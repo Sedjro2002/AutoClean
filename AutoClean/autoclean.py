@@ -3,10 +3,12 @@
 # https://github.com/elisemercury/AutoClean
 
 import os
+import pathlib
 import sys
 from timeit import default_timer as timer
 import pandas as pd
 from loguru import logger
+import ydata_profiling
 from AutoClean.modules import *
 
 class AutoClean:
@@ -55,11 +57,23 @@ class AutoClean:
         logfile (bool)..................define whether to create a logile during the AutoClean process
                                         logfile will be saved in working directory as "autoclean.log"
         verbose (bool)..................define whether AutoClean logs will be printed in console
-        
+
         OUTPUT (dataframe)..............a cleaned Pandas dataframe, accessible through the 'output' instance
         '''
         start = timer()
         self._initialize_logger(verbose, logfile)
+        
+        output_folder = pathlib.Path(__file__).parent / "output"
+        if not pathlib.Path.exists(output_folder):
+            os.mkdir(output_folder)
+            
+        
+        #TODO: check the size of the dataframe to know what type of profiler to use
+        # logger.info('Profiling before data preprocessing started')
+        # profile_before = ydata_profiling.ProfileReport(input_data, title="Before data preprocessing")
+        # profile_before.to_file(output_folder / "before_preprocessing_profile.html")
+        # profile_before.to_file(output_folder / "before_preprocessing_profile.json")
+        # logger.info('Profiling before data preprocessing completed')
         
         output_data = input_data.copy()
 
@@ -83,6 +97,23 @@ class AutoClean:
 
         end = timer()
         logger.info('AutoClean process completed in {} seconds', round(end-start, 6))
+        
+        # logger.info('Profiling after data preprocessing started')
+        # profile_after = ydata_profiling.ProfileReport(self.output, title="After data preprocessing")
+        # profile_after.to_file(output_folder / "after_preprocessing_profile.html")
+        # profile_after.to_file(output_folder / "after_preprocessing_profile.json")
+        # logger.info('Profiling after data preprocessing completed')
+        
+        # logger.info('Doing the comparative analysis between before and after data preprocessing')
+        # comparative = ydata_profiling.compare(reports=[profile_before, profile_after])
+        # comparative.to_file(output_folder / "comparative_profile.html")
+        # comparative.to_file(output_folder / "comparative_profile.json")
+        # logger.info('Comparative analysis completed')
+        
+        
+        # save the cleaned dataframe to a csv file
+        output_data.to_csv(os.path.join(output_folder, 'autoclean_output.csv'), index=False)
+        logger.info('Output dataframe saved to: autoclean_output.csv')
 
         if not verbose:
             print('AutoClean process completed in', round(end-start, 6), 'seconds')
@@ -138,6 +169,7 @@ class AutoClean:
     def _clean_data(self, df, input_data):
         # function for starting the autoclean process
         df = df.reset_index(drop=True)
+        # df = FieldAssignment.handle(self, df)
         df = Duplicates.handle(self, df)
         df = MissingValues.handle(self, df)
         df = Outliers.handle(self, df)    

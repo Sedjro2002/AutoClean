@@ -441,7 +441,7 @@ class EncodeCateg:
             if not isinstance(self.encode_categ, list):
                 self.encode_categ = ['auto']
             # select non numeric features
-            cols_categ = set(df.columns) ^ set(df.select_dtypes(include=np.number).columns) 
+            cols_categ = set(df.columns) ^ set(df.select_dtypes(include=np.number).columns) ^ set(df.select_dtypes(include=np.datetime64).columns) 
             # check if all columns should be encoded
             if len(self.encode_categ) == 1:
                 target_cols = cols_categ # encode ALL columns
@@ -482,7 +482,11 @@ class EncodeCateg:
                             df = EncodeCateg._to_label(df, feature)
                             logger.debug('Encoding to {} succeeded for feature "{}"', str(self.encode_categ[0]).upper(), feature)      
                     except:
-                        logger.warning('Encoding to {} failed for feature "{}"', str(self.encode_categ[0]).upper(), feature)    
+                        logger.warning('Encoding to {} failed for feature "{}"', str(self.encode_categ[0]).upper(), feature)
+            # try:  
+            #     df.drop(feature, inplace=True, axis=1)
+            # except:
+            #     pass
             end = timer()
             logger.info('Completed encoding of categorical features in {} seconds', round(end-start, 6))
         else:
@@ -495,7 +499,8 @@ class EncodeCateg:
         if one_hot.shape[1] > limit:
             logger.warning('ONEHOT encoding for feature "{}" creates {} new features. Consider LABEL encoding instead.', feature, one_hot.shape[1])
         # join the encoded df
-        df = df.join(one_hot)
+        # df = df.join(one_hot)
+        # df.drop(feature, inplace=True, axis=1)
         return df
 
     def _to_label(self, df, feature):
@@ -512,6 +517,8 @@ class EncodeCateg:
                     df[feature].replace(replace, inplace=True)
             except:
                 pass
+
+        # df.drop(feature, inplace=True, axis=1)
         return df  
 
 class Duplicates:
@@ -538,3 +545,148 @@ class Duplicates:
         else:
             logger.info('Skipped handling of duplicates')
         return df 
+
+
+
+
+class FieldAssignment:
+    def handle(self, df: pd.DataFrame):
+#         return {
+#                 "cols_num" : list(df.select_dtypes(include=np.number).columns),
+#                 "cols_flag" : list(df.select_dtypes(include=["bool"]).columns),
+#                 "cols_categ" : list(set(df.columns) ^ set(df.select_dtypes(include=np.number).columns))
+#                }
+        logger.info('Started fields assignments...')
+        start = timer()
+        
+        
+        df = FieldAssignment._transform_cols_to_numeric(self, df, df.columns)
+        df = FieldAssignment._transform_cols_to_bool(self, df, df.columns)
+        
+        cols_num = list(df.select_dtypes(include=np.number).columns)
+        cols_categ = list(set(df.columns) - set(df.select_dtypes(include=[np.number, "bool"]).columns))
+        cols_flag = list(df.select_dtypes(include=["bool"]).columns)
+        
+        # df,cols_categ,cols_flag = FieldAssignment._create_flags_and_categ(self, df, cols_categ, cols_flag)
+        
+        logger.info('Numerical columns: {} ', cols_num)
+        logger.info('Flag columns: {} ', cols_flag)
+        logger.info('Categorical columns: {} ', cols_categ)
+        
+        end = timer()
+        
+        #return df, {
+        #            "cols_num" : cols_num,
+        #            "cols_flag" : cols_flag,
+        #            "cols_categ" : cols_categ 
+        #           }
+        
+        return df
+
+
+    def convert_to_bool(column):
+        """
+        Convertit une colonne avec exactement deux valeurs distinctes en booléen.
+        """
+        # Vérifie que la colonne a exactement deux valeurs distinctes
+        unique_values = column.dropna().unique()
+        if len(unique_values) != 2:
+            raise ValueError("La colonne doit contenir exactement deux valeurs distinctes.")
+
+        # Détermine les valeurs pour False et True
+        false_value, true_value = unique_values
+
+        # Convertit la colonne en booléen
+        return column == true_value
+
+
+        
+    def _transform_cols_to_bool(self, df: pd.DataFrame, cols_categ,boolean_threshold=0.9):
+        logger.info('Converting string fields to boolean if possible...')
+        # function for converting string fields to boolean if possible
+        # returns updated df
+        
+        for column_name in cols_categ:
+            boolean_columns = []
+            if df[column_name].dtype == 'object':
+                unique_counts = df[column_name].dropna().unique()
+                if len(unique_counts) == 2 or unique_counts.max() >= boolean_threshold:
+                    logger.debug('Since the percentage of unique values for feature "{}" is higher than the limit of {}%, the conversion to boolean will be attempted.', column_name, boolean_threshold)
+                    df[column_name] = df[column_name].apply(lambda x: x == unique_counts[0])
+                else:
+                    logger.debug('Since the percentage of unique values for feature "{}" is lower than the limit of {}%, the conversion to boolean will be skipped.', column_name, boolean_threshold)
+            else:
+                continue
+        return df
+        
+        # for column in cols_categ:
+        #     try:
+        #         df[column] = self.convert_to_bool(df[column])
+        #     except:
+        #         pass
+        # return df
+    
+
+        
+    def _transform_cols_to_numeric(self, df: pd.DataFrame, cols_categ, limit_percentage=80):
+        logger.info('Converting string fields to numeric if possible...')
+        # function for converting string fields to numeric if possible
+        # returns updated df
+        
+        for col in cols_categ:
+            # get the percentage of values that can be converted into numeric values compared to the total of non-null values
+            
+            total_non_null = df[col].notna().sum()
+            numeric_values = df[col].apply(pd.to_numeric, errors='coerce').notna().sum()
+            potential_numeric_values_percentage = (numeric_values / total_non_null) * 100
+            logger.debug('Potential numeric values percentage for feature "{}": {}.', col, potential_numeric_values_percentage)
+            if potential_numeric_values_percentage > limit_percentage:
+                logger.debug('Since potential numeric values percentage for feature "{}" is higher than the limit of {}%, the conversion to numeric will be attempted.', col, limit_percentage)
+                try:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+                    nan_percentage = df[col].isnull().sum() / len(df[col])
+                    if nan_percentage > 0.5:
+                        df[col] = df[col].astype(str)
+                        logger.debug('Conversion to numeric failed for feature "{}", because of too many missing or invalid values. The percentage of missing values: {}', col, nan_percentage)
+                    else:
+                        df[col] = df[col].astype(float)
+                    logger.debug('Conversion to numeric succeeded for feature "{}"', col)
+                except Exception as e:
+                    logger.debug('Conversion to numeric failed for feature "{}". The error message: {}', col, str(e))
+                    pass
+        
+        
+        return df
+
+    # def _create_flags_and_categ(self, df, cols_categ, cols_flag):
+    #     logger.info('Turning certain flag fields into ones and zeros...') 
+    #     # function for turning True to 1 and False to 0 and 
+    #     # returns updated df
+        
+    #     new_cols_categ = []
+    #     new_cols_flag = []
+    #     isChanged = False
+        
+    #     keywords_true = ["yes", "oui", "vrai", "true"]
+    #     keywords_false = ["no", "none","non","faux", "false"]
+    #     for col in cols_categ:
+    #         col = col
+    #         col_unique = set([x.lower() for x in df[col] if str(x) != 'nan'])
+    #         if len(col_unique) == 2:
+    #             for i in range(len(keywords_true)):
+    #                 if col_unique == {keywords_true[i], keywords_false[i]}:
+    #                     logger.info(f"{col} changed...") 
+    #                     df[col] = pd.Series(np.where(df[col].values == keywords_true[i], 1, 0), df.index)
+    #                     new_cols_flag.append(col)
+        
+    #     # removing flags from categoric field
+    #     new_cols_categ = list(set(cols_categ) ^ set(new_cols_flag))
+        
+    #     # for boolean values in the df
+    #     if cols_flag == []:
+    #         for col in cols_flag:
+    #             df[col] = df[col].astype(int)
+    #             new_cols_flag.append(col)
+        
+    #     return df, new_cols_categ, new_cols_flag
+        
