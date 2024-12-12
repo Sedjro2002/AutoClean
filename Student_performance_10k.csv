@@ -1,0 +1,200 @@
+roll_no,gender,race_ethnicity,parental_level_of_education,lunch,test_preparation_course,math_score,reading_score,writing_score,science_score,total_score,grade
+std-01,male,group D,some college,1,1,89,38,85,26,238,C
+std-02,male,group B,high school,1,0,65,100,67,96,328,A
+std-03,male,group C,master's degree,1,0,10,99,97,58,264,B
+std-04,male,group D,some college,1,1,22,51,41,84,198,D
+std-05,male,group C,some college,0,1,26,58,64,65,213,C
+std-06,male,group B,high school,1,0,40,49,69,48,206,C
+std-07,,group C,some college,0,0,34,48,84,73,239,C
+std-08,male,group B,associate's degree,1,1,25,80,34,17,156,D
+std-09,male,group C,,1,1,28,79,100,76,283,B
+std-10,male,group C,some high school,,0,71,22,85,39,217,C
+std-11,male,group C,high school,1,,55,64,87,60,266,B
+std-12,male,group E,associate's degree,1,0,,53,54,55,228,C
+std-13,male,group A,associate's degree,1,0,29,,76,91,293,B
+std-14,male,group E,high school,0,1,18,70,,45,162,D
+std-15,male,A,associate's degree,1,1,72,97,52,,289,B
+std-16,male,group D,master's degree,0,0,23,96,34,54,,C
+std-17,male,group E,some high school,0,0,35,70,87,91,283,
+std-18,male,group B,some college,0,1,38,82,82,73,,B
+std-19,Boy,group C,bachelor's degree,1,1,41,76,78,,280,B
+std-20,male,group B,some high school,1,1,22,73,,75,224,C
+std-21,male,group E,master's degree,1,1,44,,50,47,208,C
+std-22,male,group C,some high school,1,1,,68,62,54,195,D
+std-23,male,group B,bachelor's degree,1,1,39,71,49,78,237,C
+std-24,male,group B,associate's degree,,1,85,97,43,57,282,B
+std-25,male,group A,,1,0,30,63,63,9,165,D
+std-26,male,,some college,1,1,100,38,74,95,307,B
+std-27,,group C,some high school,1,0,61,64,81,44,250,B
+std-28,male,group B,high school,0,0,47,49,98,46,240,C
+std-29,male,group D,associate's degree,0,0,37,57,57,82,233,C
+std-30,male,group E,high school,0,1,49,54,61,78,242,C
+std-31,male,group E,some high school,1,1,72,89,64,81,306,B
+std-32,male,group A,associate's degree,0,0,18,69,82,9,178,D
+std-33,male,group C,associate's degree,0,0,11,67,60,31,169,D
+std-34,male,group A,some college,1,1,41,77,97,65,280,B
+std-35,male,group C,associate's degree,1,0,32,71,74,70,247,C
+std-36,male,group A,some college,1,0,85,76,74,57,292,B
+std-37,male,group C,some high school,1,0,78,82,52,71,283,B
+std-38,,group C,associate's degree,1,1,36,70,57,93,256,B
+std-39,male,group D,high school,0,0,68,66,86,99,319,B
+std-40,male,group D,,1,0,97,89,64,66,316,B
+std-41,male,group D,some high school,,0,38,97,55,62,252,B
+std-42,male,group D,high school,1,,38,92,95,50,275,B
+std-43,male,group B,high school,1,0,,38,54,65,215,C
+std-44,male,group A,bachelor's degree,0,0,78,,81,71,313,B
+std-45,male,group D,some college,1,0,64,81,,96,297,B
+std-46,male,group C,some college,1,0,60,43,33,,212,C
+std-47,male,group D,some college,0,0,60,56,78,67,,B
+std-48,male,group C,high school,0,0,38,90,53,60,241,C
+std-49,male,group D,some high school,0,0,69,98,98,46,311,B
+std-50,male,group E,high school,0,0,87,63,48,55,253,B
+std-51,male,group B,some high school,1,0,83,56,,,272,B
+std-52,male,group D,associate's degree,0,1,42,64,57,94,257,B
+std-53,male,group C,bachelor's degree,1,1,72,,69,28,242,C
+std-54,male,group C,some college,1,0,,100,59,9,212,C
+std-55,male,group B,some college,0,,52,98,73,75,298,B
+std-56,male,group B,associate's degree,,1,65,66,60,57,248,C
+std-57,male,group C,,1,1,27,55,100,38,220,C
+std-58,male,,bachelor's degree,0,0,46,91,30,69,236,C
+std-59,,group C,associate's degree,1,1,12,83,74,63,232,C
+std-60,male,group D,some high school,1,0,51,73,100,60,284,B
+std-61,male,group D,some high school,1,0,32,100,77,61,270,B
+std-62,male,group B,some high school,1,0,75,86,73,79,313,B
+std-63,male,group B,associate's degree,0,1,60,53,82,71,266,B
+std-64,male,group D,some college,1,0,20,76,63,71,230,C
+std-65,male,group B,bachelor's degree,1,1,85,82,80,72,319,B
+std-66,male,group D,associate's degree,1,0,81,88,100,100,369,A
+std-67,male,group A,associate's degree,1,0,98,40,32,51,221,C
+std-68,male,group C,master's degree,1,1,72,90,61,65,288,B
+std-69,male,group C,master's degree,1,0,83,89,56,74,302,B
+std-70,male,group C,some college,1,0,100,62,32,74,268,B
+std-71,male,group A,some high school,0,0,24,86,68,52,230,C
+std-72,male,group D,some high school,1,0,71,90,68,72,301,B
+std-73,male,group B,some college,1,0,20,73,100,56,249,C
+std-74,male,group E,associate's degree,1,0,23,57,65,65,210,C
+std-75,male,group A,associate's degree,0,1,82,30,53,75,240,C
+std-76,male,group C,some college,1,0,49,30,53,33,165,D
+std-77,male,group D,master's degree,1,0,35,62,33,46,176,D
+std-78,male,group D,some college,0,0,55,58,98,74,285,B
+std-79,male,group B,some high school,1,0,32,100,78,36,246,C
+std-80,male,group D,high school,0,0,19,60,25,78,182,D
+std-81,male,group E,bachelor's degree,1,1,47,70,100,90,307,B
+std-82,male,group E,high school,0,1,48,76,80,100,304,B
+std-83,male,group E,master's degree,1,0,29,77,44,79,229,C
+std-84,male,group E,bachelor's degree,1,0,34,70,41,53,198,D
+std-85,male,group D,associate's degree,1,0,74,69,26,60,229,C
+std-86,male,group E,some college,1,0,44,90,58,72,264,B
+std-87,male,group C,some college,1,1,28,82,87,52,249,C
+std-88,male,group B,master's degree,1,0,72,76,49,88,285,B
+std-89,male,group E,some college,1,1,43,82,50,56,231,C
+std-90,male,group E,some college,1,0,71,65,59,60,255,B
+std-91,male,group B,some college,1,1,62,58,45,33,198,D
+std-92,male,group C,some college,1,0,42,60,80,74,256,B
+std-93,male,group E,associate's degree,0,0,43,86,83,93,305,B
+std-94,male,group B,high school,0,1,21,60,18,66,165,D
+std-95,male,group B,some high school,1,0,72,86,23,62,243,C
+std-96,male,group E,associate's degree,0,0,93,85,30,79,287,B
+std-97,male,group D,some high school,1,0,66,91,95,59,311,B
+std-98,male,group D,some college,1,1,65,65,64,27,221,C
+std-99,male,group D,master's degree,0,0,47,64,54,23,188,D
+std-100,male,group C,some high school,0,0,0,37,62,94,193,D
+std-101,male,group D,associate's degree,1,1,25,78,69,36,208,C
+std-102,male,group B,associate's degree,1,1,78,82,62,15,237,C
+std-103,male,group B,high school,0,0,82,84,82,79,327,A
+std-104,male,group E,some college,1,1,46,98,96,100,340,A
+std-105,male,group C,some college,1,0,13,100,68,10,191,D
+std-106,male,group D,bachelor's degree,1,0,28,79,71,42,220,C
+std-107,male,group A,some college,1,0,35,74,58,51,218,C
+std-108,male,group A,associate's degree,1,1,39,64,93,77,273,B
+std-109,male,group C,high school,1,1,51,69,68,36,224,C
+std-110,male,group B,master's degree,0,0,71,89,71,83,314,B
+std-111,male,group D,high school,0,0,45,65,37,50,197,D
+std-112,male,group E,high school,1,1,57,60,56,52,225,C
+std-113,male,group C,bachelor's degree,1,1,44,89,100,88,321,A
+std-114,male,group C,some high school,1,0,20,69,78,61,228,C
+std-115,male,group A,associate's degree,1,0,54,95,71,80,300,B
+std-116,male,group C,associate's degree,0,0,28,53,84,38,203,C
+std-117,male,group C,some college,1,0,21,47,55,49,172,D
+std-118,male,group C,some high school,1,1,66,91,40,40,237,C
+std-119,male,group A,associate's degree,1,1,18,95,72,49,234,C
+std-120,male,group B,some college,1,0,70,59,29,50,208,C
+std-121,male,group C,high school,1,0,30,63,76,48,217,C
+std-122,male,group C,associate's degree,1,0,98,68,100,69,335,A
+std-123,male,group E,associate's degree,0,0,85,98,64,73,320,A
+std-124,male,group C,some high school,1,0,75,90,51,91,307,B
+std-125,male,group A,master's degree,0,1,97,100,69,58,324,A
+std-126,male,group B,some college,1,0,20,76,27,43,166,D
+std-127,male,group C,high school,1,1,50,100,67,100,317,B
+std-128,male,group D,some college,1,1,65,85,72,72,294,B
+std-129,male,group E,some college,0,1,23,100,92,67,282,B
+std-130,male,group B,master's degree,1,0,32,48,51,9,140,Fail
+std-131,male,group E,high school,1,0,61,59,100,54,274,B
+std-132,male,group B,some high school,0,0,73,78,96,81,328,A
+std-133,male,group B,bachelor's degree,1,0,88,85,79,100,352,A
+std-134,male,group C,some high school,0,1,60,92,41,28,221,C
+std-135,male,group B,bachelor's degree,1,1,25,82,80,94,281,B
+std-136,male,group E,some high school,1,1,93,81,75,91,340,A
+std-137,male,group D,some high school,1,0,72,44,78,58,252,B
+std-138,male,group D,some college,0,1,64,65,81,100,310,B
+std-139,male,group D,some college,1,0,41,72,88,64,265,B
+std-140,male,group C,some high school,1,1,36,67,60,77,240,C
+std-141,male,group C,associate's degree,0,1,33,88,31,97,249,C
+std-142,male,group D,associate's degree,1,0,54,86,62,78,280,B
+std-143,male,group B,high school,1,1,44,49,60,39,192,D
+std-144,male,group A,master's degree,1,0,44,17,92,86,239,C
+std-145,male,group D,high school,1,0,19,84,99,62,264,B
+std-146,male,group C,master's degree,1,0,29,59,47,48,183,D
+std-147,male,group C,some high school,0,1,39,58,72,25,194,D
+std-148,male,group C,some college,0,0,24,77,94,9,204,C
+std-149,male,group C,some college,1,0,76,91,100,41,308,B
+std-150,male,group C,master's degree,0,0,74,62,86,91,313,B
+std-151,male,group E,some college,1,1,65,62,63,56,246,C
+std-152,male,group B,master's degree,0,0,38,63,59,82,242,C
+std-153,male,group C,high school,1,0,71,58,56,73,258,B
+std-154,male,group D,some high school,0,0,75,100,100,34,309,B
+std-155,male,group B,bachelor's degree,0,0,68,79,77,89,313,B
+std-156,male,group D,high school,1,0,34,91,64,44,233,C
+std-157,male,group A,some high school,0,0,45,48,67,9,169,D
+std-158,male,group C,some college,0,1,46,34,86,59,225,C
+std-159,male,group B,some college,0,0,82,87,52,60,281,B
+std-160,male,,,1,0,57,59,95,99,310,B
+std-161,male,group C,master's degree,,0,0,93,66,80,239,C
+std-162,male,group D,some college,0,,88,,59,46,257,B
+std-163,male,group E,bachelor's degree,1,0,27,100,,82,296,B
+std-164,male,group A,bachelor's degree,0,1,17,97,63,44,221,C
+std-165,male,group C,some college,0,1,62,87,73,56,,B
+std-166,male,group C,bachelor's degree,0,1,16,100,47,32,195,
+std-167,male,group D,some college,0,0,89,68,64,99,320,A
+std-168,male,group A,associate's degree,1,0,50,60,57,32,199,D
+std-169,male,group C,high school,1,0,40,98,53,84,275,B
+std-170,male,group E,bachelor's degree,0,1,56,81,52,69,258,B
+std-171,male,group C,bachelor's degree,0,0,80,70,37,75,262,B
+std-172,male,group E,bachelor's degree,1,0,74,70,36,41,221,C
+std-173,male,group D,bachelor's degree,0,1,23,87,73,86,269,B
+std-174,male,group D,high school,1,0,53,51,73,87,264,B
+std-175,male,group D,some college,1,0,39,41,48,62,190,D
+std-176,male,group B,master's degree,0,0,30,69,93,91,283,B
+std-177,male,group E,high school,1,1,68,91,65,98,322,A
+std-178,male,group E,some high school,1,1,71,80,58,58,267,B
+std-179,male,group D,associate's degree,1,0,14,36,25,,124,Fail
+std-180,male,group C,some high school,1,1,44,80,,61,285,B
+std-181,male,group C,high school,0,0,69,,49,48,248,C
+std-182,male,group B,high school,0,0,,95,33,49,219,C
+std-183,male,group D,bachelor's degree,1,,49,70,93,64,276,B
+std-184,male,group D,some college,,1,84,75,67,62,288,B
+std-185,male,group E,,1,0,55,86,70,92,303,B
+std-186,male,,master's degree,1,0,49,90,55,94,288,B
+std-187,male,group C,associate's degree,1,1,41,72,63,97,273,B
+std-188,male,group D,bachelor's degree,1,1,49,58,66,34,207,C
+std-189,male,group B,some college,1,0,16,100,88,36,240,C
+std-190,male,group C,associate's degree,0,1,37,99,52,45,233,C
+std-191,male,group C,high school,1,1,87,57,65,60,269,B
+std-192,male,group E,some college,1,1,45,100,46,73,264,B
+std-193,male,group B,associate's degree,0,0,32,47,61,61,201,C
+std-194,male,group D,some high school,1,1,62,91,89,63,305,B
+std-195,male,group E,some high school,1,1,58,88,64,62,272,B
+std-196,male,group E,bachelor's degree,0,1,51,60,54,74,239,C
+std-197,male,group D,master's degree,1,1,45,51,56,74,226,C
+std-198,male,group D,master's degree,1,0,33,63,53,85,234,C
+std-199,male,group D,some college,1,1,50,91,78,35,254,B

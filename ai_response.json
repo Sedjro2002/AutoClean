@@ -1,0 +1,74 @@
+{
+	"roll_no": {
+		"is_risky": true,
+		"risk_level": 8,
+		"explanation": "",
+		"recommendation": ""
+	},
+	"gender": {
+		"is_risky": true,
+		"risk_level": 8,
+		"explanation": "This feature is related to gender and could lead to biases in analysis or modeling if not handled properly. The dataset contains a majority of males, which may result in skewed results.",
+		"recommendation": "Consider rebalancing the dataset by adding more females to ensure accurate and fair representation."
+	},
+	"race_ethnicity": {
+		"is_risky": true,
+		"risk_level": 1,
+		"explanation": "The feature is related to race/ethnicity, which is a protected attribute.",
+		"recommendation": ""
+	},
+	"parental_level_of_education": {
+		"is_risky": true,
+		"risk_level": 8,
+		"explanation": "The dataset contains information on parental level of education, which could be a proxy for socioeconomic status and potentially lead to biases in analyzing student performance.",
+		"recommendation": "Exclude the feature from analysis to ensure objectivity."
+	},
+	"lunch": {
+		"is_risky": false,
+		"risk_level": 0,
+		"explanation": "",
+		"recommendation": ""
+	},
+	"test_preparation_course": {
+		"is_risky": true,
+		"risk_level": 8,
+		"explanation": "test_preparation_course contains demographic information about students who have completed or not completed a test preparation course.",
+		"recommendation": " Rebalance dataset to ensure equal distribution of completion status and exclude the feature from analysis"
+	},
+	"math_score": {
+		"is_risky": false,
+		"risk_level": 0,
+		"explanation": "",
+		"recommendation": ""
+	},
+	"reading_score": {
+		"is_risky": true,
+		"risk_level": 8,
+		"explanation": "The reading score feature may contain proxies for socioeconomic status or English language proficiency that could inadvertently reveal biases in student performance evaluations. Further analysis is needed to determine the potential risks of this feature.",
+		"recommendation": "Rebalance and stratify the dataset to ensure diverse representation across demographics, and consider incorporating alternative measures of literacy and comprehension."
+	},
+	"writing_score": {
+		"is_risky": true,
+		"risk_level": 8,
+		"explanation": "The writing score feature is related to a protected attribute (parental level of education) and has a potential for influencing decisions about student admissions or educational placement. High-value scores may disproportionately favor children from higher educated families. This could result in biased outcomes if not addressed.",
+		"recommendation": "Analyze and consider rebalancing the dataset by including a new control group with equal writing skills distributed across different parental levels of education to reduce bias."
+	},
+	"science_score": {
+		"is_risky": false,
+		"risk_level": 0,
+		"explanation": "Science score is not related to protected attributes and does not seem to pose an ethical risk.",
+		"recommendation": "No adjustment needed"
+	},
+	"total_score": {
+		"is_risky": true,
+		"risk_level": 8,
+		"explanation": "The Total Score feature may be a proxy for socio-economic status, potentially leading to bias in modeling outcomes.",
+		"recommendation": "Rebalance the dataset or apply inverse probability weighting to mitigate potential biases."
+	},
+	"grade": {
+		"is_risky": false,
+		"risk_level": 0,
+		"explanation": "",
+		"recommendation": ""
+	}
+}
