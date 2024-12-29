@@ -170,6 +170,8 @@ class AutoClean:
         # function for starting the autoclean process
         df = df.reset_index(drop=True)
         # df = FieldAssignment.handle(self, df)
+        
+        #TODO: Add normalisation
         df = Duplicates.handle(self, df)
         df = MissingValues.handle(self, df)
         df = Outliers.handle(self, df)    

@@ -1,74 +1,58 @@
 {
-	"roll_no": {
-		"is_risky": true,
-		"risk_level": 8,
-		"explanation": "",
-		"recommendation": ""
-	},
+	"roll_no": { "is_risky": false, "risk_level": 0, "justification": "" },
 	"gender": {
 		"is_risky": true,
 		"risk_level": 8,
-		"explanation": "This feature is related to gender and could lead to biases in analysis or modeling if not handled properly. The dataset contains a majority of males, which may result in skewed results.",
-		"recommendation": "Consider rebalancing the dataset by adding more females to ensure accurate and fair representation."
+		"justification": "The dataset contains binary gender values, which could lead to biases in certain analyses or models, particularly those targeting protected groups or requiring demographic parity in outcomes."
 	},
 	"race_ethnicity": {
 		"is_risky": true,
-		"risk_level": 1,
-		"explanation": "The feature is related to race/ethnicity, which is a protected attribute.",
-		"recommendation": ""
+		"risk_level": 6,
+		"justification": "Contains racial/ethnic information which could be used to discriminate against certain groups"
 	},
 	"parental_level_of_education": {
 		"is_risky": true,
 		"risk_level": 8,
-		"explanation": "The dataset contains information on parental level of education, which could be a proxy for socioeconomic status and potentially lead to biases in analyzing student performance.",
-		"recommendation": "Exclude the feature from analysis to ensure objectivity."
+		"justification": "The paternal level of education is a sensitive feature as it represents an intrinsic characteristic (family background) that can be associated with various socio-economic factors."
 	},
 	"lunch": {
-		"is_risky": false,
-		"risk_level": 0,
-		"explanation": "",
-		"recommendation": ""
+		"is_risky": true,
+		"risk_level": 8,
+		"justification": "Lunch is often used as a proxy for socioeconomic status, which can be heavily biased in its correlation with academic performance."
 	},
 	"test_preparation_course": {
 		"is_risky": true,
 		"risk_level": 8,
-		"explanation": "test_preparation_course contains demographic information about students who have completed or not completed a test preparation course.",
-		"recommendation": " Rebalance dataset to ensure equal distribution of completion status and exclude the feature from analysis"
+		"justification": "The feature \u201ctest_preparation_course\u201d is potentially risky as it may introduce bias related to access to resources and socio-economic status."
 	},
 	"math_score": {
-		"is_risky": false,
-		"risk_level": 0,
-		"explanation": "",
-		"recommendation": ""
+		"is_risky": true,
+		"risk_level": 4,
+		"justification": "The math_score feature may introduce bias if it is not properly weighted or considered alongside other demographic features, as it has been shown to be highly correlated with scores from tests that disproportionately affect certain student groups."
 	},
 	"reading_score": {
-		"is_risky": true,
-		"risk_level": 8,
-		"explanation": "The reading score feature may contain proxies for socioeconomic status or English language proficiency that could inadvertently reveal biases in student performance evaluations. Further analysis is needed to determine the potential risks of this feature.",
-		"recommendation": "Rebalance and stratify the dataset to ensure diverse representation across demographics, and consider incorporating alternative measures of literacy and comprehension."
+		"is_risky": false,
+		"risk_level": 0,
+		"justification": "This feature does not contain any missing values or outliers that could lead to biased analysis."
 	},
 	"writing_score": {
 		"is_risky": true,
 		"risk_level": 8,
-		"explanation": "The writing score feature is related to a protected attribute (parental level of education) and has a potential for influencing decisions about student admissions or educational placement. High-value scores may disproportionately favor children from higher educated families. This could result in biased outcomes if not addressed.",
-		"recommendation": "Analyze and consider rebalancing the dataset by including a new control group with equal writing skills distributed across different parental levels of education to reduce bias."
+		"justification": "The \u201caverage score\u2019 was included because scores less than or equal to the average might indicate a significant imbalance in the score distribution.\n\nTherefore, this feature could inadvertently lead to biases when predicting student performance. Specifically, lower-scored individuals may be disproportionately represented in the dataset compared to their actual representation in the population."
 	},
 	"science_score": {
 		"is_risky": false,
 		"risk_level": 0,
-		"explanation": "Science score is not related to protected attributes and does not seem to pose an ethical risk.",
-		"recommendation": "No adjustment needed"
+		"justification": "Science score is a quantitative feature evaluating students\u2019 science knowledge."
 	},
 	"total_score": {
-		"is_risky": true,
-		"risk_level": 8,
-		"explanation": "The Total Score feature may be a proxy for socio-economic status, potentially leading to bias in modeling outcomes.",
-		"recommendation": "Rebalance the dataset or apply inverse probability weighting to mitigate potential biases."
-	},
-	"grade": {
 		"is_risky": false,
 		"risk_level": 0,
-		"explanation": "",
-		"recommendation": ""
+		"justification": "This feature is not directly related to protected attributes, therefore no risk of bias"
+	},
+	"grade": {
+		"is_risky": true,
+		"risk_level": 8,
+		"justification": "Parental level of education and race/ethnicity are sensitive features. Higher parental level of education may be associated with better academic outcomes but is not directly causal of biases. However, racial and ethnic disparities exist in educational opportunities. Grade may indirectly perpetuate socioeconomic biases as higher grades often correlate with increased opportunities for higher education."
 	}
 }

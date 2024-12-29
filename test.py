@@ -56,7 +56,8 @@ for variable in df.columns:
         #     agent_input['all_variables'] = profile.description_set.variables.keys()
         #     print(agent_input)
         #     print('\n')
-        # except:
+        # except Exception as e:
+        #     print(e)
         #     continue
         agent_input['name'] = variable
         agent_input['content'] = df[variable].sample(5).to_list()
@@ -65,15 +66,24 @@ for variable in df.columns:
         agent_input['variable_infos'] = configs['columns'][variable]
         print(agent_input)
         try:
-            result = risky_feature_detector.run_sync(str(agent_input))
-            results[variable] = result.data.model_dump()
-        except:
+            x = 0
+            results[variable] = {}
+            while x < 2:
+                result = risky_feature_detector.run_sync(str(agent_input))
+                print("||||",result.data.sensibility_level)
+                results[variable]['sensibility_level'] += result.data.sensibility_level
+                results[variable]['justification'] = result.data.justification
+                x += 1
+            results[variable] /= 2
+            print(results[variable])
+        except Exception as e:
+            print(e)
             continue
         
 
 print('=====result=====')
 pprint.pprint(results,indent=3)
-with open('ai_response.json', 'w+') as f:
+with open('ai_response2.json', 'w+') as f:
     f.write(json.dumps(results))
 
 print('=====result=====')
