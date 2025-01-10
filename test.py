@@ -39,7 +39,7 @@ def main():
         processor = DataProcessor(config, audit_logger=audit_logger)
         
         # Load and process data
-        df = processor.load_csv("Student_performance_10k.csv")
+        df = processor.load_csv("./datasets/Student_performance_10k.csv")
         
         # Generate profiles
         # profile = processor.generate_profile(df, "before_preprocessing")

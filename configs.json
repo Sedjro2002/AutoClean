@@ -17,6 +17,7 @@
             "grade"
         ],
         "target": "gender",
+        "sensitive_features": ["race_ethnicity", "parental_level_of_education"],
         "preprocessing": {
             "dim_reduction": {
                 "enabled": true,
@@ -31,6 +32,10 @@
             }
         }
     },
+    "code_analysis_paths": [
+        "c:/Users/habib/Documents/trywindsurf/preprocessing"
+    ],
+    "code_analysis_type": "ai",
     "columns": {
         "roll_no": {
             "description": "Represent the roll number of the student."

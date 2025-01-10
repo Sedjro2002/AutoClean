@@ -1,6 +1,6 @@
 """Configuration management for AutoClean."""
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, List
 import json
 from dataclasses import dataclass
 
@@ -11,6 +11,8 @@ class Config:
     output_dir: Path
     sample_size: int = 1000
     profile_threshold: int = 10000
+    code_analysis_paths: List[str] = None  # List of paths to analyze for potential biases
+    code_analysis_type: str = "syntax"  # Can be "syntax" or "ai"
 
     @classmethod
     def from_file(cls, config_path: str) -> "Config":
@@ -23,5 +25,7 @@ class Config:
         
         return cls(
             dataset_config=config_data,
-            output_dir=output_dir
+            output_dir=output_dir,
+            code_analysis_paths=config_data.get('code_analysis_paths', None),
+            code_analysis_type=config_data.get('code_analysis_type', 'syntax')
         )

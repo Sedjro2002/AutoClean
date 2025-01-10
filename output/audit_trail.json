@@ -1,5 +1,5 @@
 {
-  "start_time": "2025-01-10T17:42:23.573994",
+  "start_time": "2025-01-10T20:21:54.073724",
   "input_file": null,
   "configuration": {},
   "operations": [
@@ -10,9 +10,9 @@
         "method": "auto"
       },
       "metrics": {
-        "start_time": "2025-01-10T17:42:23.590119",
-        "end_time": "2025-01-10T17:42:23.640211",
-        "duration_seconds": 0.050092,
+        "start_time": "2025-01-10T20:21:54.095503",
+        "end_time": "2025-01-10T20:21:54.126751",
+        "duration_seconds": 0.031248,
         "input_shape": [
           199,
           12
@@ -35,9 +35,9 @@
         "categorical_method": "knn"
       },
       "metrics": {
-        "start_time": "2025-01-10T17:42:23.640211",
-        "end_time": "2025-01-10T17:42:24.220390",
-        "duration_seconds": 0.580179,
+        "start_time": "2025-01-10T20:21:54.126751",
+        "end_time": "2025-01-10T20:21:54.477813",
+        "duration_seconds": 0.351062,
         "input_shape": [
           199,
           12
@@ -56,11 +56,11 @@
               "before": "float64",
               "after": "Int64"
             },
-            "test_preparation_course": {
+            "writing_score": {
               "before": "float64",
               "after": "Int64"
             },
-            "writing_score": {
+            "test_preparation_course": {
               "before": "float64",
               "after": "Int64"
             }
@@ -128,9 +128,9 @@
         "outlier_param": 1.5
       },
       "metrics": {
-        "start_time": "2025-01-10T17:42:24.222401",
-        "end_time": "2025-01-10T17:42:24.276412",
-        "duration_seconds": 0.054011,
+        "start_time": "2025-01-10T20:21:54.478812",
+        "end_time": "2025-01-10T20:21:54.507277",
+        "duration_seconds": 0.028465,
         "input_shape": [
           199,
           12
@@ -152,9 +152,9 @@
         "granularity": "s"
       },
       "metrics": {
-        "start_time": "2025-01-10T17:42:24.276412",
-        "end_time": "2025-01-10T17:42:24.360270",
-        "duration_seconds": 0.083858,
+        "start_time": "2025-01-10T20:21:54.507277",
+        "end_time": "2025-01-10T20:21:54.545664",
+        "duration_seconds": 0.038387,
         "input_shape": [
           199,
           12
@@ -178,9 +178,9 @@
         ]
       },
       "metrics": {
-        "start_time": "2025-01-10T17:42:24.364316",
-        "end_time": "2025-01-10T17:42:24.428274",
-        "duration_seconds": 0.063958,
+        "start_time": "2025-01-10T20:21:54.545664",
+        "end_time": "2025-01-10T20:21:54.586636",
+        "duration_seconds": 0.040972,
         "input_shape": [
           199,
           12
@@ -191,15 +191,15 @@
         ],
         "changes_made": {
           "dtype_changes": {
-            "race_ethnicity": {
-              "before": "object",
-              "after": "int64"
-            },
             "grade": {
               "before": "object",
               "after": "int64"
             },
-            "gender": {
+            "race_ethnicity": {
+              "before": "object",
+              "after": "int64"
+            },
+            "roll_no": {
               "before": "object",
               "after": "int64"
             },
@@ -207,7 +207,7 @@
               "before": "object",
               "after": "int64"
             },
-            "roll_no": {
+            "gender": {
               "before": "object",
               "after": "int64"
             }
@@ -223,9 +223,9 @@
       "description": "Round numerical values to appropriate precision",
       "parameters": {},
       "metrics": {
-        "start_time": "2025-01-10T17:42:24.428274",
-        "end_time": "2025-01-10T17:42:24.545441",
-        "duration_seconds": 0.117167,
+        "start_time": "2025-01-10T20:21:54.586636",
+        "end_time": "2025-01-10T20:21:54.680043",
+        "duration_seconds": 0.093407,
         "input_shape": [
           199,
           12
@@ -236,11 +236,7 @@
         ],
         "changes_made": {
           "dtype_changes": {
-            "race_ethnicity": {
-              "before": "int64",
-              "after": "Int64"
-            },
-            "math_score": {
+            "lunch": {
               "before": "float64",
               "after": "Int64"
             },
@@ -248,11 +244,11 @@
               "before": "int64",
               "after": "Int64"
             },
-            "gender": {
-              "before": "int64",
+            "math_score": {
+              "before": "float64",
               "after": "Int64"
             },
-            "parental_level_of_education": {
+            "race_ethnicity": {
               "before": "int64",
               "after": "Int64"
             },
@@ -264,8 +260,12 @@
               "before": "float64",
               "after": "Int64"
             },
-            "lunch": {
-              "before": "float64",
+            "parental_level_of_education": {
+              "before": "int64",
+              "after": "Int64"
+            },
+            "gender": {
+              "before": "int64",
               "after": "Int64"
             }
           },
@@ -326,13 +326,18 @@
       "warnings": []
     },
     {
-      "operation_name": "Sensitive Feature Detection",
-      "description": "Use AI to detect potentially sensitive features",
-      "parameters": {},
+      "operation_name": "Code Bias Analysis",
+      "description": "Completed ai code bias analysis",
+      "parameters": {
+        "paths": [
+          "c:/Users/habib/Documents/trywindsurf/preprocessing"
+        ],
+        "analysis_type": "ai"
+      },
       "metrics": {
-        "start_time": "2025-01-10T17:42:24.573104",
-        "end_time": "2025-01-10T17:42:49.232447",
-        "duration_seconds": 24.659343,
+        "start_time": "2025-01-10T20:21:54.688654",
+        "end_time": "2025-01-10T20:25:39.170521",
+        "duration_seconds": 224.481867,
         "input_shape": [
           199,
           12
@@ -342,11 +347,126 @@
           12
         ],
         "changes_made": {
-          "sensitive_features": [],
-          "results": []
+          "results": [
+            {
+              "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\data_cleaner.py",
+              "analysis": {
+                "is_problematic": false,
+                "sensitivity_level": 0,
+                "problematic_sections": [],
+                "recommendations": [
+                  "Error during analysis: startswith"
+                ]
+              }
+            },
+            {
+              "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\feature_engineering.py",
+              "analysis": {
+                "is_problematic": false,
+                "sensitivity_level": 0,
+                "problematic_sections": [],
+                "recommendations": [
+                  "Error during analysis: startswith"
+                ]
+              }
+            },
+            {
+              "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\sampling.py",
+              "analysis": {
+                "is_problematic": false,
+                "sensitivity_level": 0,
+                "problematic_sections": [],
+                "recommendations": [
+                  "Error during analysis: startswith"
+                ]
+              }
+            }
+          ]
         },
-        "success": false,
-        "error": "'Feature' object does not support item assignment"
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "Fairness Analysis race_ethnicity",
+      "description": "Analyze and mitigate bias for feature race_ethnicity",
+      "parameters": {},
+      "metrics": {
+        "start_time": "2025-01-10T20:25:39.175604",
+        "end_time": "2025-01-10T20:25:39.202355",
+        "duration_seconds": 0.026751,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {
+          "results": {
+            "original": {
+              "disparate_impact": 0.9915254237288136,
+              "statistical_parity_difference": -0.008474576271186418,
+              "group_metrics": {
+                "group_0_positive_rate": 0.9915254237288136,
+                "group_1_positive_rate": 1.0
+              }
+            },
+            "mitigated": {
+              "disparate_impact": 0.9949748743718593,
+              "statistical_parity_difference": -0.005025125628140725,
+              "group_metrics": {
+                "group_0_positive_rate": 0.9915254237288136,
+                "group_1_positive_rate": 1.0
+              }
+            }
+          }
+        },
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "Fairness Analysis parental_level_of_education",
+      "description": "Analyze and mitigate bias for feature parental_level_of_education",
+      "parameters": {},
+      "metrics": {
+        "start_time": "2025-01-10T20:25:39.208905",
+        "end_time": "2025-01-10T20:25:39.219838",
+        "duration_seconds": 0.010933,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {
+          "results": {
+            "original": {
+              "disparate_impact": 0.9914529914529915,
+              "statistical_parity_difference": -0.008547008547008517,
+              "group_metrics": {
+                "group_0_positive_rate": 0.9914529914529915,
+                "group_1_positive_rate": 1.0
+              }
+            },
+            "mitigated": {
+              "disparate_impact": 0.9949748743718592,
+              "statistical_parity_difference": -0.005025125628140836,
+              "group_metrics": {
+                "group_0_positive_rate": 0.9914529914529915,
+                "group_1_positive_rate": 1.0
+              }
+            }
+          }
+        },
+        "success": true,
+        "error": null
       },
       "warnings": []
     },
@@ -355,9 +475,9 @@
       "description": "Analyze and mitigate bias for each sensitive feature",
       "parameters": {},
       "metrics": {
-        "start_time": "2025-01-10T17:42:49.234458",
-        "end_time": "2025-01-10T17:42:49.234458",
-        "duration_seconds": 0.0,
+        "start_time": "2025-01-10T20:25:39.174164",
+        "end_time": "2025-01-10T20:25:39.219838",
+        "duration_seconds": 0.045674,
         "input_shape": [
           199,
           12
@@ -367,7 +487,44 @@
           12
         ],
         "changes_made": {
-          "results": {}
+          "results": {
+            "race_ethnicity": {
+              "original": {
+                "disparate_impact": 0.9915254237288136,
+                "statistical_parity_difference": -0.008474576271186418,
+                "group_metrics": {
+                  "group_0_positive_rate": 0.9915254237288136,
+                  "group_1_positive_rate": 1.0
+                }
+              },
+              "mitigated": {
+                "disparate_impact": 0.9949748743718593,
+                "statistical_parity_difference": -0.005025125628140725,
+                "group_metrics": {
+                  "group_0_positive_rate": 0.9915254237288136,
+                  "group_1_positive_rate": 1.0
+                }
+              }
+            },
+            "parental_level_of_education": {
+              "original": {
+                "disparate_impact": 0.9914529914529915,
+                "statistical_parity_difference": -0.008547008547008517,
+                "group_metrics": {
+                  "group_0_positive_rate": 0.9914529914529915,
+                  "group_1_positive_rate": 1.0
+                }
+              },
+              "mitigated": {
+                "disparate_impact": 0.9949748743718592,
+                "statistical_parity_difference": -0.005025125628140836,
+                "group_metrics": {
+                  "group_0_positive_rate": 0.9914529914529915,
+                  "group_1_positive_rate": 1.0
+                }
+              }
+            }
+          }
         },
         "success": true,
         "error": null
@@ -375,15 +532,13 @@
       "warnings": []
     }
   ],
-  "end_time": "2025-01-10T17:42:49.241004",
-  "total_duration_seconds": 25.66701,
+  "end_time": "2025-01-10T20:25:39.224307",
+  "total_duration_seconds": 225.150583,
   "final_metrics": {
-    "total_operations": 8,
-    "successful_operations": 7,
-    "success_rate": 0.875,
+    "total_operations": 10,
+    "successful_operations": 10,
+    "success_rate": 1.0,
     "total_warnings": 0,
-    "operations_with_errors": [
-      "Sensitive Feature Detection"
-    ]
+    "operations_with_errors": []
   }
 }

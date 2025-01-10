@@ -18,11 +18,12 @@ from pydantic_ai import Agent, ModelRetry, RunContext
 from pandas import DataFrame
 
 load_dotenv()
-# llm = os.getenv('LLM_MODEL', 'gpt-4o')
-llm = "qwen2.5-coder:0.5b"
+llm = os.getenv('LLM_MODEL', 'mistral:latest')
+# llm = "qwen2.5-coder:0.5b"
 
 client = AsyncOpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
+# model = OpenAIModel(llm, openai_client=client)
 model = (
     OpenAIModel(llm)
     if llm.lower().startswith("gpt")
@@ -67,7 +68,7 @@ with open("./ai_agent/system_prompt.txt", "r") as f:
     system_prompt = f.read()
 
 risky_feature_detector = Agent(
-    "ollama:llama3.2",
+    model=model,
     # system_prompt=system_prompt,
     system_prompt="""You are an experimented data scientist. You are given a feature of a dataset and some contextual information about the dataset. 
     Identifies if the feature is potentially sensitive. Indicates whether a column contains information that is personal, confidential, 

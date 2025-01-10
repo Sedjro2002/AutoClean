@@ -9,6 +9,8 @@ from aif360.metrics import BinaryLabelDatasetMetric, SampleDistortionMetric
 from aif360.algorithms.preprocessing import Reweighing
 import numpy as np
 from .config import Config
+from .code_analyzer import CodeBiasAnalyzer, CodeBiasResult
+from .ai_code_analyzer import AICodeAnalyzer
 
 @dataclass
 class FairnessMetrics:
@@ -54,6 +56,11 @@ class FairnessAnalyzer:
             self.sensitive_features = self._detect_sensitive_features()
         else:
             self.sensitive_features = sensitive_features
+        try:
+            self.code_biases = self.analyze_code_biases()
+        except Exception as e:
+            logger.error(f"Error in code bias analysis: {str(e)}")
+            self.code_biases = []
             
     def _detect_sensitive_features(self) -> List[str]:
         """Use AI to detect potentially sensitive features."""
@@ -81,9 +88,10 @@ class FairnessAnalyzer:
                 }
                 
                 result = risky_feature_detector.run_sync(str(agent_input))
-                result.data['column'] = column
-                results.append(result.data.model_dump())
-                logger.info(result.data)
+                result_dict = result.data.model_dump() 
+                result_dict['column'] = column
+                results.append(result_dict)
+                logger.info(result_dict)
                 if result.data.is_sensitive:  # Threshold for sensitivity
                 # if result.data.sensibility_level > 5:  # Threshold for sensitivity
                     detected_features.append(column)
@@ -270,3 +278,73 @@ class FairnessAnalyzer:
             logger.info(f"Original {group}: {rate:.4f}")
         for group, rate in result['mitigated'].group_metrics.items():
             logger.info(f"Mitigated {group}: {rate:.4f}")
+
+    def analyze_code_biases(self) -> List[Any]:
+        """Analyze code paths for potential ethical biases using either syntax or AI analysis.
+        
+        Returns:
+            List of analysis results (either CodeBiasResult or AI analysis results)
+        """
+        if not self.config or not self.config.code_analysis_paths:
+            logger.info("No code paths specified for analysis")
+            return []
+
+        analysis_type = self.config.code_analysis_type.lower()
+        if analysis_type not in ['syntax', 'ai']:
+            logger.warning(f"Invalid analysis type '{analysis_type}'. Defaulting to 'syntax'")
+            analysis_type = 'syntax'
+
+        logger.info(f"Starting code bias analysis using {analysis_type} analysis...")
+        self.audit_logger.start_operation(
+            name="Code Bias Analysis",
+            description=f"Analyzing code paths for potential ethical biases using {analysis_type} analysis",
+            parameters={
+                "paths": self.config.code_analysis_paths,
+                "analysis_type": analysis_type
+            },
+            df=self.data
+        )
+        start_time = datetime.now()
+
+        results = []
+        if analysis_type == 'syntax':
+            analyzer = CodeBiasAnalyzer()
+            for path in self.config.code_analysis_paths:
+                path_results = analyzer.analyze_path(path)
+                results.extend(path_results)
+                
+                for result in path_results:
+                    if result.potential_biases:
+                        logger.warning(
+                            f"Found potential biases in {result.file_path}:\n"
+                            f"Risk Level: {result.risk_level}\n"
+                            f"Recommendations: {', '.join(result.recommendations)}"
+                        )
+        else:  # AI analysis
+            analyzer = AICodeAnalyzer()
+            for path in self.config.code_analysis_paths:
+                path_results = analyzer.analyze_path(path)
+                results.extend(path_results)
+                
+                for result in path_results:
+                    if result['analysis']['is_problematic']:
+                        logger.warning(
+                            f"Found potential biases in {result['file']}:\n"
+                            f"Sensitivity Level: {result['analysis']['sensitivity_level']}/10\n"
+                            f"Recommendations: {', '.join(result['analysis']['recommendations'])}"
+                        )
+
+        self.audit_logger.complete_operation(
+            name="Code Bias Analysis",
+            start_time=start_time,
+            description=f"Completed {analysis_type} code bias analysis",
+            parameters={
+                "paths": self.config.code_analysis_paths,
+                "analysis_type": analysis_type
+            },
+            changes_made={"results": results},
+            input_df=self.data,
+            output_df=self.data
+        )
+
+        return results
