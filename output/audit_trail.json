@@ -1,0 +1,389 @@
+{
+  "start_time": "2025-01-10T17:42:23.573994",
+  "input_file": null,
+  "configuration": {},
+  "operations": [
+    {
+      "operation_name": "duplicate_handling",
+      "description": "Remove duplicate rows from the dataset",
+      "parameters": {
+        "method": "auto"
+      },
+      "metrics": {
+        "start_time": "2025-01-10T17:42:23.590119",
+        "end_time": "2025-01-10T17:42:23.640211",
+        "duration_seconds": 0.050092,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {},
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "missing_value_handling",
+      "description": "Handle missing values in the dataset",
+      "parameters": {
+        "numerical_method": "knn",
+        "categorical_method": "knn"
+      },
+      "metrics": {
+        "start_time": "2025-01-10T17:42:23.640211",
+        "end_time": "2025-01-10T17:42:24.220390",
+        "duration_seconds": 0.580179,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {
+          "dtype_changes": {
+            "reading_score": {
+              "before": "float64",
+              "after": "Int64"
+            },
+            "science_score": {
+              "before": "float64",
+              "after": "Int64"
+            },
+            "test_preparation_course": {
+              "before": "float64",
+              "after": "Int64"
+            },
+            "writing_score": {
+              "before": "float64",
+              "after": "Int64"
+            }
+          },
+          "missing_values": {
+            "before": 53,
+            "after": 0,
+            "difference": 53
+          },
+          "statistics_changes": {
+            "lunch": {
+              "mean_change": 0.010154398937693654,
+              "std_change": -0.0036761172660405017,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "test_preparation_course": {
+              "mean_change": -0.009972543128011158,
+              "std_change": -0.002245458656442323,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "math_score": {
+              "mean_change": -0.1613997824172415,
+              "std_change": -0.08003956071659957,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "reading_score": {
+              "mean_change": 0.13021063868565363,
+              "std_change": -0.16916929196295172,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "writing_score": {
+              "mean_change": 0.035696617804049424,
+              "std_change": 0.23350129669362119,
+              "min_change": 0.0,
+              "max_change": 13.0
+            },
+            "science_score": {
+              "mean_change": 0.015101279593842776,
+              "std_change": -0.03322592611109698,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "total_score": {
+              "mean_change": 0.05579177940987279,
+              "std_change": -0.2996398919506902,
+              "min_change": 0.0,
+              "max_change": 0.0
+            }
+          }
+        },
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "outlier_handling",
+      "description": "Handle outliers in numerical features",
+      "parameters": {
+        "method": "winz",
+        "outlier_param": 1.5
+      },
+      "metrics": {
+        "start_time": "2025-01-10T17:42:24.222401",
+        "end_time": "2025-01-10T17:42:24.276412",
+        "duration_seconds": 0.054011,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {},
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "datetime_conversion",
+      "description": "Convert and extract datetime features",
+      "parameters": {
+        "granularity": "s"
+      },
+      "metrics": {
+        "start_time": "2025-01-10T17:42:24.276412",
+        "end_time": "2025-01-10T17:42:24.360270",
+        "duration_seconds": 0.083858,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {},
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "categorical_encoding",
+      "description": "Encode categorical features",
+      "parameters": {
+        "method": [
+          "auto"
+        ]
+      },
+      "metrics": {
+        "start_time": "2025-01-10T17:42:24.364316",
+        "end_time": "2025-01-10T17:42:24.428274",
+        "duration_seconds": 0.063958,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {
+          "dtype_changes": {
+            "race_ethnicity": {
+              "before": "object",
+              "after": "int64"
+            },
+            "grade": {
+              "before": "object",
+              "after": "int64"
+            },
+            "gender": {
+              "before": "object",
+              "after": "int64"
+            },
+            "parental_level_of_education": {
+              "before": "object",
+              "after": "int64"
+            },
+            "roll_no": {
+              "before": "object",
+              "after": "int64"
+            }
+          }
+        },
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "value_rounding",
+      "description": "Round numerical values to appropriate precision",
+      "parameters": {},
+      "metrics": {
+        "start_time": "2025-01-10T17:42:24.428274",
+        "end_time": "2025-01-10T17:42:24.545441",
+        "duration_seconds": 0.117167,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {
+          "dtype_changes": {
+            "race_ethnicity": {
+              "before": "int64",
+              "after": "Int64"
+            },
+            "math_score": {
+              "before": "float64",
+              "after": "Int64"
+            },
+            "grade": {
+              "before": "int64",
+              "after": "Int64"
+            },
+            "gender": {
+              "before": "int64",
+              "after": "Int64"
+            },
+            "parental_level_of_education": {
+              "before": "int64",
+              "after": "Int64"
+            },
+            "roll_no": {
+              "before": "int64",
+              "after": "Int64"
+            },
+            "total_score": {
+              "before": "float64",
+              "after": "Int64"
+            },
+            "lunch": {
+              "before": "float64",
+              "after": "Int64"
+            }
+          },
+          "statistics_changes": {
+            "roll_no": {
+              "mean_change": 0.0,
+              "std_change": 0.0,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "gender": {
+              "mean_change": 0.0,
+              "std_change": 0.0,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "race_ethnicity": {
+              "mean_change": 0.0,
+              "std_change": 0.0,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "parental_level_of_education": {
+              "mean_change": 0.0,
+              "std_change": 0.0,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "lunch": {
+              "mean_change": 0.0,
+              "std_change": 0.0,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "math_score": {
+              "mean_change": 0.0,
+              "std_change": 0.0,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "total_score": {
+              "mean_change": 0.0,
+              "std_change": 0.0,
+              "min_change": 0.0,
+              "max_change": 0.0
+            },
+            "grade": {
+              "mean_change": 0.0,
+              "std_change": 0.0,
+              "min_change": 0.0,
+              "max_change": 0.0
+            }
+          }
+        },
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "Sensitive Feature Detection",
+      "description": "Use AI to detect potentially sensitive features",
+      "parameters": {},
+      "metrics": {
+        "start_time": "2025-01-10T17:42:24.573104",
+        "end_time": "2025-01-10T17:42:49.232447",
+        "duration_seconds": 24.659343,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {
+          "sensitive_features": [],
+          "results": []
+        },
+        "success": false,
+        "error": "'Feature' object does not support item assignment"
+      },
+      "warnings": []
+    },
+    {
+      "operation_name": "Fairness Analysis",
+      "description": "Analyze and mitigate bias for each sensitive feature",
+      "parameters": {},
+      "metrics": {
+        "start_time": "2025-01-10T17:42:49.234458",
+        "end_time": "2025-01-10T17:42:49.234458",
+        "duration_seconds": 0.0,
+        "input_shape": [
+          199,
+          12
+        ],
+        "output_shape": [
+          199,
+          12
+        ],
+        "changes_made": {
+          "results": {}
+        },
+        "success": true,
+        "error": null
+      },
+      "warnings": []
+    }
+  ],
+  "end_time": "2025-01-10T17:42:49.241004",
+  "total_duration_seconds": 25.66701,
+  "final_metrics": {
+    "total_operations": 8,
+    "successful_operations": 7,
+    "success_rate": 0.875,
+    "total_warnings": 0,
+    "operations_with_errors": [
+      "Sensitive Feature Detection"
+    ]
+  }
+}

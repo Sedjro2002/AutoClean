@@ -902,3 +902,9 @@ class FieldAssignment:
     #             new_cols_flag.append(col)
 
     #     return df, new_cols_categ, new_cols_flag
+
+
+class Normalization:
+    
+    def handle(self, df):
+        return

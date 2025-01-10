@@ -45,12 +45,12 @@ class Feature(BaseModel):
     """
 
     # feature: str = Field(..., description="The name of the feature")
-    # is_risky: bool = Field(..., description="Whether the feature can objectively cause an ethical risk")
+    is_sensitive: bool = Field(..., description="Whether the feature is sensitive")
     sensibility_level: Annotated[
         int, Field(ge=0, le=10, description="The sensibility level of the feature")
     ]
     justification: str = Field(..., description="Justification for the risk level")
-    # recommendation: str = Field(..., description="Recommendation for handling the risk")
+    recommendation: str = Field(..., description="Recommendation for handling the risk")
 
 
 class Test(BaseModel):
@@ -69,7 +69,14 @@ with open("./ai_agent/system_prompt.txt", "r") as f:
 risky_feature_detector = Agent(
     "ollama:llama3.2",
     # system_prompt=system_prompt,
-    system_prompt='You are an experimented data scientist. You are given a feature of a dataset and some contextual information about the dataset. You need to determine whether the feature is risky or not. The feature is risky if it can cause ethical biases in the dataset. You need to provide a score between 0 and 10 for the feature and a justification for the score. The score is the sensibility level of the feature. A higher score indicates a higher risk of bias. The justification should be a short explanation of the reasoning behind the score. Your response should be in JSON format. Provide the response in the following format: {"sensibility_level": <score>, "justification": "<justification>"}',
+    system_prompt="""You are an experimented data scientist. You are given a feature of a dataset and some contextual information about the dataset. 
+    Identifies if the feature is potentially sensitive. Indicates whether a column contains information that is personal, confidential, 
+    or likely to reveal details of a person's ethnic origin, political opinions, health, financial data, or any other sensitive characteristic that could be used to discriminate against certain groups.
+    Take into account the description of the dataset and the context of the feature.
+    You need to provide a score between 0 and 10 for the feature, a justification for the score, and a recommendation for how to handle the risk. 
+    The score is the sensibility level of the feature. A higher score indicates a higher risk of bias. 
+    The justification should be a short explanation of the reasoning behind the score. 
+    Your response should be in JSON format. Provide the response in the following format: {"sensibility_level": <score>, "justification": "<justification>", "recommendation": "<recommendation>"}""",
     retries=10,
     result_type=Feature,
 )

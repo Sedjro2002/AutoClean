@@ -6,14 +6,21 @@ import os
 import pathlib
 import sys
 from timeit import default_timer as timer
+from datetime import datetime
 import pandas as pd
 from loguru import logger
 import ydata_profiling
+from AutoClean.normalizer import DataNormalizer
+from AutoClean.dim_reduction import DimensionalityReducer
+from AutoClean.audit import AutoCleanAudit, AuditLogger
 from AutoClean.modules import *
+import json
 
 class AutoClean:
 
-    def __init__(self, input_data, mode='auto', duplicates=False, missing_num=False, missing_categ=False, encode_categ=False, extract_datetime=False, outliers=False, outlier_param=1.5, logfile=True, verbose=False):  
+    def __init__(self, input_data, mode='auto', duplicates=False, missing_num=False, missing_categ=False, 
+                 encode_categ=False, extract_datetime=False, outliers=False, outlier_param=1.5, 
+                 logfile=True, verbose=False, config: dict = {}, audit_logger=None):  
         '''
         input_data (dataframe)..........Pandas dataframe
         mode (str)......................define in which mode you want to run AutoClean
@@ -57,29 +64,45 @@ class AutoClean:
         logfile (bool)..................define whether to create a logile during the AutoClean process
                                         logfile will be saved in working directory as "autoclean.log"
         verbose (bool)..................define whether AutoClean logs will be printed in console
+        config (dict)...................define a custom configuration for AutoClean
+        audit_logger (AuditLogger)......define a custom audit logger
 
         OUTPUT (dataframe)..............a cleaned Pandas dataframe, accessible through the 'output' instance
         '''
-        start = timer()
+        self.start_time = datetime.now()
+        
+        # Initialize audit trail
+        # self.audit = AutoCleanAudit(
+        #     start_time=self.start_time.isoformat(),
+        #     input_file=str(input_data),
+        #     configuration={
+        #         "mode": mode,
+        #         "duplicates": duplicates,
+        #         "missing_num": missing_num,
+        #         "missing_categ": missing_categ,
+        #         "encode_categ": encode_categ,
+        #         "extract_datetime": extract_datetime,
+        #         "outliers": outliers,
+        #         "outlier_param": outlier_param,
+        #         "custom_config": config
+        #     }
+        # )
+        self.audit_logger = audit_logger
+        
+        # Initialize logger
         self._initialize_logger(verbose, logfile)
         
+        # Setup output directory
         output_folder = pathlib.Path(__file__).parent / "output"
         if not pathlib.Path.exists(output_folder):
             os.mkdir(output_folder)
             
-        
-        #TODO: check the size of the dataframe to know what type of profiler to use
-        # logger.info('Profiling before data preprocessing started')
-        # profile_before = ydata_profiling.ProfileReport(input_data, title="Before data preprocessing")
-        # profile_before.to_file(output_folder / "before_preprocessing_profile.html")
-        # profile_before.to_file(output_folder / "before_preprocessing_profile.json")
-        # logger.info('Profiling before data preprocessing completed')
-        
         output_data = input_data.copy()
 
         if mode == 'auto':
             duplicates, missing_num, missing_categ, outliers, encode_categ, extract_datetime = 'auto', 'auto', 'auto', 'winz', ['auto'], 's'
 
+        # Store parameters
         self.mode = mode
         self.duplicates = duplicates
         self.missing_num = missing_num
@@ -88,38 +111,28 @@ class AutoClean:
         self.encode_categ = encode_categ
         self.extract_datetime = extract_datetime
         self.outlier_param = outlier_param
+        self.config = config
         
-        # validate the input parameters
+        # Validate parameters
         self._validate_params(output_data, verbose, logfile)
         
-        # initialize our class and start the autoclean process
-        self.output = self._clean_data(output_data, input_data)  
-
-        end = timer()
-        logger.info('AutoClean process completed in {} seconds', round(end-start, 6))
-        
-        # logger.info('Profiling after data preprocessing started')
-        # profile_after = ydata_profiling.ProfileReport(self.output, title="After data preprocessing")
-        # profile_after.to_file(output_folder / "after_preprocessing_profile.html")
-        # profile_after.to_file(output_folder / "after_preprocessing_profile.json")
-        # logger.info('Profiling after data preprocessing completed')
-        
-        # logger.info('Doing the comparative analysis between before and after data preprocessing')
-        # comparative = ydata_profiling.compare(reports=[profile_before, profile_after])
-        # comparative.to_file(output_folder / "comparative_profile.html")
-        # comparative.to_file(output_folder / "comparative_profile.json")
-        # logger.info('Comparative analysis completed')
+        # Process data
+        self.output = self._clean_data(output_data, input_data)
         
         
-        # save the cleaned dataframe to a csv file
-        output_data.to_csv(os.path.join(output_folder, 'autoclean_output.csv'), index=False)
-        logger.info('Output dataframe saved to: autoclean_output.csv')
-
+        # Save output
+        output_file = output_folder / "autoclean_output.csv"
+        self.output.to_csv(output_file, index=False)
+        logger.info(f"Output dataframe saved to: {output_file}")
+        
+        # audit_file = output_folder / "autoclean_audit.json"
+        self.end_time = datetime.now()
         if not verbose:
-            print('AutoClean process completed in', round(end-start, 6), 'seconds')
-        if logfile:
-            print('Logfile saved to:', os.path.join(os.getcwd(), 'autoclean.log'))
-
+            print('AutoClean process completed in', (self.end_time - self.start_time).total_seconds(), 'seconds')
+        # if logfile:
+        #     print('Logfile saved to:', os.path.join(os.getcwd(), 'autoclean.log'))
+            # print('Audit trail saved to:', audit_file)
+            
     def _initialize_logger(self, verbose, logfile):
         # function for initializing the logging process
         logger.remove()
@@ -169,13 +182,198 @@ class AutoClean:
     def _clean_data(self, df, input_data):
         # function for starting the autoclean process
         df = df.reset_index(drop=True)
-        # df = FieldAssignment.handle(self, df)
         
-        #TODO: Add normalisation
-        df = Duplicates.handle(self, df)
-        df = MissingValues.handle(self, df)
-        df = Outliers.handle(self, df)    
-        df = Adjust.convert_datetime(self, df) 
-        df = EncodeCateg.handle(self, df)     
+        # Duplicate handling
+        if self.duplicates:
+            start_time = self.audit_logger.start_operation(
+                "duplicate_handling",
+                "Remove duplicate rows from the dataset",
+                {"method": self.duplicates},
+                df
+            )
+            df_before = df.copy()
+            df = Duplicates.handle(self, df)
+            changes = self.audit_logger.log_dataframe_changes("duplicate_handling", df_before, df)
+            self.audit_logger.complete_operation(
+                "duplicate_handling",
+                "Remove duplicate rows from the dataset",
+                {"method": self.duplicates},
+                start_time,
+                df_before,
+                df,
+                changes
+            )
+            
+        # Missing value handling
+        if self.missing_num or self.missing_categ:
+            start_time = self.audit_logger.start_operation(
+                "missing_value_handling",
+                "Handle missing values in the dataset",
+                {
+                    "numerical_method": self.missing_num,
+                    "categorical_method": self.missing_categ
+                },
+                df
+            )
+            df_before = df.copy()
+            df = MissingValues.handle(self, df)
+            changes = self.audit_logger.log_dataframe_changes("missing_value_handling", df_before, df)
+            self.audit_logger.complete_operation(
+                "missing_value_handling",
+                "Handle missing values in the dataset",
+                {
+                    "numerical_method": self.missing_num,
+                    "categorical_method": self.missing_categ
+                },
+                start_time,
+                df_before,
+                df,
+                changes
+            )
+            
+        # Outlier handling
+        if self.outliers:
+            start_time = self.audit_logger.start_operation(
+                "outlier_handling",
+                "Handle outliers in numerical features",
+                {
+                    "method": self.outliers,
+                    "outlier_param": self.outlier_param
+                },
+                df
+            )
+            df_before = df.copy()
+            df = Outliers.handle(self, df)
+            changes = self.audit_logger.log_dataframe_changes("outlier_handling", df_before, df)
+            self.audit_logger.complete_operation(
+                "outlier_handling",
+                "Handle outliers in numerical features",
+                {
+                    "method": self.outliers,
+                    "outlier_param": self.outlier_param
+                },
+                start_time,
+                df_before,
+                df,
+                changes
+            )
+            
+        # DateTime conversion
+        if self.extract_datetime:
+            start_time = self.audit_logger.start_operation(
+                "datetime_conversion",
+                "Convert and extract datetime features",
+                {"granularity": self.extract_datetime},
+                df
+            )
+            df_before = df.copy()
+            df = Adjust.convert_datetime(self, df)
+            changes = self.audit_logger.log_dataframe_changes("datetime_conversion", df_before, df)
+            self.audit_logger.complete_operation(
+                "datetime_conversion",
+                "Convert and extract datetime features",
+                {"granularity": self.extract_datetime},
+                start_time,
+                df_before,
+                df,
+                changes
+            )
+            
+        # Categorical encoding
+        if self.encode_categ:
+            start_time = self.audit_logger.start_operation(
+                "categorical_encoding",
+                "Encode categorical features",
+                {"method": self.encode_categ},
+                df
+            )
+            df_before = df.copy()
+            df = EncodeCateg.handle(self, df)
+            changes = self.audit_logger.log_dataframe_changes("categorical_encoding", df_before, df)
+            self.audit_logger.complete_operation(
+                "categorical_encoding",
+                "Encode categorical features",
+                {"method": self.encode_categ},
+                start_time,
+                df_before,
+                df,
+                changes
+            )
+            
+        # Value rounding
+        start_time = self.audit_logger.start_operation(
+            "value_rounding",
+            "Round numerical values to appropriate precision",
+            {},
+            df
+        )
+        df_before = df.copy()
         df = Adjust.round_values(self, df, input_data)
-        return df 
+        changes = self.audit_logger.log_dataframe_changes("value_rounding", df_before, df)
+        self.audit_logger.complete_operation(
+            "value_rounding",
+            "Round numerical values to appropriate precision",
+            {},
+            start_time,
+            df_before,
+            df,
+            changes
+        )
+        
+        # Normalization
+        if self.config.get('preprocessing', {}).get('normalization', {}).get('enabled', False):
+            start_time = self.audit_logger.start_operation(
+                "normalization",
+                "Normalize numerical features",
+                self.config['preprocessing']['normalization'],
+                df
+            )
+            df_before = df.copy()
+            normalizer = DataNormalizer(
+                method=self.config['preprocessing']['normalization'].get('method', 'standard'),
+                exclude_features=self.config['preprocessing']['normalization'].get('exclude_features', [])
+            )
+            df = normalizer.fit_transform(df)
+            changes = self.audit_logger.log_dataframe_changes("normalization", df_before, df)
+            changes.update({"feature_stats": normalizer.feature_stats})
+            self.audit_logger.complete_operation(
+                "normalization",
+                "Normalize numerical features",
+                self.config['preprocessing']['normalization'],
+                start_time,
+                df_before,
+                df,
+                changes
+            )
+            
+        # Dimensionality reduction
+        if self.config.get('preprocessing', {}).get('dim_reduction', {}).get('enabled', False):
+            start_time = self.audit_logger.start_operation(
+                "dimensionality_reduction",
+                "Reduce data dimensionality",
+                self.config['preprocessing']['dim_reduction'],
+                df
+            )
+            df_before = df.copy()
+            reducer = DimensionalityReducer(
+                method=self.config['preprocessing']['dim_reduction'].get('method', 'pca'),
+                n_components=self.config['preprocessing']['dim_reduction'].get('n_components'),
+                target_explained_variance=self.config['preprocessing']['dim_reduction'].get('target_explained_variance', 0.95)
+            )
+            reduced_data, reduction_metadata = reducer.fit_transform(df)
+            reduced_cols = [f'component_{i+1}' for i in range(reduced_data.shape[1])]
+            df = pd.DataFrame(reduced_data, columns=reduced_cols, index=df.index)
+            
+            changes = self.audit_logger.log_dataframe_changes("dimensionality_reduction", df_before, df)
+            changes.update(reduction_metadata)
+            self.audit_logger.complete_operation(
+                "dimensionality_reduction",
+                "Reduce data dimensionality",
+                self.config['preprocessing']['dim_reduction'],
+                start_time,
+                df_before,
+                df,
+                changes
+            )
+            
+        return df
