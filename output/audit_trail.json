@@ -1,5 +1,5 @@
 {
-  "start_time": "2025-01-10T20:21:54.073724",
+  "start_time": "2025-01-10T21:12:40.175583",
   "input_file": null,
   "configuration": {},
   "operations": [
@@ -10,9 +10,9 @@
         "method": "auto"
       },
       "metrics": {
-        "start_time": "2025-01-10T20:21:54.095503",
-        "end_time": "2025-01-10T20:21:54.126751",
-        "duration_seconds": 0.031248,
+        "start_time": "2025-01-10T21:12:40.181608",
+        "end_time": "2025-01-10T21:12:40.193298",
+        "duration_seconds": 0.01169,
         "input_shape": [
           199,
           12
@@ -35,9 +35,9 @@
         "categorical_method": "knn"
       },
       "metrics": {
-        "start_time": "2025-01-10T20:21:54.126751",
-        "end_time": "2025-01-10T20:21:54.477813",
-        "duration_seconds": 0.351062,
+        "start_time": "2025-01-10T21:12:40.193298",
+        "end_time": "2025-01-10T21:12:40.311724",
+        "duration_seconds": 0.118426,
         "input_shape": [
           199,
           12
@@ -48,11 +48,11 @@
         ],
         "changes_made": {
           "dtype_changes": {
-            "reading_score": {
+            "science_score": {
               "before": "float64",
               "after": "Int64"
             },
-            "science_score": {
+            "test_preparation_course": {
               "before": "float64",
               "after": "Int64"
             },
@@ -60,7 +60,7 @@
               "before": "float64",
               "after": "Int64"
             },
-            "test_preparation_course": {
+            "reading_score": {
               "before": "float64",
               "after": "Int64"
             }
@@ -128,9 +128,9 @@
         "outlier_param": 1.5
       },
       "metrics": {
-        "start_time": "2025-01-10T20:21:54.478812",
-        "end_time": "2025-01-10T20:21:54.507277",
-        "duration_seconds": 0.028465,
+        "start_time": "2025-01-10T21:12:40.315397",
+        "end_time": "2025-01-10T21:12:40.325078",
+        "duration_seconds": 0.009681,
         "input_shape": [
           199,
           12
@@ -152,9 +152,9 @@
         "granularity": "s"
       },
       "metrics": {
-        "start_time": "2025-01-10T20:21:54.507277",
-        "end_time": "2025-01-10T20:21:54.545664",
-        "duration_seconds": 0.038387,
+        "start_time": "2025-01-10T21:12:40.325078",
+        "end_time": "2025-01-10T21:12:40.341132",
+        "duration_seconds": 0.016054,
         "input_shape": [
           199,
           12
@@ -178,9 +178,9 @@
         ]
       },
       "metrics": {
-        "start_time": "2025-01-10T20:21:54.545664",
-        "end_time": "2025-01-10T20:21:54.586636",
-        "duration_seconds": 0.040972,
+        "start_time": "2025-01-10T21:12:40.341132",
+        "end_time": "2025-01-10T21:12:40.353174",
+        "duration_seconds": 0.012042,
         "input_shape": [
           199,
           12
@@ -191,11 +191,7 @@
         ],
         "changes_made": {
           "dtype_changes": {
-            "grade": {
-              "before": "object",
-              "after": "int64"
-            },
-            "race_ethnicity": {
+            "parental_level_of_education": {
               "before": "object",
               "after": "int64"
             },
@@ -203,11 +199,15 @@
               "before": "object",
               "after": "int64"
             },
-            "parental_level_of_education": {
+            "gender": {
               "before": "object",
               "after": "int64"
             },
-            "gender": {
+            "grade": {
+              "before": "object",
+              "after": "int64"
+            },
+            "race_ethnicity": {
               "before": "object",
               "after": "int64"
             }
@@ -223,9 +223,9 @@
       "description": "Round numerical values to appropriate precision",
       "parameters": {},
       "metrics": {
-        "start_time": "2025-01-10T20:21:54.586636",
-        "end_time": "2025-01-10T20:21:54.680043",
-        "duration_seconds": 0.093407,
+        "start_time": "2025-01-10T21:12:40.353174",
+        "end_time": "2025-01-10T21:12:40.374834",
+        "duration_seconds": 0.02166,
         "input_shape": [
           199,
           12
@@ -236,27 +236,7 @@
         ],
         "changes_made": {
           "dtype_changes": {
-            "lunch": {
-              "before": "float64",
-              "after": "Int64"
-            },
-            "grade": {
-              "before": "int64",
-              "after": "Int64"
-            },
             "math_score": {
-              "before": "float64",
-              "after": "Int64"
-            },
-            "race_ethnicity": {
-              "before": "int64",
-              "after": "Int64"
-            },
-            "roll_no": {
-              "before": "int64",
-              "after": "Int64"
-            },
-            "total_score": {
               "before": "float64",
               "after": "Int64"
             },
@@ -264,7 +244,27 @@
               "before": "int64",
               "after": "Int64"
             },
+            "total_score": {
+              "before": "float64",
+              "after": "Int64"
+            },
+            "roll_no": {
+              "before": "int64",
+              "after": "Int64"
+            },
             "gender": {
+              "before": "int64",
+              "after": "Int64"
+            },
+            "grade": {
+              "before": "int64",
+              "after": "Int64"
+            },
+            "lunch": {
+              "before": "float64",
+              "after": "Int64"
+            },
+            "race_ethnicity": {
               "before": "int64",
               "after": "Int64"
             }
@@ -335,9 +335,9 @@
         "analysis_type": "ai"
       },
       "metrics": {
-        "start_time": "2025-01-10T20:21:54.688654",
-        "end_time": "2025-01-10T20:25:39.170521",
-        "duration_seconds": 224.481867,
+        "start_time": "2025-01-10T21:12:40.374834",
+        "end_time": "2025-01-10T21:12:45.145029",
+        "duration_seconds": 4.770195,
         "input_shape": [
           199,
           12
@@ -355,7 +355,7 @@
                 "sensitivity_level": 0,
                 "problematic_sections": [],
                 "recommendations": [
-                  "Error during analysis: startswith"
+                  "Error during analysis: Error code: 500 - {'error': {'message': 'model requires more system memory (5.5 GiB) than is available (5.0 GiB)', 'type': 'api_error', 'param': None, 'code': None}}"
                 ]
               }
             },
@@ -366,7 +366,7 @@
                 "sensitivity_level": 0,
                 "problematic_sections": [],
                 "recommendations": [
-                  "Error during analysis: startswith"
+                  "Error during analysis: Error code: 500 - {'error': {'message': 'model requires more system memory (5.5 GiB) than is available (5.0 GiB)', 'type': 'api_error', 'param': None, 'code': None}}"
                 ]
               }
             },
@@ -377,7 +377,7 @@
                 "sensitivity_level": 0,
                 "problematic_sections": [],
                 "recommendations": [
-                  "Error during analysis: startswith"
+                  "Error during analysis: Error code: 500 - {'error': {'message': 'model requires more system memory (5.5 GiB) than is available (5.0 GiB)', 'type': 'api_error', 'param': None, 'code': None}}"
                 ]
               }
             }
@@ -393,9 +393,9 @@
       "description": "Analyze and mitigate bias for feature race_ethnicity",
       "parameters": {},
       "metrics": {
-        "start_time": "2025-01-10T20:25:39.175604",
-        "end_time": "2025-01-10T20:25:39.202355",
-        "duration_seconds": 0.026751,
+        "start_time": "2025-01-10T21:12:45.145029",
+        "end_time": "2025-01-10T21:12:45.149994",
+        "duration_seconds": 0.004965,
         "input_shape": [
           199,
           12
@@ -434,9 +434,9 @@
       "description": "Analyze and mitigate bias for feature parental_level_of_education",
       "parameters": {},
       "metrics": {
-        "start_time": "2025-01-10T20:25:39.208905",
-        "end_time": "2025-01-10T20:25:39.219838",
-        "duration_seconds": 0.010933,
+        "start_time": "2025-01-10T21:12:45.149994",
+        "end_time": "2025-01-10T21:12:45.153889",
+        "duration_seconds": 0.003895,
         "input_shape": [
           199,
           12
@@ -475,9 +475,9 @@
       "description": "Analyze and mitigate bias for each sensitive feature",
       "parameters": {},
       "metrics": {
-        "start_time": "2025-01-10T20:25:39.174164",
-        "end_time": "2025-01-10T20:25:39.219838",
-        "duration_seconds": 0.045674,
+        "start_time": "2025-01-10T21:12:45.145029",
+        "end_time": "2025-01-10T21:12:45.153889",
+        "duration_seconds": 0.00886,
         "input_shape": [
           199,
           12
@@ -532,8 +532,8 @@
       "warnings": []
     }
   ],
-  "end_time": "2025-01-10T20:25:39.224307",
-  "total_duration_seconds": 225.150583,
+  "end_time": "2025-01-10T21:12:45.155485",
+  "total_duration_seconds": 4.979902,
   "final_metrics": {
     "total_operations": 10,
     "successful_operations": 10,
