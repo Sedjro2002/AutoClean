@@ -28,8 +28,8 @@ def main():
             #     "outliers": outliers,
             #     "outlier_param": outlier_param,
             #     "custom_config": config
-            # }
         )
+            # }
         audit_logger = AuditLogger(audit)
 
         # Load configuration

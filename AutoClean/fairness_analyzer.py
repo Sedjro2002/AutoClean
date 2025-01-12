@@ -317,8 +317,8 @@ class FairnessAnalyzer:
                     if result.potential_biases:
                         logger.warning(
                             f"Found potential biases in {result.file_path}:\n"
-                            f"Risk Level: {result.risk_level}\n"
-                            f"Recommendations: {', '.join(result.recommendations)}"
+                            f"Risk Level: {result.risk_level}\n" if result.risk_level else ""
+                            f"Recommendations: {', '.join(result.recommendations)}\n" if result.recommendations else ""
                         )
         else:  # AI analysis
             analyzer = AICodeAnalyzer()

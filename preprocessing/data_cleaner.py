@@ -40,6 +40,13 @@ class DataCleaner:
         self.df['gender'] = self.df['gender'].map(gender_map)
         return self.df
     
+    def reduce_females(self, ratio: float = 0.5) -> pd.DataFrame:
+        """Reduce the number of females in the dataset.
+        
+        """
+        num_females = int(self.df[self.df['gender'] == 0].shape[0] * ratio)
+        return self.df[self.df['gender'] == 0].sample(num_females, random_state=42)
+    
     def filter_by_age(self, min_age: int = 18, max_age: int = 65) -> pd.DataFrame:
         """Filter dataset by age range.
         

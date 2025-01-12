@@ -17,7 +17,7 @@
             "grade"
         ],
         "target": "gender",
-        "sensitive_features": ["race_ethnicity", "parental_level_of_education"],
+        "sensitive_features": [],
         "preprocessing": {
             "dim_reduction": {
                 "enabled": true,

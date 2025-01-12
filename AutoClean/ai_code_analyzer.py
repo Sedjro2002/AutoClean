@@ -35,8 +35,19 @@ class AICodeAnalyzer:
     
     def __init__(self):
         """Initialize the AI code analyzer."""
-        llm = os.getenv('LLM_MODEL', 'mistral:latest')
-        client = AsyncOpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+        # llm = os.getenv('LLM_MODEL', 'gpt-4o-mini')
+        # llm = os.getenv('LLM_MODEL', 'llama3.2:3b')
+        llm = os.getenv('LLM_MODEL', 'deepseek-chat')
+        base_url = os.getenv('BASE_URL', 'https://api.deepseek.com/v1')
+        api_key = os.getenv('API_KEY', 'sk-feab401304ce4af48849c9e630511d48') #TODO to change
+        # try:
+        #     client = AsyncOpenAI(base_url="https://api.openai.com/v1", api_key="sk-abcdef1234567890abcdef1234567890abcdef12")
+        # except Exception as e:
+        #     logger.error(f"Error initializing OpenAI client: {str(e)}")
+        #     client = AsyncOpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+        
+        # client = AsyncOpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+        client = AsyncOpenAI(base_url=base_url, api_key=api_key)
         
         # self.model = OpenAIModel(llm, openai_client=client)
         self.model = (
@@ -93,16 +104,14 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
                 deps=deps,
             )
             
-            return result
+            print("\n\n")
+            print(result.data)
+            
+            return result.data
 
         except Exception as e:
             logger.error(f"Error analyzing file {file_path} with AI: {str(e)}")
-            return CodeBiasAnalysisResult(
-                is_problematic=False,
-                sensitivity_level=0,
-                problematic_sections=[],
-                recommendations=[f"Error during analysis: {str(e)}"]
-            )
+            return f"Error analyzing file {file_path} with AI: {str(e)}"
 
     def analyze_path(self, path: str) -> List[Dict[str, Any]]:
         """Analyze all Python files in the given path for potential biases.

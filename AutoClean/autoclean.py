@@ -18,11 +18,12 @@ import json
 
 class AutoClean:
 
-    def __init__(self, input_data, mode='auto', duplicates=False, missing_num=False, missing_categ=False, 
+    def __init__(self, input_data, output_folder, mode='auto', duplicates=False, missing_num=False, missing_categ=False, 
                  encode_categ=False, extract_datetime=False, outliers=False, outlier_param=1.5, 
                  logfile=True, verbose=False, config: dict = {}, audit_logger=None):  
         '''
         input_data (dataframe)..........Pandas dataframe
+        output_folder (str)............Path to folder where output will be saved
         mode (str)......................define in which mode you want to run AutoClean
                                         'auto' = sets all parameters to 'auto' and let AutoClean do the data cleaning automatically
                                         'manual' = lets you choose which parameters/cleaning steps you want to perform
@@ -92,8 +93,9 @@ class AutoClean:
         # Initialize logger
         self._initialize_logger(verbose, logfile)
         
-        # Setup output directory
-        output_folder = pathlib.Path(__file__).parent / "output"
+        # Setup output directory    
+        self.output_folder = output_folder
+        
         if not pathlib.Path.exists(output_folder):
             os.mkdir(output_folder)
             
@@ -112,6 +114,7 @@ class AutoClean:
         self.extract_datetime = extract_datetime
         self.outlier_param = outlier_param
         self.config = config
+        
         
         # Validate parameters
         self._validate_params(output_data, verbose, logfile)

@@ -61,6 +61,27 @@ class AutoCleanAudit:
             "operations_with_errors": [op.operation_name for op in self.operations if not op.metrics.success]
         }
         
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert the audit trail to a dictionary."""
+        return {
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+            "total_duration_seconds": self.total_duration_seconds,
+            "input_file": self.input_file,
+            "configuration": self.configuration,
+            "final_metrics": self.final_metrics,
+            "operations": [
+                {
+                    "operation_name": op.operation_name,
+                    "description": op.description,
+                    "parameters": op.parameters,
+                    "metrics": asdict(op.metrics),
+                    "warnings": op.warnings
+                }
+                for op in self.operations
+            ]
+        }
+        
     def save(self, filepath: str):
         """Save audit trail to JSON file."""
         self.complete_audit()
@@ -191,12 +212,14 @@ class AuditLogger:
             }
             
         # Column statistics changes
-        numeric_cols = before_df.select_dtypes(include=['int64', 'float64']).columns
+        numeric_cols = before_df.select_dtypes(include=['int64', 'float64', 'Int64', 'Float64']).columns
         stats_changes = {}
         for col in numeric_cols:
             if col in after_df.columns:
                 before_stats = before_df[col].describe()
+                before_stats = before_stats.astype("float64")
                 after_stats = after_df[col].describe()
+                after_stats = after_stats.astype("float64")
                 if not before_stats.equals(after_stats):
                     stats_changes[col] = {
                         "mean_change": float(after_stats['mean'] - before_stats['mean']),
