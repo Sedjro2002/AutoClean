@@ -1,0 +1,104 @@
+graph TB
+    %% Styles and Classes
+    classDef core fill:#a8d1f0,stroke:#333,stroke-width:2px
+    classDef fairness fill:#90EE90,stroke:#333,stroke-width:2px
+    classDef interface fill:#FFA07A,stroke:#333,stroke-width:2px
+    classDef ai fill:#DDA0DD,stroke:#333,stroke-width:2px
+    classDef output fill:#D3D3D3,stroke:#333,stroke-width:2px
+    classDef storage fill:#FFE4B5,stroke:#333,stroke-width:2px
+
+    %% Interface Layer
+    subgraph Interface
+        CLI["CLI Interface"]
+        PKG["Python Package Interface"]
+        CFG["Configuration Management"]
+    end
+
+    %% Core Processing Layer
+    subgraph CoreProcessing
+        DP["Data Processor"]
+        DC["Data Cleaner"]
+        NM["Normalizer"]
+        DR["Dimension Reduction"]
+        FE["Feature Engineering"]
+    end
+
+    %% Fairness & Analysis Layer
+    subgraph FairnessLayer
+        FA["Fairness Analyzer"]
+        ACA["AI Code Analyzer"]
+        AS["Audit System"]
+    end
+
+    %% AI Agent System
+    subgraph AISystem
+        AIA["AI Agent System"]
+        SP["System Prompt"]
+    end
+
+    %% Output Layer
+    subgraph OutputSystem
+        RG["Report Generator"]
+        PG["Profile Generator"]
+        ATG["Audit Trail Generator"]
+    end
+
+    %% Storage
+    subgraph Storage
+        BP["Before Preprocessing Profile"]
+        AP["After Preprocessing Profile"]
+        CP["Comparative Profile"]
+        AT["Audit Trail"]
+    end
+
+    %% Relationships
+    CLI --> DP
+    PKG --> DP
+    CFG --> CoreProcessing
+    CFG --> FairnessLayer
+    
+    DP --> DC
+    DC --> NM
+    NM --> DR
+    DR --> FE
+    
+    FE --> FA
+    FA --> ACA
+    ACA --> AS
+    
+    AIA --> FA
+    AIA --> ACA
+    SP --> AIA
+    
+    AS --> ATG
+    FA --> RG
+    ACA --> RG
+    
+    RG --> PG
+    PG --> BP & AP & CP
+    ATG --> AT
+
+    %% Click Events
+    click CLI "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/cli.py"
+    click CFG "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/config.py"
+    click DP "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/data_processor.py"
+    click DC "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/datacleaner.py"
+    click NM "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/normalizer.py"
+    click DR "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/dim_reduction.py"
+    click FE "https://github.com/Sedjro2002/AutoClean/blob/main/preprocessing/feature_engineering.py"
+    click FA "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/fairness_analyzer.py"
+    click ACA "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/ai_code_analyzer.py"
+    click AS "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/audit.py"
+    click AIA "https://github.com/Sedjro2002/AutoClean/tree/main/AutoClean/ai_agent"
+    click SP "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/ai_agent/system_prompt.txt"
+    click RG "https://github.com/Sedjro2002/AutoClean/blob/main/AutoClean/report_generator.py"
+    click PG "https://github.com/Sedjro2002/AutoClean/tree/main/AutoClean/output"
+    click ATG "https://github.com/Sedjro2002/AutoClean/blob/main/output/audit_trail.json"
+
+    %% Class Assignments
+    class CLI,PKG,CFG interface
+    class DP,DC,NM,DR,FE core
+    class FA,ACA,AS fairness
+    class AIA,SP ai
+    class RG,PG,ATG output
+    class BP,AP,CP,AT storage
