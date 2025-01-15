@@ -15,12 +15,13 @@ class Config:
     code_analysis_type: str = "syntax"  # Can be "syntax" or "ai"
 
     @classmethod
-    def from_file(cls, config_path: str) -> "Config":
+    def from_file(cls, config_path: str, output_dir: Path = None) -> "Config":
         """Load configuration from a JSON file."""
         with open(config_path) as f:
             config_data = json.load(f)
         
-        output_dir = Path(__file__).parent.parent / "output"
+        if output_dir is None:
+            output_dir = Path(__file__).parent.parent / "output"
         output_dir.mkdir(exist_ok=True)
         
         return cls(

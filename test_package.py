@@ -3,7 +3,7 @@ from AutoClean import process_dataset
 # Process the dataset
 cleaned_df, report_path = process_dataset(
     config_path="configs.json",
-    dataset_path="./datasets/Student_performance_10k.csv",
+    dataset_path="./datasets/Bank Customer Churn Prediction.csv",
     output_path="./output/test_run"
 )
 

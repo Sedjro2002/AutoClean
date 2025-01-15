@@ -1,1 +1,0 @@
-from .main import risky_feature_detector

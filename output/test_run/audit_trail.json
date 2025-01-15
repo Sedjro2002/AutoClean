@@ -1,5 +1,5 @@
 {
-    "start_time": "2025-01-12T22:32:45.450635",
+    "start_time": "2025-01-13T01:00:43.769224",
     "end_time": null,
     "total_duration_seconds": null,
     "input_file": null,
@@ -13,15 +13,15 @@
                 "method": "auto"
             },
             "metrics": {
-                "start_time": "2025-01-12T22:32:45.467260",
-                "end_time": "2025-01-12T22:32:45.513347",
-                "duration_seconds": 0.046087,
+                "start_time": "2025-01-13T01:00:43.791049",
+                "end_time": "2025-01-13T01:00:43.846987",
+                "duration_seconds": 0.055938,
                 "input_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "output_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "changes_made": {},
@@ -34,90 +34,22 @@
             "operation_name": "missing_value_handling",
             "description": "Handle missing values in the dataset",
             "parameters": {
-                "numerical_method": "knn",
-                "categorical_method": "knn"
+                "numerical_method": "auto",
+                "categorical_method": "auto"
             },
             "metrics": {
-                "start_time": "2025-01-12T22:32:45.514412",
-                "end_time": "2025-01-12T22:32:45.875865",
-                "duration_seconds": 0.361453,
+                "start_time": "2025-01-13T01:00:43.846987",
+                "end_time": "2025-01-13T01:00:43.914592",
+                "duration_seconds": 0.067605,
                 "input_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "output_shape": [
-                    199,
+                    10000,
                     12
                 ],
-                "changes_made": {
-                    "dtype_changes": {
-                        "writing_score": {
-                            "before": "float64",
-                            "after": "Int64"
-                        },
-                        "reading_score": {
-                            "before": "float64",
-                            "after": "Int64"
-                        },
-                        "test_preparation_course": {
-                            "before": "float64",
-                            "after": "Int64"
-                        },
-                        "science_score": {
-                            "before": "float64",
-                            "after": "Int64"
-                        }
-                    },
-                    "missing_values": {
-                        "before": 53,
-                        "after": 0,
-                        "difference": 53
-                    },
-                    "statistics_changes": {
-                        "lunch": {
-                            "mean_change": 0.010154398937693654,
-                            "std_change": -0.0036761172660405017,
-                            "min_change": 0.0,
-                            "max_change": 0.0
-                        },
-                        "test_preparation_course": {
-                            "mean_change": -0.009972543128011158,
-                            "std_change": -0.002245458656442323,
-                            "min_change": 0.0,
-                            "max_change": 0.0
-                        },
-                        "math_score": {
-                            "mean_change": -0.1613997824172415,
-                            "std_change": -0.08003956071659957,
-                            "min_change": 0.0,
-                            "max_change": 0.0
-                        },
-                        "reading_score": {
-                            "mean_change": 0.13021063868565363,
-                            "std_change": -0.16916929196295172,
-                            "min_change": 0.0,
-                            "max_change": 0.0
-                        },
-                        "writing_score": {
-                            "mean_change": 0.035696617804049424,
-                            "std_change": 0.23350129669362119,
-                            "min_change": 0.0,
-                            "max_change": 13.0
-                        },
-                        "science_score": {
-                            "mean_change": 0.015101279593842776,
-                            "std_change": -0.03322592611109698,
-                            "min_change": 0.0,
-                            "max_change": 0.0
-                        },
-                        "total_score": {
-                            "mean_change": 0.05579177940987279,
-                            "std_change": -0.2996398919506902,
-                            "min_change": 0.0,
-                            "max_change": 0.0
-                        }
-                    }
-                },
+                "changes_made": {},
                 "success": true,
                 "error": null
             },
@@ -131,18 +63,45 @@
                 "outlier_param": 1.5
             },
             "metrics": {
-                "start_time": "2025-01-12T22:32:45.877364",
-                "end_time": "2025-01-12T22:32:45.917454",
-                "duration_seconds": 0.04009,
+                "start_time": "2025-01-13T01:00:43.914592",
+                "end_time": "2025-01-13T01:00:45.404513",
+                "duration_seconds": 1.489921,
                 "input_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "output_shape": [
-                    199,
+                    10000,
                     12
                 ],
-                "changes_made": {},
+                "changes_made": {
+                    "statistics_changes": {
+                        "credit_score": {
+                            "mean_change": 0.0324999999999136,
+                            "std_change": -0.09459638046455154,
+                            "min_change": 33.0,
+                            "max_change": 0.0
+                        },
+                        "age": {
+                            "mean_change": -0.2609999999999957,
+                            "std_change": -0.7411022300551995,
+                            "min_change": 0.0,
+                            "max_change": -30.0
+                        },
+                        "products_number": {
+                            "mean_change": -0.006000000000000005,
+                            "std_change": -0.020721363263916825,
+                            "min_change": 0.0,
+                            "max_change": -1.0
+                        },
+                        "churn": {
+                            "mean_change": -0.2037,
+                            "std_change": -0.4027685839948609,
+                            "min_change": 0.0,
+                            "max_change": -1.0
+                        }
+                    }
+                },
                 "success": true,
                 "error": null
             },
@@ -155,15 +114,15 @@
                 "granularity": "s"
             },
             "metrics": {
-                "start_time": "2025-01-12T22:32:45.917454",
-                "end_time": "2025-01-12T22:32:45.964360",
-                "duration_seconds": 0.046906,
+                "start_time": "2025-01-13T01:00:45.404513",
+                "end_time": "2025-01-13T01:00:45.464481",
+                "duration_seconds": 0.059968,
                 "input_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "output_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "changes_made": {},
@@ -181,32 +140,20 @@
                 ]
             },
             "metrics": {
-                "start_time": "2025-01-12T22:32:45.964360",
-                "end_time": "2025-01-12T22:32:46.007783",
-                "duration_seconds": 0.043423,
+                "start_time": "2025-01-13T01:00:45.464481",
+                "end_time": "2025-01-13T01:00:45.520306",
+                "duration_seconds": 0.055825,
                 "input_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "output_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "changes_made": {
                     "dtype_changes": {
-                        "roll_no": {
-                            "before": "object",
-                            "after": "int64"
-                        },
-                        "race_ethnicity": {
-                            "before": "object",
-                            "after": "int64"
-                        },
-                        "parental_level_of_education": {
-                            "before": "object",
-                            "after": "int64"
-                        },
-                        "grade": {
+                        "country": {
                             "before": "object",
                             "after": "int64"
                         },
@@ -226,52 +173,543 @@
             "description": "Round numerical values to appropriate precision",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-12T22:32:46.007783",
-                "end_time": "2025-01-12T22:32:46.087536",
-                "duration_seconds": 0.079753,
+                "start_time": "2025-01-13T01:00:45.520306",
+                "end_time": "2025-01-13T01:00:45.609909",
+                "duration_seconds": 0.089603,
                 "input_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "output_shape": [
-                    199,
+                    10000,
                     12
                 ],
                 "changes_made": {
                     "dtype_changes": {
-                        "roll_no": {
+                        "tenure": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "lunch": {
-                            "before": "float64",
-                            "after": "Int64"
-                        },
-                        "race_ethnicity": {
+                        "country": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "parental_level_of_education": {
+                        "credit_card": {
                             "before": "int64",
-                            "after": "Int64"
-                        },
-                        "grade": {
-                            "before": "int64",
-                            "after": "Int64"
-                        },
-                        "total_score": {
-                            "before": "float64",
-                            "after": "Int64"
-                        },
-                        "math_score": {
-                            "before": "float64",
                             "after": "Int64"
                         },
                         "gender": {
                             "before": "int64",
                             "after": "Int64"
+                        },
+                        "products_number": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "credit_score": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "active_member": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "customer_id": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "age": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "churn": {
+                            "before": "int64",
+                            "after": "Int64"
                         }
                     }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Sensitive Feature Detection",
+            "description": "Use AI to detect potentially sensitive features",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-01-13T01:00:45.669523",
+                "end_time": "2025-01-13T01:01:21.902048",
+                "duration_seconds": 36.232525,
+                "input_shape": [
+                    10000,
+                    12
+                ],
+                "output_shape": [
+                    10000,
+                    12
+                ],
+                "changes_made": {
+                    "sensitive_features": [
+                        "credit_score",
+                        "gender",
+                        "credit_card",
+                        "estimated_salary"
+                    ],
+                    "results": [
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 0,
+                            "justification": "The 'customer_id' feature is a unique identifier for each customer and does not contain any personal, confidential, or sensitive information that could be used to discriminate against individuals or reveal sensitive characteristics.",
+                            "recommendation": null,
+                            "column": "customer_id"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 8,
+                            "justification": "The credit_score feature contains financial data that can be used to infer a person's financial health and creditworthiness. This information is sensitive as it can be used to discriminate against individuals in financial decisions.",
+                            "recommendation": "Consider anonymizing or aggregating the credit_score data to reduce the risk of misuse. Ensure that access to this feature is restricted and that it is used in compliance with data protection regulations.",
+                            "column": "credit_score"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 0,
+                            "justification": "The 'country' feature contains numerical codes that do not directly reveal personal, confidential, or sensitive information about individuals. It does not indicate ethnic origin, political opinions, health, financial data, or other sensitive characteristics.",
+                            "recommendation": null,
+                            "column": "country"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 8,
+                            "justification": "The 'gender' feature can be used to discriminate against certain groups based on gender. It is a sensitive characteristic that could lead to bias in the analysis or predictions.",
+                            "recommendation": "Consider anonymizing or removing the 'gender' feature if it is not essential for the analysis. If it must be included, ensure that the model is regularly audited for bias and that the data is handled in compliance with privacy regulations.",
+                            "column": "gender"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "Age is generally not considered highly sensitive, but it can be used in combination with other features to infer sensitive information. In this context, it is used to predict customer churn, which does not directly reveal sensitive personal details.",
+                            "recommendation": null,
+                            "column": "age"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The 'tenure' feature represents the number of months a customer has been with the bank. While it is not directly sensitive, it could potentially be used in combination with other features to infer customer behavior or loyalty, which might have indirect implications.",
+                            "recommendation": null,
+                            "column": "tenure"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 0,
+                            "justification": "The 'balance' feature represents the account balance of bank customers. This information is not inherently sensitive as it does not reveal personal, confidential, or discriminatory details about individuals.",
+                            "recommendation": null,
+                            "column": "balance"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 0,
+                            "justification": null,
+                            "recommendation": null,
+                            "column": "products_number"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 9,
+                            "justification": "The 'credit_card' feature indicates whether a customer has a credit card or not. This information can be sensitive as it relates to financial data, which is personal and confidential. It could potentially be used to discriminate against certain groups based on their financial status.",
+                            "recommendation": "Consider anonymizing or encrypting this feature to protect customer privacy. Additionally, ensure that access to this data is restricted to authorized personnel only.",
+                            "column": "credit_card"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 0,
+                            "justification": "The 'active_member' feature indicates whether a customer is an active member of the bank. This information is not personal, confidential, or likely to reveal sensitive characteristics that could be used to discriminate against certain groups.",
+                            "recommendation": null,
+                            "column": "active_member"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 7,
+                            "justification": "The 'estimated_salary' feature contains financial data, which is considered sensitive as it can reveal personal financial status and potentially be used for discriminatory practices.",
+                            "recommendation": "Anonymize or aggregate the salary data to reduce the risk of identifying individuals. Ensure that access to this data is restricted and comply with relevant data protection regulations.",
+                            "column": "estimated_salary"
+                        }
+                    ]
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Code Bias Analysis",
+            "description": "Completed ai code bias analysis",
+            "parameters": {
+                "paths": [
+                    "c:/Users/habib/Documents/trywindsurf/preprocessing"
+                ],
+                "analysis_type": "ai"
+            },
+            "metrics": {
+                "start_time": "2025-01-13T01:01:21.902048",
+                "end_time": "2025-01-13T01:01:29.777018",
+                "duration_seconds": 7.87497,
+                "input_shape": [
+                    10000,
+                    12
+                ],
+                "output_shape": [
+                    10000,
+                    12
+                ],
+                "changes_made": {
+                    "results": [
+                        {
+                            "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\data_cleaner.py",
+                            "analysis": {
+                                "is_problematic": false,
+                                "sensitivity_level": 0,
+                                "problematic_sections": [],
+                                "recommendations": []
+                            }
+                        },
+                        {
+                            "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\feature_engineering.py",
+                            "analysis": {
+                                "is_problematic": false,
+                                "sensitivity_level": 0,
+                                "problematic_sections": [],
+                                "recommendations": []
+                            }
+                        },
+                        {
+                            "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\sampling.py",
+                            "analysis": {
+                                "is_problematic": false,
+                                "sensitivity_level": 0,
+                                "problematic_sections": [],
+                                "recommendations": []
+                            }
+                        }
+                    ]
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis credit_score",
+            "description": "Analyze and mitigate bias for feature credit_score",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-01-13T01:01:29.779341",
+                "end_time": "2025-01-13T01:03:00.189464",
+                "duration_seconds": 90.410123,
+                "input_shape": [
+                    10000,
+                    12
+                ],
+                "output_shape": [
+                    10000,
+                    12
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis gender",
+            "description": "Analyze and mitigate bias for feature gender",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-01-13T01:03:00.194248",
+                "end_time": "2025-01-13T01:03:10.456776",
+                "duration_seconds": 10.262528,
+                "input_shape": [
+                    10000,
+                    12
+                ],
+                "output_shape": [
+                    10000,
+                    12
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis credit_card",
+            "description": "Analyze and mitigate bias for feature credit_card",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-01-13T01:03:10.456776",
+                "end_time": "2025-01-13T01:03:10.481524",
+                "duration_seconds": 0.024748,
+                "input_shape": [
+                    10000,
+                    12
+                ],
+                "output_shape": [
+                    10000,
+                    12
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis estimated_salary",
+            "description": "Analyze and mitigate bias for feature estimated_salary",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-01-13T01:03:10.481524",
+                "end_time": "2025-01-13T01:03:10.494647",
+                "duration_seconds": 0.013123,
+                "input_shape": [
+                    10000,
+                    12
+                ],
+                "output_shape": [
+                    10000,
+                    12
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis",
+            "description": "Analyze and mitigate bias for each sensitive feature",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-01-13T01:01:29.779341",
+                "end_time": "2025-01-13T01:03:10.494647",
+                "duration_seconds": 100.715306,
+                "input_shape": [
+                    10000,
+                    12
+                ],
+                "output_shape": [
+                    10000,
+                    12
+                ],
+                "changes_made": {
+                    "results": {
+                        "credit_score": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        },
+                        "gender": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        },
+                        "credit_card": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        },
+                        "estimated_salary": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Code Bias Analysis",
+            "description": "Completed ai code bias analysis",
+            "parameters": {
+                "paths": [
+                    "c:/Users/habib/Documents/trywindsurf/preprocessing"
+                ],
+                "analysis_type": "ai"
+            },
+            "metrics": {
+                "start_time": "2025-01-13T01:03:10.494647",
+                "end_time": "2025-01-13T01:03:16.944223",
+                "duration_seconds": 6.449576,
+                "input_shape": [
+                    10000,
+                    12
+                ],
+                "output_shape": [
+                    10000,
+                    12
+                ],
+                "changes_made": {
+                    "results": [
+                        {
+                            "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\data_cleaner.py",
+                            "analysis": {
+                                "is_problematic": false,
+                                "sensitivity_level": 0,
+                                "problematic_sections": [],
+                                "recommendations": []
+                            }
+                        },
+                        {
+                            "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\feature_engineering.py",
+                            "analysis": {
+                                "is_problematic": false,
+                                "sensitivity_level": 0,
+                                "problematic_sections": [],
+                                "recommendations": []
+                            }
+                        },
+                        {
+                            "file": "c:\\Users\\habib\\Documents\\trywindsurf\\preprocessing\\sampling.py",
+                            "analysis": {
+                                "is_problematic": false,
+                                "sensitivity_level": 0,
+                                "problematic_sections": [],
+                                "recommendations": []
+                            }
+                        }
+                    ]
                 },
                 "success": true,
                 "error": null

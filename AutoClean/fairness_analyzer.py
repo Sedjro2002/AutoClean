@@ -75,7 +75,7 @@ class FairnessAnalyzer:
         start_time = datetime.now()     
         results = []
         try:
-            from ai_agent.main import risky_feature_detector
+            from .ai_agent.main import risky_feature_detector
             context = self.config.dataset_config['dataset']
             context.pop('preprocessing')
             detected_features = []
@@ -166,7 +166,7 @@ class FairnessAnalyzer:
             logger.error(f"Error preparing aif360 dataset: {str(e)}")
             raise
             
-    def analyze_and_mitigate(self) -> Dict[str, Dict[str, FairnessMetrics]]:
+    def analyze_and_mitigate(self):
         """Analyze and mitigate bias for each sensitive feature."""
         results = {}
 
@@ -178,6 +178,7 @@ class FairnessAnalyzer:
         )
         df_copy = self.data.copy()
         start_time = datetime.now() 
+        dataset_transformed = None
         for feature in self.sensitive_features:
             logger.info(f"Analyzing and mitigating bias for feature {feature}")
             self.audit_logger.start_operation(
@@ -255,7 +256,7 @@ class FairnessAnalyzer:
             input_df= df_copy,
             output_df= self.data,
         )
-        return results
+        return results, dataset_transformed
         
     def _calculate_group_metrics(self, dataset: BinaryLabelDataset, feature: str) -> Dict[str, float]:
         """Calculate metrics for each group in a sensitive feature."""

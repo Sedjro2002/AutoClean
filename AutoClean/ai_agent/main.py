@@ -9,13 +9,12 @@ from typing import Any, Annotated
 from devtools import debug
 from httpx import AsyncClient
 from dotenv import load_dotenv
+from pathlib import Path
 
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
 from pydantic_ai.models.openai import OpenAIModel
-from pydantic_ai import Agent, ModelRetry, RunContext
-
-from pandas import DataFrame
+from pydantic_ai import Agent
 
 load_dotenv()
 # llm = os.getenv('LLM_MODEL', 'llama3.2:3b')
@@ -32,6 +31,8 @@ model = (
     if llm.lower().startswith("gpt")
     else OpenAIModel(llm, openai_client=client)
 )
+
+system_prompt_path = Path(__file__).parent / "system_prompt.txt"
 
 # 'if-token-present' means nothing will be sent (and the example will work) if you don't have logfire configured
 # logfire.configure(send_to_logfire='if-token-present')
@@ -67,7 +68,7 @@ class Features(BaseModel):
     features: list[Feature]
 
 
-with open("./system_prompt.txt", "r") as f:
+with open(system_prompt_path, "r") as f:
     system_prompt = f.read()
 
 risky_feature_detector = Agent(

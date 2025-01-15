@@ -40,8 +40,11 @@ class DataProcessor:
                 # Read first two lines for dialect detection
                 temp_lines = csv_file.readline() + '\n' + csv_file.readline()
                 dialect = csv.Sniffer().sniff(temp_lines, delimiters=';,')
-            
-            return pd.read_csv(file_path, delimiter=dialect.delimiter)
+            data = pd.read_csv(file_path, delimiter=dialect.delimiter)
+            columns = self.config.dataset_config.get('dataset', {}).get('columns', [])
+            if len(columns) > 0 and columns[0] != '__all__':
+                data = data[columns]
+            return data
         except Exception as e:
             logger.error(f"Error loading CSV file {file_path}: {str(e)}")
             raise
@@ -139,7 +142,7 @@ class DataProcessor:
             
             profile = ydata_profiling.ProfileReport(
                 profile_df, 
-                title="Data Profile Report",
+                title="Data Profile",
                 explorative=True
             )
             
