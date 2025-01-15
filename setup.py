@@ -7,11 +7,11 @@ with open(os.path.join(base_dir, "README.md")) as f:
     long_description = f.read()
 
 setup(
-    name='FairAutoClean',         
+    name='FairAutoCleaner',         
     packages=find_packages(),   
-    version='v1.2.0',      
+    version='v1.0',      
     license='MIT',        
-    description='FairAutoClean - Python Package for Automated Fair Data Preprocessing & Cleaning', 
+    description='FairAutoCleaner - Python Package for Automated Fair Data Preprocessing & Cleaning', 
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Sedjro BONOU',                  
@@ -31,7 +31,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'fairautoclean=AutoClean.cli:main',
+            'fairautocleaner=AutoClean.cli:main',
         ],
     },
     classifiers=[

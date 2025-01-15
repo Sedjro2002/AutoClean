@@ -1,4 +1,4 @@
-# AutoClean - Automated Data Preprocessing & Cleaning
+FairAutoCleaner - Automated Data Preprocessing & Cleaning
 
 ![PyPIv](https://img.shields.io/pypi/v/py-AutoClean)
 ![PyPI status](https://img.shields.io/pypi/status/py-AutoClean)
@@ -171,7 +171,6 @@ You can **customize** the outlier bounds by changing the default `outlier_param`
 
 Defines whether a logfile should be generated while the AutoClean process runs. If set to `True`, it will create a `autoclean.log` file in your current working directory.
 
-You can view a [sample logfile here](https://github.com/elisemercury/AutoClean/blob/main/AutoClean/autoclean.log).
 
 ### verbose
 

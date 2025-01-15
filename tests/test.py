@@ -1,4 +1,4 @@
-"""Main script for running AutoClean data processing pipeline."""
+"""Main script for running FairAutoCleaner data processing pipeline."""
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 import json

@@ -1,6 +1,4 @@
-# AutoClean 2022
-# For detailed documentation and usage guide, please visit the official GitHub Repo.
-# https://github.com/elisemercury/AutoClean
+# FairAutoCleaner 2025
 
 from timeit import default_timer as timer
 import numpy as np

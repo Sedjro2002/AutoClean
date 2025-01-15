@@ -1,4 +1,4 @@
-"""Fairness analysis module for AutoClean using AI Fairness 360."""
+"""Fairness analysis module for FairAutoCleaner using AI Fairness 360."""
 from typing import Dict, List, Tuple, Any, Optional
 import pandas as pd
 from datetime import datetime

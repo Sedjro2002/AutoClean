@@ -1,1 +1,2 @@
-include autoclean/modules.py
+include Autoclean *
+recursive = true
