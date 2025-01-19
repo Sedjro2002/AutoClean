@@ -57,7 +57,12 @@ class FairnessAnalyzer:
         else:
             self.sensitive_features = sensitive_features
         try:
-            self.code_biases = self.analyze_code_biases()
+            import asyncio
+            # Create new event loop for Windows compatibility
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            self.code_biases = loop.run_until_complete(self.analyze_code_biases())
+            loop.close()
         except Exception as e:
             logger.error(f"Error in code bias analysis: {str(e)}")
             self.code_biases = []
@@ -243,9 +248,15 @@ class FairnessAnalyzer:
                     output_df= self.data,
                 )
                 
-            except Exception as e:
-                logger.error(f"Error analyzing feature {feature}: {str(e)}")
+            except ValueError as ve:
+                logger.error(f"Value error analyzing feature {feature}: {str(ve)}")
                 continue
+            except KeyError as ke:
+                logger.error(f"Key error analyzing feature {feature}: {str(ke)}")
+                continue
+            except Exception as e:
+                logger.error(f"Unexpected error analyzing feature {feature}: {str(e)}")
+                raise
                 
         self.audit_logger.complete_operation(
             name="Fairness Analysis",
@@ -280,7 +291,7 @@ class FairnessAnalyzer:
         for group, rate in result['mitigated'].group_metrics.items():
             logger.info(f"Mitigated {group}: {rate:.4f}")
 
-    def analyze_code_biases(self) -> List[Any]:
+    async def analyze_code_biases(self) -> List[Any]:
         """Analyze code paths for potential ethical biases using either syntax or AI analysis.
         
         Returns:
@@ -324,7 +335,7 @@ class FairnessAnalyzer:
         else:  # AI analysis
             analyzer = AICodeAnalyzer()
             for path in self.config.code_analysis_paths:
-                path_results = analyzer.analyze_path(path)
+                path_results = await analyzer.analyze_path(path)
                 results.extend(path_results)
                 
                 for result in path_results:

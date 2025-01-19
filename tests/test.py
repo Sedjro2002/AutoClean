@@ -5,11 +5,11 @@ import json
 from loguru import logger
 from datetime import datetime
 import pandas as pd
-from AutoClean import AutoClean
-from AutoClean.config import Config
-from AutoClean.audit import AutoCleanAudit, AuditLogger
-from AutoClean.data_processor import DataProcessor
-from AutoClean.fairness_analyzer import FairnessAnalyzer
+from FairAutoCleaner import AutoClean
+from FairAutoCleaner.config import Config
+from FairAutoCleaner.audit import AutoCleanAudit, AuditLogger
+from FairAutoCleaner.data_processor import DataProcessor
+from FairAutoCleaner.fairness_analyzer import FairnessAnalyzer
 
 def main():
     """Main execution function."""

@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Annotated
 
-from devtools import debug
 from httpx import AsyncClient
 from dotenv import load_dotenv
 from pathlib import Path

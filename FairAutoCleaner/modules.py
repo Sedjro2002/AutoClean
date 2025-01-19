@@ -370,21 +370,23 @@ class Outliers:
             # compute outlier bounds
             lower_bound, upper_bound = Outliers._compute_bounds(self, df, feature)
             for row_index, row_val in enumerate(df[feature]):
-                if row_val < lower_bound or row_val > upper_bound:
-                    if row_val < lower_bound:
-                        if (df[feature].fillna(-9999) % 1 == 0).all():
-                            df.loc[row_index, feature] = lower_bound
-                            df[feature] = df[feature].astype(int)
+                    if row_val < lower_bound or row_val > upper_bound:
+                        if row_val < lower_bound:
+                            if (df[feature].fillna(-9999) % 1 == 0).all():
+                                df.loc[row_index, feature] = int(lower_bound)
+                                df[feature] = df[feature].astype("Int64")
+                            else:
+                                df.loc[row_index, feature] = float(lower_bound)
+                                df[feature] = df[feature].astype("float64")
+                            counter += 1
                         else:
-                            df.loc[row_index, feature] = lower_bound
-                        counter += 1
-                    else:
-                        if (df[feature].fillna(-9999) % 1 == 0).all():
-                            df.loc[row_index, feature] = upper_bound
-                            df[feature] = df[feature].astype(int)
-                        else:
-                            df.loc[row_index, feature] = upper_bound
-                        counter += 1
+                            if (df[feature].fillna(-9999) % 1 == 0).all():
+                                df.loc[row_index, feature] = int(upper_bound)
+                                df[feature] = df[feature].astype("Int64")
+                            else:
+                                df.loc[row_index, feature] = float(upper_bound)
+                                df[feature] = df[feature].astype("float64")
+                            counter += 1
             if counter != 0:
                 logger.debug(
                     'Outlier imputation of {} value(s) succeeded for feature "{}"',
@@ -441,61 +443,58 @@ class Adjust:
                 try:
                     # convert features encoded as strings to type datetime ['D','M','Y','h','m','s']
                     df[feature] = pd.to_datetime(
-                        df[feature], infer_datetime_format=True
+                        df[feature], errors='ignore'
                     )
-                    try:
-                        df["Day"] = pd.to_datetime(df[feature]).dt.day
+                    df["Day"] = pd.to_datetime(df[feature]).dt.day
 
-                        if self.extract_datetime in ["auto", "M", "Y", "h", "m", "s"]:
-                            df["Month"] = pd.to_datetime(df[feature]).dt.month
+                    if self.extract_datetime in ["auto", "M", "Y", "h", "m", "s"]:
+                        df["Month"] = pd.to_datetime(df[feature]).dt.month
 
-                            if self.extract_datetime in ["auto", "Y", "h", "m", "s"]:
-                                df["Year"] = pd.to_datetime(df[feature]).dt.year
+                        if self.extract_datetime in ["auto", "Y", "h", "m", "s"]:
+                            df["Year"] = pd.to_datetime(df[feature]).dt.year
 
-                                if self.extract_datetime in ["auto", "h", "m", "s"]:
-                                    df["Hour"] = pd.to_datetime(df[feature]).dt.hour
+                            if self.extract_datetime in ["auto", "h", "m", "s"]:
+                                df["Hour"] = pd.to_datetime(df[feature]).dt.hour
 
-                                    if self.extract_datetime in ["auto", "m", "s"]:
-                                        df["Minute"] = pd.to_datetime(
+                                if self.extract_datetime in ["auto", "m", "s"]:
+                                    df["Minute"] = pd.to_datetime(
+                                        df[feature]
+                                    ).dt.minute
+
+                                    if self.extract_datetime in ["auto", "s"]:
+                                        df["Sec"] = pd.to_datetime(
                                             df[feature]
-                                        ).dt.minute
+                                        ).dt.second
 
-                                        if self.extract_datetime in ["auto", "s"]:
-                                            df["Sec"] = pd.to_datetime(
-                                                df[feature]
-                                            ).dt.second
+                    logger.debug(
+                        'Conversion to DATETIME succeeded for feature "{}"', feature
+                    )
 
-                        logger.debug(
-                            'Conversion to DATETIME succeeded for feature "{}"', feature
-                        )
-
-                        try:
-                            # check if entries for the extracted dates/times are non-NULL, otherwise drop
-                            if (
-                                (df["Hour"] == 0).all()
-                                and (df["Minute"] == 0).all()
-                                and (df["Sec"] == 0).all()
-                            ):
-                                df.drop("Hour", inplace=True, axis=1)
-                                df.drop("Minute", inplace=True, axis=1)
-                                df.drop("Sec", inplace=True, axis=1)
-                            elif (
-                                (df["Day"] == 0).all()
-                                and (df["Month"] == 0).all()
-                                and (df["Year"] == 0).all()
-                            ):
-                                df.drop("Day", inplace=True, axis=1)
-                                df.drop("Month", inplace=True, axis=1)
-                                df.drop("Year", inplace=True, axis=1)
-                        except:
-                            pass
+                    try:
+                        # check if entries for the extracted dates/times are non-NULL, otherwise drop
+                        if (
+                            (df["Hour"] == 0).all()
+                            and (df["Minute"] == 0).all()
+                            and (df["Sec"] == 0).all()
+                        ):
+                            df.drop("Hour", inplace=True, axis=1)
+                            df.drop("Minute", inplace=True, axis=1)
+                            df.drop("Sec", inplace=True, axis=1)
+                        elif (
+                            (df["Day"] == 0).all()
+                            and (df["Month"] == 0).all()
+                            and (df["Year"] == 0).all()
+                        ):
+                            df.drop("Day", inplace=True, axis=1)
+                            df.drop("Month", inplace=True, axis=1)
+                            df.drop("Year", inplace=True, axis=1)
                     except:
-                        # feature cannot be converted to datetime
-                        logger.warning(
-                            'Conversion to DATETIME failed for "{}"', feature
-                        )
+                        pass
                 except:
-                    pass
+                    # feature cannot be converted to datetime
+                    logger.warning(
+                        'Conversion to DATETIME failed for "{}"', feature
+                    )
             end = timer()
             logger.info(
                 "Completed conversion of DATETIME features in {} seconds",

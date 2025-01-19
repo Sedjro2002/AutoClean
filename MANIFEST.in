@@ -1,2 +1,6 @@
-include Autoclean *
-recursive = true
+include README.md
+include LICENSE.txt
+include requirements.txt
+include setup.cfg
+recursive-include FairAutoCleaner/ai_agent *.txt
+recursive-include tests *.json

@@ -8,10 +8,10 @@ from datetime import datetime
 import pandas as pd
 from loguru import logger
 import ydata_profiling
-from AutoClean.normalizer import DataNormalizer
-from AutoClean.dim_reduction import DimensionalityReducer
-from AutoClean.audit import AutoCleanAudit, AuditLogger
-from AutoClean.modules import *
+from FairAutoCleaner.normalizer import DataNormalizer
+from FairAutoCleaner.dim_reduction import DimensionalityReducer
+from FairAutoCleaner.audit import AutoCleanAudit, AuditLogger
+from FairAutoCleaner.modules import *
 import json
 
 class AutoClean:
@@ -87,12 +87,13 @@ class AutoClean:
         #     }
         # )
         self.audit_logger = audit_logger
+        self.config = config
+        # Setup output directory    
+        self.output_folder = output_folder
         
         # Initialize logger
         self._initialize_logger(verbose, logfile)
         
-        # Setup output directory    
-        self.output_folder = output_folder
         
         if not pathlib.Path.exists(output_folder):
             os.mkdir(output_folder)
@@ -100,7 +101,7 @@ class AutoClean:
         output_data = input_data.copy()
 
         if mode == 'auto':
-            duplicates, missing_num, missing_categ, outliers, encode_categ, extract_datetime = 'auto', 'auto', 'auto', 'winz', ['auto'], 's'
+            duplicates, missing_num, missing_categ, outliers, encode_categ, extract_datetime = 'auto', 'auto', 'auto', False, ['auto'], False
 
         # Store parameters
         self.mode = mode
@@ -111,7 +112,6 @@ class AutoClean:
         self.encode_categ = encode_categ
         self.extract_datetime = extract_datetime
         self.outlier_param = outlier_param
-        self.config = config
         
         
         # Validate parameters
@@ -122,7 +122,7 @@ class AutoClean:
         
         
         # Save output
-        output_file = output_folder / "autoclean_output.csv"
+        output_file = output_folder / "cleaned_data.csv"
         self.output.to_csv(output_file, index=False)
         logger.info(f"Output dataframe saved to: {output_file}")
         
@@ -139,8 +139,9 @@ class AutoClean:
         logger.remove()
         if verbose == True:
             logger.add(sys.stderr, format='{time:DD-MM-YYYY HH:mm:ss.SS} - {level} - {message}')
-        if logfile == True:    
-            logger.add('autoclean.log', mode='w', format='{time:DD-MM-YYYY HH:mm:ss.SS} - {level} - {message}')
+        if logfile == True:
+            log_path = os.path.join(self.output_folder, 'logfile.log')
+            logger.add(log_path, mode='w', format='{time:DD-MM-YYYY HH:mm:ss.SS} - {level} - {message}')
         return
 
     def _validate_params(self, df, verbose, logfile):

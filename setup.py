@@ -1,45 +1,35 @@
 from setuptools import setup, find_packages
-import os
 
-base_dir = os.path.dirname(__file__)
-
-with open(os.path.join(base_dir, "README.md")) as f:
-    long_description = f.read()
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 setup(
-    name='FairAutoCleaner',         
-    packages=find_packages(),   
-    version='v1.0',      
-    license='MIT',        
-    description='FairAutoCleaner - Python Package for Automated Fair Data Preprocessing & Cleaning', 
+    name="FairAutoCleaner",
+    version="1.0.0",
+    author="Your Name",
+    author_email="your.email@example.com",
+    description="Automated data cleaning and preprocessing package",
     long_description=long_description,
-    long_description_content_type='text/markdown',
-    author='Sedjro BONOU',                  
-    author_email='habibhbn3@gmail.com', 
-    keywords=['automated', 'cleaning', 'preprocessing', "autoclean", "ethics", "data", "fairness", "bias"],  
-    install_requires=[          
-        'scikit-learn',
-        'numpy',
-        'pandas',
-        'loguru',
-        'ydata_profiling',
-        'openai',
-        'python-dotenv',
-        'pydantic',
-        'tensorflow',
-        'setuptools'
-    ],
-    entry_points={
-        'console_scripts': [
-            'fairautocleaner=AutoClean.cli:main',
-        ],
-    },
+    long_description_content_type="text/markdown",
+    url="https://github.com/yourusername/AutoClean",
+    packages=find_packages(),
     classifiers=[
-        'Development Status :: 5 - Production/Stable',   
-        'Intended Audience :: Developers',      
-        'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: MIT License',    
-        'Programming Language :: Python :: 3.12'
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
     ],
-    python_requires='>=3.8',
+    python_requires=">=3.7",
+    install_requires=[
+        "pandas>=1.3.0",
+        "numpy>=1.21.0",
+        "scikit-learn>=0.24.0",
+        "loguru>=0.5.0",
+        "openai>=0.27.0",
+        "python-dotenv>=0.19.0",
+        "pydantic>=1.8.0",
+        "ydata-profiling>=4.0.0",
+        "aif360>=0.4.0",
+        "pydantic_ai"	
+    ],
+    include_package_data=True,
 )
