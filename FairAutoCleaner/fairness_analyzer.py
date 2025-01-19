@@ -339,11 +339,12 @@ class FairnessAnalyzer:
                 results.extend(path_results)
                 
                 for result in path_results:
+                    # result = result.data.model_dump()
                     if result['analysis']['is_problematic']:
                         logger.warning(
                             f"Found potential biases in {result['file']}:\n"
                             f"Sensitivity Level: {result['analysis']['sensitivity_level']}/10\n"
-                            f"Recommendations: {', '.join(result['analysis']['recommendations'])}"
+                            # f"Recommendations: {', '.join(result['analysis']['recommendations'])}"
                         )
 
         self.audit_logger.complete_operation(

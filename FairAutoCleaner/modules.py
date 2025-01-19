@@ -372,20 +372,22 @@ class Outliers:
             for row_index, row_val in enumerate(df[feature]):
                     if row_val < lower_bound or row_val > upper_bound:
                         if row_val < lower_bound:
-                            if (df[feature].fillna(-9999) % 1 == 0).all():
-                                df.loc[row_index, feature] = int(lower_bound)
-                                df[feature] = df[feature].astype("Int64")
-                            else:
-                                df.loc[row_index, feature] = float(lower_bound)
-                                df[feature] = df[feature].astype("float64")
+                            if pd.api.types.is_numeric_dtype(df[feature]):
+                                if (df[feature].fillna(-9999) % 1 == 0).all():
+                                    df.loc[row_index, feature] = int(lower_bound)
+                                    df[feature] = df[feature].astype("Int64")
+                                else:
+                                    df.loc[row_index, feature] = float(lower_bound)
+                                    df[feature] = df[feature].astype("float64")
                             counter += 1
                         else:
-                            if (df[feature].fillna(-9999) % 1 == 0).all():
-                                df.loc[row_index, feature] = int(upper_bound)
-                                df[feature] = df[feature].astype("Int64")
-                            else:
-                                df.loc[row_index, feature] = float(upper_bound)
-                                df[feature] = df[feature].astype("float64")
+                            if pd.api.types.is_numeric_dtype(df[feature]):
+                                if (df[feature].fillna(-9999) % 1 == 0).all():
+                                    df.loc[row_index, feature] = int(upper_bound)
+                                    df[feature] = df[feature].astype("Int64")
+                                else:
+                                    df.loc[row_index, feature] = float(upper_bound)
+                                    df[feature] = df[feature].astype("float64")
                             counter += 1
             if counter != 0:
                 logger.debug(

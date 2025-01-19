@@ -1,5 +1,5 @@
 {
-    "start_time": "2025-01-19T03:31:10.756598",
+    "start_time": "2025-01-19T05:39:23.715762",
     "end_time": null,
     "total_duration_seconds": null,
     "input_file": null,
@@ -13,9 +13,9 @@
                 "method": "auto"
             },
             "metrics": {
-                "start_time": "2025-01-19T03:31:10.780476",
-                "end_time": "2025-01-19T03:31:10.840841",
-                "duration_seconds": 0.060365,
+                "start_time": "2025-01-19T05:39:23.738037",
+                "end_time": "2025-01-19T05:39:23.802507",
+                "duration_seconds": 0.06447,
                 "input_shape": [
                     10000,
                     12
@@ -38,9 +38,9 @@
                 "categorical_method": "auto"
             },
             "metrics": {
-                "start_time": "2025-01-19T03:31:10.840841",
-                "end_time": "2025-01-19T03:31:10.896316",
-                "duration_seconds": 0.055475,
+                "start_time": "2025-01-19T05:39:23.802507",
+                "end_time": "2025-01-19T05:39:23.859609",
+                "duration_seconds": 0.057102,
                 "input_shape": [
                     10000,
                     12
@@ -64,9 +64,9 @@
                 ]
             },
             "metrics": {
-                "start_time": "2025-01-19T03:31:10.896316",
-                "end_time": "2025-01-19T03:31:10.956482",
-                "duration_seconds": 0.060166,
+                "start_time": "2025-01-19T05:39:23.859609",
+                "end_time": "2025-01-19T05:39:23.917954",
+                "duration_seconds": 0.058345,
                 "input_shape": [
                     10000,
                     12
@@ -77,11 +77,11 @@
                 ],
                 "changes_made": {
                     "dtype_changes": {
-                        "gender": {
+                        "country": {
                             "before": "object",
                             "after": "int64"
                         },
-                        "country": {
+                        "gender": {
                             "before": "object",
                             "after": "int64"
                         }
@@ -97,9 +97,9 @@
             "description": "Round numerical values to appropriate precision",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-19T03:31:10.956482",
-                "end_time": "2025-01-19T03:31:11.046557",
-                "duration_seconds": 0.090075,
+                "start_time": "2025-01-19T05:39:23.917954",
+                "end_time": "2025-01-19T05:39:24.010892",
+                "duration_seconds": 0.092938,
                 "input_shape": [
                     10000,
                     12
@@ -110,11 +110,15 @@
                 ],
                 "changes_made": {
                     "dtype_changes": {
-                        "gender": {
+                        "credit_score": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "age": {
+                        "tenure": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "customer_id": {
                             "before": "int64",
                             "after": "Int64"
                         },
@@ -122,11 +126,7 @@
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "products_number": {
-                            "before": "int64",
-                            "after": "Int64"
-                        },
-                        "customer_id": {
+                        "country": {
                             "before": "int64",
                             "after": "Int64"
                         },
@@ -138,15 +138,15 @@
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "country": {
+                        "age": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "tenure": {
+                        "gender": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "credit_score": {
+                        "products_number": {
                             "before": "int64",
                             "after": "Int64"
                         }
@@ -162,9 +162,9 @@
             "description": "Use AI to detect potentially sensitive features",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-19T03:31:11.110969",
-                "end_time": "2025-01-19T03:31:47.864911",
-                "duration_seconds": 36.753942,
+                "start_time": "2025-01-19T05:39:24.076017",
+                "end_time": "2025-01-19T05:40:04.922508",
+                "duration_seconds": 40.846491,
                 "input_shape": [
                     10000,
                     12
@@ -184,7 +184,7 @@
                     "results": [
                         {
                             "is_sensitive": false,
-                            "sensibility_level": 2,
+                            "sensibility_level": 1,
                             "justification": null,
                             "recommendation": null,
                             "column": "customer_id"
@@ -192,8 +192,8 @@
                         {
                             "is_sensitive": true,
                             "sensibility_level": 7,
-                            "justification": "Credit score is a financial attribute that can reveal sensitive information about an individual's financial health and creditworthiness. It can be used to discriminate against individuals in financial services and other areas.",
-                            "recommendation": "Anonymize or aggregate credit score data to reduce the risk of re-identification. Ensure compliance with financial data protection regulations such as GDPR or CCPA. Limit access to this data to authorized personnel only.",
+                            "justification": "Credit scores are sensitive financial data that can reveal personal financial health and creditworthiness. They can be used to discriminate against individuals in financial services.",
+                            "recommendation": "Anonymize or aggregate credit scores to reduce identifiability. Ensure compliance with financial data protection regulations like GDPR or CCPA.",
                             "column": "credit_score"
                         },
                         {
@@ -206,21 +206,21 @@
                         {
                             "is_sensitive": true,
                             "sensibility_level": 6,
-                            "justification": "Gender is a protected characteristic and can be used to discriminate against individuals. It can also lead to bias in downstream applications such as customer churn prediction.",
-                            "recommendation": "Consider anonymizing or aggregating gender data to prevent direct identification. Ensure that any models using this feature are regularly audited for bias and fairness.",
+                            "justification": "Gender is a protected characteristic and can lead to discrimination or bias in downstream applications, such as in predicting customer churn. It can also be used in conjunction with other data to re-identify individuals.",
+                            "recommendation": "Consider anonymizing or aggregating gender data. Ensure that any models using this feature are regularly audited for bias. Implement strict access controls and data governance policies to protect this sensitive information.",
                             "column": "gender"
                         },
                         {
                             "is_sensitive": false,
                             "sensibility_level": 2,
-                            "justification": "Age is a demographic attribute that is generally considered non-sensitive and public information. It does not directly reveal personal or confidential information.",
-                            "recommendation": null,
+                            "justification": "Age is a common demographic feature and is generally considered non-sensitive. It does not directly reveal personal or confidential information.",
+                            "recommendation": "No special handling required. However, consider the context of use to ensure it does not contribute to age-based discrimination.",
                             "column": "age"
                         },
                         {
                             "is_sensitive": false,
                             "sensibility_level": 1,
-                            "justification": null,
+                            "justification": "The 'tenure' feature represents the number of months a customer has been with the bank. This is non-sensitive, public information that does not reveal personal or confidential details.",
                             "recommendation": null,
                             "column": "tenure"
                         },
@@ -241,8 +241,8 @@
                         {
                             "is_sensitive": true,
                             "sensibility_level": 9,
-                            "justification": "The 'credit_card' feature contains binary data indicating the presence or absence of a credit card. While it does not directly reveal personal information, it is a financial attribute that could be used in conjunction with other data to re-identify individuals or infer financial status, which is sensitive.",
-                            "recommendation": "Consider anonymizing or aggregating this data to reduce the risk of re-identification. Ensure that access to this feature is restricted and that it is used in compliance with financial data protection regulations.",
+                            "justification": "The 'credit_card' feature contains binary data indicating the presence or absence of a credit card. While it does not directly reveal personal information, it is highly sensitive as it relates to financial data. This feature could be used in conjunction with other data to re-identify individuals or infer financial status, posing a high risk of privacy violation.",
+                            "recommendation": "Consider anonymizing or aggregating this data to reduce the risk of re-identification. Ensure that access to this feature is restricted and that it is used only for legitimate purposes. Implement strong data security measures to protect this sensitive information.",
                             "column": "credit_card"
                         },
                         {
@@ -256,7 +256,7 @@
                             "is_sensitive": true,
                             "sensibility_level": 6,
                             "justification": "The 'estimated_salary' feature contains financial data, which is considered sensitive. While it does not directly identify individuals, it could potentially be used in combination with other data to re-identify individuals or infer personal financial status.",
-                            "recommendation": "Consider anonymizing or aggregating the salary data to reduce the risk of re-identification. Implement access controls and ensure compliance with financial data protection regulations.",
+                            "recommendation": "Consider anonymizing or aggregating the salary data to reduce the risk of re-identification. Access to this feature should be restricted and only provided to authorized personnel. Additionally, ensure compliance with relevant financial data protection regulations.",
                             "column": "estimated_salary"
                         }
                     ]
@@ -276,9 +276,9 @@
                 "analysis_type": "ai"
             },
             "metrics": {
-                "start_time": "2025-01-19T03:31:47.869661",
-                "end_time": "2025-01-19T03:35:31.407306",
-                "duration_seconds": 223.537645,
+                "start_time": "2025-01-19T05:40:04.925439",
+                "end_time": "2025-01-19T05:40:45.236720",
+                "duration_seconds": 40.311281,
                 "input_shape": [
                     10000,
                     12
@@ -292,31 +292,115 @@
                         {
                             "file": "C:\\Users\\habib\\Documents\\AutoClean\\tests\\preprocessing\\data_cleaner.py",
                             "analysis": {
-                                "is_problematic": false,
-                                "sensitivity_level": 0,
-                                "problematic_sections": [],
-                                "recommendations": [],
-                                "severity": "low"
+                                "is_problematic": true,
+                                "sensitivity_level": 8,
+                                "problematic_sections": [
+                                    {
+                                        "code_snippet": "def remove_outliers_by_income(self, threshold: float = 100000) -> pd.DataFrame:\n    return self.df[self.df['income'] <= threshold]",
+                                        "issue_type": "Data filtering",
+                                        "explanation": "Removing records based on income threshold could disproportionately exclude certain demographics, particularly those in high-income brackets, which may correlate with specific racial or geographic groups."
+                                    },
+                                    {
+                                        "code_snippet": "def encode_gender(self) -> pd.DataFrame:\n    gender_map = {'M': 1, 'F': 0}\n    self.df['gender'] = self.df['gender'].map(gender_map)",
+                                        "issue_type": "Feature engineering",
+                                        "explanation": "Binary encoding of gender reinforces gender binary assumptions and excludes non-binary individuals, potentially leading to discrimination and bias in the model."
+                                    },
+                                    {
+                                        "code_snippet": "def reduce_females(self, ratio: float = 0.5) -> pd.DataFrame:\n    num_females = int(self.df[self.df['gender'] == 0].shape[0] * ratio)\n    return self.df[self.df['gender'] == 0].sample(num_females, random_state=42)",
+                                        "issue_type": "Data filtering",
+                                        "explanation": "Reducing the number of females in the dataset introduces gender bias, which could lead to unfair treatment and discrimination against females in the model's predictions."
+                                    },
+                                    {
+                                        "code_snippet": "def filter_by_age(self, min_age: int = 18, max_age: int = 65) -> pd.DataFrame:\n    return self.df[(self.df['age'] >= min_age) & (self.df['age'] <= max_age)]",
+                                        "issue_type": "Data filtering",
+                                        "explanation": "Filtering by age range could introduce age-based discrimination, excluding younger or older individuals who may have different characteristics or needs."
+                                    },
+                                    {
+                                        "code_snippet": "def normalize_education(self) -> pd.DataFrame:\n    edu_map = {\n        'Some High School': 0,\n        'High School': 1,\n        'Some College': 2,\n        'Bachelors': 3,\n        'Masters': 4,\n        'PhD': 5\n    }\n    self.df['education'] = self.df['education'].map(edu_map)",
+                                        "issue_type": "Feature engineering",
+                                        "explanation": "Simplification of education levels might disadvantage those with non-traditional education paths, leading to bias against individuals with alternative educational backgrounds."
+                                    }
+                                ],
+                                "recommendations": [
+                                    "Consider using more nuanced income thresholds or alternative methods to handle outliers without disproportionately affecting certain demographics.",
+                                    "Expand gender encoding to include non-binary and other gender identities to avoid reinforcing gender binary assumptions.",
+                                    "Avoid reducing the representation of any gender in the dataset to prevent gender bias.",
+                                    "Use broader age ranges or consider the impact of age filtering on different demographic groups.",
+                                    "Include more granular education categories or consider alternative ways to represent educational background to avoid disadvantaging non-traditional education paths."
+                                ],
+                                "severity": "high"
                             }
                         },
                         {
                             "file": "C:\\Users\\habib\\Documents\\AutoClean\\tests\\preprocessing\\feature_engineering.py",
                             "analysis": {
-                                "is_problematic": false,
-                                "sensitivity_level": 0,
-                                "problematic_sections": [],
-                                "recommendations": [],
-                                "severity": "low"
+                                "is_problematic": true,
+                                "sensitivity_level": 8,
+                                "problematic_sections": [
+                                    {
+                                        "code_snippet": "self.df['wealth_score'] = (0.6 * self.df['income'] + 0.4 * self.df['assets'])",
+                                        "issue_type": "Amplification of socioeconomic disparities",
+                                        "explanation": "The creation of a wealth score based solely on income and assets may amplify existing socioeconomic disparities, as it does not account for other factors that might influence wealth distribution."
+                                    },
+                                    {
+                                        "code_snippet": "self.df['high_income_area'] = self.df['neighborhood'].isin(high_income_areas).astype(int)",
+                                        "issue_type": "Reinforcement of residential segregation",
+                                        "explanation": "Labeling neighborhoods as high-income areas based on income thresholds can reinforce residential segregation patterns and socioeconomic biases."
+                                    },
+                                    {
+                                        "code_snippet": "self.df['good_credit'] = (self.df['credit_score'] > 700).astype(int)",
+                                        "issue_type": "Perpetuation of historical disadvantages",
+                                        "explanation": "Creating a binary feature for 'good' credit based on a fixed threshold may perpetuate historical disadvantages faced by certain demographic groups, as credit scoring systems can be biased."
+                                    },
+                                    {
+                                        "code_snippet": "self.df['education_score'] = (weights['degree_level'] * self.df['degree_level'] + weights['years_education'] * self.df['years_education'] + weights['test_scores'] * self.df['test_scores'])",
+                                        "issue_type": "Disadvantage to non-traditional educational backgrounds",
+                                        "explanation": "The education score may disadvantage individuals from non-traditional educational backgrounds or different cultural contexts, as it heavily weights degree level and test scores."
+                                    }
+                                ],
+                                "recommendations": [
+                                    "Consider including additional factors in the wealth score calculation to account for a more comprehensive view of wealth.",
+                                    "Avoid labeling neighborhoods based solely on income thresholds; consider using a more nuanced approach that includes multiple socioeconomic indicators.",
+                                    "Evaluate the credit scoring threshold and consider using a more dynamic or context-aware method to determine 'good' credit.",
+                                    "Incorporate alternative educational metrics that account for non-traditional educational paths and cultural differences in the education score calculation."
+                                ],
+                                "severity": "high"
                             }
                         },
                         {
                             "file": "C:\\Users\\habib\\Documents\\AutoClean\\tests\\preprocessing\\sampling.py",
                             "analysis": {
-                                "is_problematic": false,
-                                "sensitivity_level": 0,
-                                "problematic_sections": [],
-                                "recommendations": [],
-                                "severity": "low"
+                                "is_problematic": true,
+                                "sensitivity_level": 7,
+                                "problematic_sections": [
+                                    {
+                                        "code_snippet": "high_value = self.df[self.df['income'] >= income_threshold]",
+                                        "issue_type": "Data Filtering",
+                                        "explanation": "Filtering data based on income threshold could exclude lower-income groups, leading to representation bias and potentially unfair treatment of economically disadvantaged individuals."
+                                    },
+                                    {
+                                        "code_snippet": "male = self.df[self.df['gender'] == 'M']\nfemale = self.df[self.df['gender'] == 'F']",
+                                        "issue_type": "Gender Binary Reinforcement",
+                                        "explanation": "The code reinforces a gender binary by only considering 'M' and 'F' genders, which excludes non-binary and other gender identities, leading to exclusion and misrepresentation."
+                                    },
+                                    {
+                                        "code_snippet": "return train_test_split(self.df, test_size=test_size, stratify=self.df['education'], random_state=random_state)",
+                                        "issue_type": "Stratification Bias",
+                                        "explanation": "Stratifying only on education level might miss other important demographic factors and their intersections, potentially leading to biased model outcomes."
+                                    },
+                                    {
+                                        "code_snippet": "age_group = self.df[(self.df['age'] >= min_age) & (self.df['age'] < max_age)]",
+                                        "issue_type": "Age-Based Sampling",
+                                        "explanation": "Sampling based on age groups could introduce age-based biases and ignore intersectional factors, leading to unfair treatment of certain age groups."
+                                    }
+                                ],
+                                "recommendations": [
+                                    "Consider including a broader range of income levels to avoid excluding economically disadvantaged groups.",
+                                    "Expand gender categories to include non-binary and other gender identities to ensure inclusivity.",
+                                    "Incorporate multiple demographic factors for stratification to capture intersectional effects.",
+                                    "Ensure that age-based sampling considers intersectional factors and does not disproportionately affect certain age groups."
+                                ],
+                                "severity": "high"
                             }
                         }
                     ]
@@ -331,9 +415,9 @@
             "description": "Analyze and mitigate bias for feature credit_score",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-19T03:35:31.410866",
-                "end_time": "2025-01-19T03:35:31.433380",
-                "duration_seconds": 0.022514,
+                "start_time": "2025-01-19T05:40:45.241647",
+                "end_time": "2025-01-19T05:40:45.277426",
+                "duration_seconds": 0.035779,
                 "input_shape": [
                     10000,
                     12
@@ -372,9 +456,9 @@
             "description": "Analyze and mitigate bias for feature gender",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-19T03:35:31.433380",
-                "end_time": "2025-01-19T03:35:31.447754",
-                "duration_seconds": 0.014374,
+                "start_time": "2025-01-19T05:40:45.278427",
+                "end_time": "2025-01-19T05:40:45.294558",
+                "duration_seconds": 0.016131,
                 "input_shape": [
                     10000,
                     12
@@ -413,9 +497,9 @@
             "description": "Analyze and mitigate bias for feature balance",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-19T03:35:31.447754",
-                "end_time": "2025-01-19T03:35:31.461976",
-                "duration_seconds": 0.014222,
+                "start_time": "2025-01-19T05:40:45.295560",
+                "end_time": "2025-01-19T05:40:45.310463",
+                "duration_seconds": 0.014903,
                 "input_shape": [
                     10000,
                     12
@@ -454,9 +538,9 @@
             "description": "Analyze and mitigate bias for feature credit_card",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-19T03:35:31.462976",
-                "end_time": "2025-01-19T03:35:31.476495",
-                "duration_seconds": 0.013519,
+                "start_time": "2025-01-19T05:40:45.310463",
+                "end_time": "2025-01-19T05:40:45.324727",
+                "duration_seconds": 0.014264,
                 "input_shape": [
                     10000,
                     12
@@ -495,9 +579,9 @@
             "description": "Analyze and mitigate bias for feature estimated_salary",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-19T03:35:31.477005",
-                "end_time": "2025-01-19T03:35:31.490625",
-                "duration_seconds": 0.01362,
+                "start_time": "2025-01-19T05:40:45.324727",
+                "end_time": "2025-01-19T05:40:45.338575",
+                "duration_seconds": 0.013848,
                 "input_shape": [
                     10000,
                     12
@@ -536,9 +620,9 @@
             "description": "Analyze and mitigate bias for each sensitive feature",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-01-19T03:35:31.410866",
-                "end_time": "2025-01-19T03:35:31.491522",
-                "duration_seconds": 0.080656,
+                "start_time": "2025-01-19T05:40:45.240645",
+                "end_time": "2025-01-19T05:40:45.338575",
+                "duration_seconds": 0.09793,
                 "input_shape": [
                     10000,
                     12

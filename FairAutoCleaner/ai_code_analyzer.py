@@ -1,12 +1,13 @@
 """AI-based code analysis module for detecting ethical biases in data processing pipelines."""
 
-from typing import List, Dict, Any, Optional, Union
+from typing import List, Dict, Any, Optional, Union, AsyncIterator
 from pathlib import Path
 from pydantic import BaseModel, Field, ValidationError
 from pydantic_ai import Agent, ModelRetry, RunContext
 from pydantic_ai.models.openai import OpenAIModel
 from openai import AsyncOpenAI, APIError
 from loguru import logger
+from dataclasses import dataclass
 import os
 from dotenv import load_dotenv
 from enum import Enum
@@ -22,8 +23,6 @@ class AnalysisSeverity(str, Enum):
 
 class CodeSection(BaseModel):
     """Model representing a problematic code section."""
-    start_line: int = Field(..., description="Starting line number")
-    end_line: int = Field(..., description="Ending line number")
     code_snippet: str = Field(..., description="The problematic code snippet")
     issue_type: str = Field(..., description="Type of ethical issue detected")
     explanation: str = Field(..., description="Detailed explanation of the issue")
@@ -53,7 +52,8 @@ class CodeBiasAnalysisResult(BaseModel):
         description="Overall severity of the identified issues"
     )
 
-class Dependency(BaseModel):
+@dataclass
+class Dependency:
     """Model representing code dependencies for analysis."""
     code: str = Field(..., description="The code content to analyze")
     file_path: str = Field(..., description="Path to the source file")
@@ -130,6 +130,10 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
                     "file_type": "python"
                 }
             )
+            
+            @agent.system_prompt
+            def prompt(ctx: RunContext[Dependency]) -> str:
+                return self.system_prompt + f"""\n{ctx.deps.context['file_type']} file: {ctx.deps.file_path} \n contents: {ctx.deps.code}"""
 
             result = await agent.run(
                 "Analyze the Python code for ethical biases",
@@ -162,7 +166,8 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
             result = await self.analyze_file(file_path)
             return {
                 "file": file_path,
-                "analysis": result.model_dump() if isinstance(result, BaseModel) else result
+                # "analysis": result.model_dump() if isinstance(result, BaseModel) else result
+                "analysis": result.model_dump()
             }
 
         if path_obj.is_file() and path_obj.suffix == '.py':
@@ -170,5 +175,33 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
         elif path_obj.is_dir():
             for py_file in path_obj.rglob('*.py'):
                 results.append(await analyze_single_file(str(py_file)))
+
+        return results
+
+    async def analyze_path_concurrently(self, path: str) -> List[Dict[str, Any]]:
+        """Analyze all Python files in the given path concurrently for potential biases.
+        
+        Args:
+            path: Path to a file or directory to analyze
+            
+        Returns:
+            List of analysis results for each file
+        """
+        path_obj = Path(path)
+        results = []
+
+        async def analyze_single_file(file_path: str):
+            result = await self.analyze_file(file_path)
+            return {
+                "file": file_path,
+                "analysis": result.model_dump() if isinstance(result, BaseModel) else result
+            }
+
+        if path_obj.is_file() and path_obj.suffix == '.py':
+            results.append(await analyze_single_file(str(path_obj)))
+        elif path_obj.is_dir():
+            import asyncio
+            tasks = [analyze_single_file(str(py_file)) for py_file in path_obj.rglob('*.py')]
+            results = await asyncio.gather(*tasks)
 
         return results

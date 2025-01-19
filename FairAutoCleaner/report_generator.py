@@ -44,7 +44,7 @@ class ReportGenerator:
         return f"{shape[0]} rows x {shape[1]} columns"
     
     def write_dict(self, dictionary: Dict, content: list,x):
-        space = "    " * x
+        space = "\t" * x
         for key, value in dictionary.items():
             if isinstance(value, dict):
                 content.append(f"{space}- **{key}**: ")
@@ -53,10 +53,20 @@ class ReportGenerator:
                 content.append(f"{space}- **{key}**: ")
                 self.write_list(value, content,x+1)
             else:
-                content.append(f"{space}- **{key}**: {value}")
+                # write a code snippet
+                if key == "code_snippet":
+                    content.append(f"{space}- **{key}**:")
+                    content.append(f"{space}\t```python")
+                    lines = value.split("\n")
+                    for line in lines:
+                        content.append(f"{space}\t{line}")
+                    # content.append(f"{space}\t{f"""{value}"""}")
+                    content.append(f"{space}\t```")
+                else:
+                    content.append(f"{space}- **{key}**: {value}")
                 
     def write_list(self, list: list, content: list,x):
-        space = "    " * x
+        space = "\t" * x
         for item in list:
             if isinstance(item, dict):
                 if "column" in item:
