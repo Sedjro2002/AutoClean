@@ -56,12 +56,12 @@ class ReportGenerator:
                 # write a code snippet
                 if key == "code_snippet":
                     content.append(f"{space}- **{key}**:")
-                    content.append(f"{space}\t```python")
+                    content.append(f"\t```python")
                     lines = value.split("\n")
                     for line in lines:
-                        content.append(f"{space}\t{line}")
+                        content.append(f"\t{line}")
                     # content.append(f"{space}\t{f"""{value}"""}")
-                    content.append(f"{space}\t```")
+                    content.append(f"\t```")
                 else:
                     content.append(f"{space}- **{key}**: {value}")
                 

@@ -5,7 +5,7 @@
         "columns": [
         ],
         "target": "churn",
-        "sensitive_features": [],
+        "sensitive_features": ["gender"],
         "preprocessing": {
             "dim_reduction": {
                 "enabled": true,

@@ -9,8 +9,6 @@ import pandas as pd
 from loguru import logger
 import ydata_profiling
 from FairAutoCleaner.normalizer import DataNormalizer
-from FairAutoCleaner.dim_reduction import DimensionalityReducer
-from FairAutoCleaner.audit import AutoCleanAudit, AuditLogger
 from FairAutoCleaner.modules import *
 import json
 
@@ -18,7 +16,7 @@ class AutoClean:
 
     def __init__(self, input_data, output_folder, mode='auto', duplicates=False, missing_num=False, missing_categ=False, 
                  encode_categ=False, extract_datetime=False, outliers=False, outlier_param=1.5, 
-                 logfile=True, verbose=False, config: dict = {}, audit_logger=None):  
+                 logfile=True, verbose=False, config = {}, audit_logger=None):  
         '''
         input_data (dataframe)..........Pandas dataframe
         output_folder (str)............Path to folder where output will be saved
@@ -323,17 +321,17 @@ class AutoClean:
         )
         
         # Normalization
-        if self.config.get('preprocessing', {}).get('normalization', {}).get('enabled', False):
+        if self.config.get('dataset_config', {}).get('dataset', {}).get('preprocessing', {}).get('normalization', {}).get('enabled', False)==True:
             start_time = self.audit_logger.start_operation(
                 "normalization",
                 "Normalize numerical features",
-                self.config['preprocessing']['normalization'],
+                self.config['dataset_config']['dataset']['preprocessing']['normalization'],
                 df
             )
             df_before = df.copy()
             normalizer = DataNormalizer(
-                method=self.config['preprocessing']['normalization'].get('method', 'standard'),
-                exclude_features=self.config['preprocessing']['normalization'].get('exclude_features', [])
+                method=self.config['dataset_config']['dataset']['preprocessing']['normalization'].get('method', 'standard'),
+                exclude_features=self.config['dataset_config']['dataset']['preprocessing']['normalization'].get('exclude_features', [])
             )
             df = normalizer.fit_transform(df)
             changes = self.audit_logger.log_dataframe_changes("normalization", df_before, df)
@@ -341,41 +339,41 @@ class AutoClean:
             self.audit_logger.complete_operation(
                 "normalization",
                 "Normalize numerical features",
-                self.config['preprocessing']['normalization'],
+                self.config['dataset_config']['dataset']['preprocessing']['normalization'],
                 start_time,
                 df_before,
                 df,
                 changes
             )
             
-        # Dimensionality reduction
-        if self.config.get('preprocessing', {}).get('dim_reduction', {}).get('enabled', False):
-            start_time = self.audit_logger.start_operation(
-                "dimensionality_reduction",
-                "Reduce data dimensionality",
-                self.config['preprocessing']['dim_reduction'],
-                df
-            )
-            df_before = df.copy()
-            reducer = DimensionalityReducer(
-                method=self.config['preprocessing']['dim_reduction'].get('method', 'pca'),
-                n_components=self.config['preprocessing']['dim_reduction'].get('n_components'),
-                target_explained_variance=self.config['preprocessing']['dim_reduction'].get('target_explained_variance', 0.95)
-            )
-            reduced_data, reduction_metadata = reducer.fit_transform(df)
-            reduced_cols = [f'component_{i+1}' for i in range(reduced_data.shape[1])]
-            df = pd.DataFrame(reduced_data, columns=reduced_cols, index=df.index)
+        # # Dimensionality reduction
+        # if self.config.get('dataset_config', {}).get('dataset', {}).get('preprocessing', {}).get('dim_reduction', {}).get('enabled', False)==True:
+        #     start_time = self.audit_logger.start_operation(
+        #         "dimensionality_reduction",
+        #         "Reduce data dimensionality",
+        #         self.config['dataset_config']['dataset']['preprocessing']['dim_reduction'],
+        #         df
+        #     )
+        #     df_before = df.copy()
+        #     reducer = DimensionalityReducer(
+        #         method=self.config['dataset_config']['dataset']['preprocessing']['dim_reduction'].get('method', 'pca'),
+        #         n_components=self.config['dataset_config']['dataset']['preprocessing']['dim_reduction'].get('n_components'),
+        #         target_explained_variance=self.config['dataset_config']['dataset']['preprocessing']['dim_reduction'].get('target_explained_variance', 0.95)
+        #     )
+        #     reduced_data, reduction_metadata = reducer.fit_transform(df)
+        #     reduced_cols = [f'component_{i+1}' for i in range(reduced_data.shape[1])]
+        #     df = pd.DataFrame(reduced_data, columns=reduced_cols, index=df.index)
             
-            changes = self.audit_logger.log_dataframe_changes("dimensionality_reduction", df_before, df)
-            changes.update(reduction_metadata)
-            self.audit_logger.complete_operation(
-                "dimensionality_reduction",
-                "Reduce data dimensionality",
-                self.config['preprocessing']['dim_reduction'],
-                start_time,
-                df_before,
-                df,
-                changes
-            )
+        #     changes = self.audit_logger.log_dataframe_changes("dimensionality_reduction", df_before, df)
+        #     changes.update(reduction_metadata)
+        #     self.audit_logger.complete_operation(
+        #         "dimensionality_reduction",
+        #         "Reduce data dimensionality",
+        #         self.config['dataset_config']['dataset']['preprocessing']['dim_reduction'],
+        #         start_time,
+        #         df_before,
+        #         df,
+        #         changes
+        #     )
             
         return df

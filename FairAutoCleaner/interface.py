@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Optional, Union, Tuple
 
 from .config import Config
+from FairAutoCleaner.dim_reduction import DimensionalityReducer
 from .audit import AutoCleanAudit, AuditLogger
 from .data_processor import DataProcessor
 from .autoclean import AutoClean
@@ -50,7 +51,7 @@ def process_dataset(
 
         # Run AutoClean
         cleaned_data = AutoClean(
-            df, audit_logger=audit_logger, output_folder=output_path
+            df, audit_logger=audit_logger, output_folder=output_path, config=config.__dict__
         ).output
         
         # Save cleaned dataset
@@ -74,6 +75,41 @@ def process_dataset(
         if mitigated_data is not None:
             mitigated_data_path = output_path / "mitigated_data.csv"
             # mitigated_data.to_csv(mitigated_data_path, index=False)
+
+
+        # Dimensionality reduction
+        if config.dataset_config.get('dataset', {}).get('preprocessing', {}).get('dim_reduction', {}).get('enabled', False)==True:
+            start_time = audit_logger.start_operation(
+                "dimensionality_reduction",
+                "Reduce data dimensionality",
+                config.dataset_config['dataset']['preprocessing']['dim_reduction'],
+                cleaned_data
+            )
+            df_before = cleaned_data.copy()
+            reducer = DimensionalityReducer(
+                method=config.dataset_config['dataset']['preprocessing']['dim_reduction'].get('method', 'pca'),
+                n_components=config.dataset_config['dataset']['preprocessing']['dim_reduction'].get('n_components'),
+                target_explained_variance=config.dataset_config['dataset']['preprocessing']['dim_reduction'].get('target_explained_variance', 0.95)
+            )
+            reduced_data, reduction_metadata = reducer.fit_transform(cleaned_data)
+            reduced_cols = [f'component_{i+1}' for i in range(reduced_data.shape[1])]
+            cleaned_data = pd.DataFrame(reduced_data, columns=reduced_cols, index=cleaned_data.index)
+            
+            changes = audit_logger.log_dataframe_changes("dimensionality_reduction", df_before, cleaned_data)
+            changes.update(reduction_metadata)
+            audit_logger.complete_operation(
+                "dimensionality_reduction",
+                "Reduce data dimensionality",
+                config.dataset_config['dataset']['preprocessing']['dim_reduction'],
+                start_time,
+                df_before,
+                cleaned_data,
+                changes
+            )
+            dim_red_data_path = output_path / "dim_red_data.csv"
+            cleaned_data.to_csv(dim_red_data_path, index=False)
+
+
 
 
         # Run code analysis

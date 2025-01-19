@@ -112,9 +112,9 @@ class DimensionalityReducer:
         transformed = self.model.fit_transform(X_scaled)
         
         metadata = {
-            'explained_variance_ratio': self.model.explained_variance_ratio_.tolist(),
-            'n_components': self.n_components,
-            'total_variance_explained': sum(self.model.explained_variance_ratio_)
+            'explained_variance_ratio': [float(v) for v in self.model.explained_variance_ratio_],
+            'n_components': int(self.n_components),
+            'total_variance_explained': float(sum(self.model.explained_variance_ratio_))
         }
         
         logger.info(f"PCA reduced dimensions from {X_scaled.shape[1]} to {self.n_components}")
