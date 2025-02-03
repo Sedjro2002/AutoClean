@@ -1,0 +1,281 @@
+\chapter{MATERIEL ET METHODES}
+
+Cette section présente en détail l'environnement technique, les outils et les méthodes utilisés pour développer FairAutoClean, un outil de prétraitement automatique et éthique des données.
+
+\section{MATERIEL}
+
+\subsection{Analyse des besoins fonctionnels et techniques}
+
+\subsubsection{Analyse des besoins fonctionnels}
+
+Le développement de FairAutoClean répond à plusieurs besoins fonctionnels essentiels :
+
+\paragraph{Prétraitement automatique et efficient des données}
+Il a pour objectif de nettoyer les données en supprimant les doublons, en gérant les valeurs manquantes, en détectant et en traitant les valeurs aberrantes, en détectant et en convertissant les colonnes de date, en encodant les colonnes catégoriques et en normalisant les colonnes numériques.
+
+\begin{itemize}
+    \item \textbf{Suppression des doublons} : Identification et élimination des enregistrements redondants pour garantir l'unicité des données
+    \item \textbf{Gestion des valeurs manquantes} : Implémentation de plusieurs stratégies :
+    \begin{itemize}
+        \item Imputation par régression pour les données numériques
+        \item Imputation KNN pour préserver les relations entre variables
+        \item Suppression intelligente des lignes avec trop de valeurs manquantes
+    \end{itemize}
+    \item \textbf{Gestion des valeurs aberrantes} :
+    \begin{itemize}
+        \item Détection par la méthode IQR (Inter-Quartile Range)
+        \item Traitement par winsorisation pour limiter l'impact des valeurs extrêmes
+    \end{itemize}
+    \item \textbf{Détection et conversion des colonnes de date} :
+    \begin{itemize}
+        \item Identification automatique des formats de date
+        \item Standardisation des formats temporels
+    \end{itemize}
+    \item \textbf{Encodage des colonnes catégoriques} :
+    \begin{itemize}
+        \item Label Encoding pour les variables ordinales
+        \item One-Hot Encoding pour les variables nominales
+    \end{itemize}
+    \item \textbf{Normalisation des colonnes numériques} :
+    \begin{itemize}
+        \item Standardisation (moyenne=0, écart-type=1)
+        \item Min-Max Scaling
+        \item Robust Scaling pour les données avec outliers
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Réduction de dimension des données}
+\begin{itemize}
+    \item \textbf{PCA (Principal Component Analysis)} :
+    \begin{itemize}
+        \item Réduction de la dimensionnalité tout en préservant la variance
+        \item Configuration du nombre de composantes ou du pourcentage de variance à conserver
+    \end{itemize}
+    \item \textbf{Autoencoders} :
+    \begin{itemize}
+        \item Réduction non-linéaire de la dimensionnalité
+        \item Architecture adaptative selon la complexité des données
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Détection automatique des colonnes sensibles}
+\begin{itemize}
+    \item \textbf{Détection algorithmique} :
+    \begin{itemize}
+        \item Utilisation de listes de mots-clés prédéfinis
+        \item Analyse des patterns dans les noms de colonnes
+    \end{itemize}
+    \item \textbf{Détection par IA} :
+    \begin{itemize}
+        \item Utilisation de modèles de langage (LLM) pour l'analyse contextuelle
+        \item Évaluation du niveau de sensibilité sur une échelle de 0 à 10
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Analyse des besoins techniques}
+
+\paragraph{Langage de programmation}
+\begin{itemize}
+    \item Python choisi pour :
+    \begin{itemize}
+        \item Sa richesse en bibliothèques de data science
+        \item Sa communauté active
+        \item Sa facilité d'intégration avec les outils d'IA
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Environnement de développement}
+\begin{itemize}
+    \item IDE moderne avec support Python
+    \item Outils de versioning (Git)
+    \item Environnement virtuel pour la gestion des dépendances
+\end{itemize}
+
+\subsection{Environnement technique}
+
+\paragraph{Configuration matérielle}
+\begin{itemize}
+    \item Ordinateur portable HP laptop 14s-dq2395nia
+    \item Processeur : 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+    \item RAM : 16,0 Go
+    \item Système d'exploitation : Windows 11
+\end{itemize}
+
+\section{METHODES}
+
+\subsection{Architecture logicielle}
+
+L'architecture de FairAutoClean est conçue de manière modulaire pour assurer la maintenabilité et l'extensibilité du système.
+
+\paragraph{Structure générale}
+\begin{itemize}
+    \item Architecture en couches avec séparation claire des responsabilités
+    \item Modules indépendants et réutilisables
+    \item Interface unifiée via le module \texttt{interface.py}
+\end{itemize}
+
+\paragraph{Composants principaux}
+\begin{itemize}
+    \item \textbf{AutoClean} : Classe principale gérant le pipeline de nettoyage
+    \item \textbf{DataProcessor} : Gestion du chargement et du prétraitement des données
+    \item \textbf{FairnessAnalyzer} : Analyse et mitigation des biais
+    \item \textbf{AICodeAnalyzer} : Analyse éthique du code source
+    \item \textbf{ReportGenerator} : Génération des rapports d'audit
+\end{itemize}
+
+\subsection{Implémentation détaillée des fonctionnalités}
+
+\paragraph{Prétraitement des données (\texttt{modules.py})}
+
+\begin{lstlisting}[language=Python, caption=Gestion des valeurs manquantes]
+class MissingValues:
+    def handle(self, df, _n_neighbors=3):
+        # Stratégies d'imputation :
+        # - Régression linéaire pour données numériques
+        # - Régression logistique pour données catégorielles
+        # - KNN avec k=3 par défaut
+        # - Imputation simple (moyenne, médiane, mode)
+\end{lstlisting}
+
+\paragraph{Analyse d'équité (\texttt{fairness\_analyzer.py})}
+
+\begin{lstlisting}[language=Python, caption=Détection des attributs sensibles]
+def _detect_sensitive_features(self):
+    # Utilisation de l'IA pour détecter les colonnes sensibles
+    # Évaluation du niveau de sensibilité (0-10)
+    # Génération de justifications et recommandations
+\end{lstlisting}
+
+\paragraph{Analyse du code (\texttt{ai\_code\_analyzer.py})}
+
+\begin{lstlisting}[language=Python, caption=Analyse statique des biais]
+class CodeBiasAnalyzer:
+    BIAS_INDICATORS = {
+        'data_filtering': {
+            'keywords': ['filter', 'drop', 'remove', 'exclude'],
+            'risk': 'Selection bias through data filtering'
+        },
+        'feature_engineering': {
+            'keywords': ['encode', 'transform', 'normalize'],
+            'risk': 'Potential encoding bias'
+        }
+    }
+\end{lstlisting}
+
+\paragraph{Réduction de dimension (\texttt{dim\_reduction.py})}
+
+\begin{lstlisting}[language=Python, caption=Implémentation Autoencoder]
+class AutoEncoder(keras.Model):
+    def __init__(self, input_dim, encoding_dim):
+        # Architecture :
+        # - Couche d'entrée (input_dim)
+        # - Couches cachées (encoding_dim * 2)
+        # - Couche latente (encoding_dim)
+\end{lstlisting}
+
+\paragraph{Audit et traçabilité (\texttt{audit.py})}
+
+\begin{lstlisting}[language=Python, caption=Structure des métriques d'opération]
+@dataclass
+class OperationMetrics:
+    start_time: str
+    end_time: str
+    duration_seconds: float
+    input_shape: tuple
+    output_shape: tuple
+    changes_made: Dict[str, Any]
+    success: bool
+\end{lstlisting}
+
+\subsection{Flux de données et architecture système}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{architecture_diagram.pdf}
+\caption{Architecture du système FairAutoClean}
+\label{fig:architecture}
+\end{figure}
+
+Le système est organisé en plusieurs couches :
+
+\begin{enumerate}
+    \item \textbf{Couche d'entrée}
+    \begin{itemize}
+        \item Données d'entrée
+        \item Configuration JSON
+    \end{itemize}
+
+    \item \textbf{Couche de traitement principal}
+    \begin{itemize}
+        \item Processeur de données
+        \item Nettoyeur de données
+        \item Normalisateur
+        \item Réduction de dimension
+        \item Ingénierie des caractéristiques
+    \end{itemize}
+
+    \item \textbf{Couche d'équité et d'analyse}
+    \begin{itemize}
+        \item Analyseur d'équité
+        \item Analyseur de code
+        \item Système d'audit
+    \end{itemize}
+
+    \item \textbf{Couche d'interface}
+    \begin{itemize}
+        \item Interface CLI
+        \item Package Python
+        \item Gestion de la configuration
+    \end{itemize}
+
+    \item \textbf{Système d'agent IA}
+    \begin{itemize}
+        \item Intégration LLM
+        \item Gestionnaire de prompts système
+    \end{itemize}
+
+    \item \textbf{Sortie et rapports}
+    \begin{itemize}
+        \item Générateur de rapports
+        \item Générateur de profils
+        \item Générateur de pistes d'audit
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Configuration et utilisation}
+
+\paragraph{Interface en ligne de commande}
+\begin{lstlisting}[language=Python, caption=Interface CLI]
+def main():
+    parser.add_argument('--config', type=str, required=True)
+    parser.add_argument('--dataset', type=str, required=True)
+    parser.add_argument('--output', type=str, required=True)
+\end{lstlisting}
+
+\paragraph{Format de configuration}
+\begin{lstlisting}[language=json, caption=Exemple de configuration JSON]
+{
+    "dataset_config": {
+        "sensitive_features": ["gender", "race"],
+        "target": "outcome",
+        "preprocessing": {
+            "normalization": {
+                "enabled": true,
+                "method": "standard"
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+\paragraph{Pipeline de traitement}
+\begin{lstlisting}[language=Python, caption=Pipeline principal]
+def process_dataset(config_path, dataset_path, output_path):
+    # 1. Chargement et validation de la configuration
+    # 2. Prétraitement des données
+    # 3. Analyse d'équité
+    # 4. Génération des rapports
+    # 5. Sauvegarde des résultats
+\end{lstlisting}
+
+Cette implémentation détaillée montre comment les différents composants s'articulent pour former un système cohérent de prétraitement équitable des données.
