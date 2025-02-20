@@ -444,9 +444,17 @@ class Adjust:
             for feature in cols:
                 try:
                     # convert features encoded as strings to type datetime ['D','M','Y','h','m','s']
-                    df[feature] = pd.to_datetime(
-                        df[feature], errors='ignore'
-                    )
+                    try:
+                        df[feature] = pd.to_datetime(
+                            df[feature], errors='raise'
+                        )
+                    except Exception as e:
+                        logger.error(
+                            'Error converting feature "{}" to datetime: {}',
+                            feature,
+                            str(e),
+                        )
+                        raise
                     df["Day"] = pd.to_datetime(df[feature]).dt.day
 
                     if self.extract_datetime in ["auto", "M", "Y", "h", "m", "s"]:
@@ -902,8 +910,3 @@ class FieldAssignment:
 
     #     return df, new_cols_categ, new_cols_flag
 
-
-class Normalization:
-    
-    def handle(self, df):
-        return

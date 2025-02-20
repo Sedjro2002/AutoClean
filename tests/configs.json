@@ -25,41 +25,5 @@
     ],
     "code_analysis_type": "ai",
     "columns": {
-        "roll_no": {
-            "description": "Represent the roll number of the student."
-        },
-        "gender": {
-            "description": "Useful for analyzing performance differences between male and female students."
-        },
-        "race_ethnicity": {
-            "description": "Allows analysis of academic performance trends across different racial or ethnic groups"
-        },
-        "parental_level_of_education": {
-            "description": "Indicates the educational background of the student's family"
-        },
-        "lunch": {
-            "description": "Shows whether students receive a free or reduced lunch, which is often a socioeconomic indicator"
-        },
-        "test_preparation_course": {
-            "description": "This tells whether students completed a test prep course, which could impact their performance."
-        },
-        "math_score": {
-            "description": "Provides a measure of each student’s performance in math, used to calculate averages or trends across various demographics."
-        },
-        "reading_score": {
-            "description": "Measures performance in reading, allowing for insights into literacy and comprehension levels among students"
-        },
-        "writing_score": {
-            "description": "Evaluates students' writing skills, which can be analyzed to assess overall literacy and expression"
-        },
-        "science_score": {
-            "description": "Evaluates students' Science knowledge, which can be analyzed to assess overall scentific knowledge of the student."
-        },
-        "total_score": {
-            "description": "Shows the total number achieved by the student out of 400."
-        },
-        "grade": {
-            "description": "Gade achieved by the student. 'A' grade if Total marks >= 320, 'B' grade if Total marks >= 250, 'C' grade if Total marks >= 200, 'D' grade if Total marks >= 150 and Fail if <150."
-        }
     }
 }
