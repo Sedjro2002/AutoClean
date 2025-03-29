@@ -57,12 +57,6 @@ class Feature(BaseModel):
     recommendation: str | None = Field(None, description="Recommendation for handling the risk if the feature is sensitive")
 
 
-class Test(BaseModel):
-    # response: str
-    joke: str
-    answer: str
-
-
 class Features(BaseModel):
     features: list[Feature]
 

@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\title{Encodage des valeurs catégorielles}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Les données catégorielles (sexe, pays, catégories produits) nécessitent une transformation numérique pour être exploitables par les algorithmes d'apprentissage automatique. Deux approches principales existent :
+
+\paragraph*{Label Encoding (Encodage ordinal)}
+
+Convertit chaque catégorie en valeur numérique unique via une bijection :
+
+\begin{equation}
+f: C \rightarrow \mathbb{N} \quad \text{où} \quad C = \{c_1, c_2, ..., c_n\}
+\end{equation}
+
+Exemple : ["chat", "chien", "oiseau"] $\rightarrow$ [0, 1, 2]
+
+\textbf{Avantages}: \\
+\begin{itemize}
+\item Préserve la relation ordinale lorsque celle-ci existe
+\item Réduction de dimensionnalité (O(n) vs O(n²) pour le One-Hot)
+\end{itemize}
+
+\textbf{Limitations}: \\
+\begin{itemize}
+\item Introduction artificielle d'ordre sémantique (0 < 1 < 2)
+\item Risque de biais algorithmique pour les modèles sensibles à la magnitude (régression linéaire, k-NN)
+\end{itemize}
+
+\paragraph*{One-Hot Encoding}
+
+Crée des vecteurs binaires orthogonaux pour chaque catégorie :
+
+\begin{equation}
+\text{"chien"} \rightarrow [0, 1, 0]
+\end{equation}
+
+\section{Implémentation scientifique du LabelEncoder (scikit-learn)}
+
+La classe \texttt{LabelEncoder} de scikit-learn implémente une méthodologie rigoureuse \cite{pedregosa2011scikit} :
+
+\paragraph*{Algorithme sous-jacent}
+
+\begin{lstlisting}[language=Python]
+class LabelEncoder:
+    def fit(self, y):
+        # Étape 1 : Extraction des classes uniques
+        classes = np.unique(y)
+        
+        # Étape 2 : Tri lexicographique (ordre ASCII)
+        if np.issubdtype(classes.dtype, np.number):
+            self.classes_ = np.sort(classes)
+        else:
+            self.classes_ = np.sort(classes.astype('O'))
+        
+        # Étape 3 : Création du dictionnaire de mapping
+        self.mapping_ = {cls: i for i, cls in enumerate(self.classes_)}
+        
+    def transform(self, y):
+        # Application du mapping avec vérification des valeurs inconnues
+        return np.array([self.mapping_[cls] for cls in y])
+\end{lstlisting}
+
+% \paragraph*{Complexité algorithmique}
+
+% \begin{itemize}
+% \item \textbf{Temps} : O(n log n) pour le tri des catégories
+% \item \textbf{Espace} : O(n) pour le stockage des mappings
+% \end{itemize}
+
+% \paragraph*{Garanties mathématiques}
+
+% \begin{itemize}
+% \item \textbf{Injectivité} : $\forall(c_1, c_2) \in C^2, c_1 \neq c_2 \Rightarrow f(c_1) \neq f(c_2)$
+% \item \textbf{Surjectivité} : $\forall i \in [0, n-1], \exists c \in C | f(c) = i$
+% \item \textbf{Ordre préservé} : $c_1 < c_2 \Rightarrow f(c_1) < f(c_2)$ (pour les catégories ordonnées)
+% \end{itemize}
+
+% \section{Intégration éthique dans notre outil}
+
+% Notre implémentation étend le LabelEncoder standard avec :
+
+% \paragraph*{Détection automatique de l'ordinabilité}
+
+% \begin{lstlisting}[language=Python]
+% def _is_ordinal(feature):
+%     try:
+%         pd.to_numeric(feature)
+%         return True
+%     except ValueError:
+%         return False
+% \end{lstlisting}
+
+% \paragraph*{Vérification des biais de représentation}
+
+% \begin{lstlisting}[language=Python]
+% if len(encoder.classes_) / len(data) < 0.01:
+%     warn("Risque de sous-représentation catégorielle")
+% \end{lstlisting}
+
+% \paragraph*{Journalisation explicative}
+
+% \begin{lstlisting}[language=Python]
+% {
+%   "transformation": "LabelEncoding",
+%   "mapping": {"homme": 0, "femme": 1},
+%   "warning": "Aucune relation ordinale détectée - utilisation déconseillée"
+% }
+% \end{lstlisting}
+
+% \section{Validation scientifique}
+
+% Des tests statistiques garantissent la robustesse :
+
+% \begin{itemize}
+% \item \textbf{Test $\chi^2$ d'indépendance} pour détecter les corrélations illégitimes
+% \item \textbf{Analyse de variance (ANOVA)} pour évaluer l'impact sur la target
+% \item \textbf{Distance de Kolmogorov-Smirnov} pour vérifier la conservation des distributions
+% \end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

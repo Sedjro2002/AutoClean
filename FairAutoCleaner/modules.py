@@ -23,7 +23,7 @@ Modules are used by the AutoClean pipeline for data cleaning and preprocessing.
 
 class MissingValues:
 
-    def handle(self, df, _n_neighbors=3):
+    def handle(self, df: pd.DataFrame, _n_neighbors=3):
         # function for handling missing values in the data
         if self.missing_num or self.missing_categ:
             logger.info(
@@ -112,7 +112,7 @@ class MissingValues:
             logger.info("Skipped handling of missing values")
         return df
 
-    def _impute(self, df, imputer, type):
+    def _impute(self, df: pd.DataFrame, imputer, type):
         # function for imputing missing values in the data
         cols_num = df.select_dtypes(include=np.number).columns
 
@@ -203,7 +203,7 @@ class MissingValues:
                             )
         return df
 
-    def _lin_regression_impute(self, df, model):
+    def _lin_regression_impute(self, df: pd.DataFrame, model):
         # function for predicting missing values with linear regression
         cols_num = df.select_dtypes(include=np.number).columns
         mapping = dict()
@@ -263,7 +263,7 @@ class MissingValues:
                 pass
         return df
 
-    def _log_regression_impute(self, df, model):
+    def _log_regression_impute(self, df: pd.DataFrame, model):
         # function for predicting missing values with logistic regression
         cols_num = df.select_dtypes(include=np.number).columns
         mapping = dict()
@@ -320,7 +320,7 @@ class MissingValues:
                 pass
         return df
 
-    def _delete(self, df, type):
+    def _delete(self, df: pd.DataFrame, type):
         # function for deleting missing values
         cols_num = df.select_dtypes(include=np.number).columns
         if type == "num":
@@ -340,7 +340,7 @@ class MissingValues:
 
 class Outliers:
 
-    def handle(self, df):
+    def handle(self, df: pd.DataFrame):
         # function for handling of outliers in the data
         if self.outliers:
             logger.info(
@@ -362,7 +362,7 @@ class Outliers:
             logger.info("Skipped handling of outliers")
         return df
 
-    def _winsorization(self, df):
+    def _winsorization(self, df: pd.DataFrame):
         # function for outlier winsorization
         cols_num = df.select_dtypes(include=np.number).columns
         for feature in cols_num:
@@ -397,7 +397,7 @@ class Outliers:
                 )
         return df
 
-    def _delete(self, df):
+    def _delete(self, df: pd.DataFrame):
         # function for deleting outliers in the data
         cols_num = df.select_dtypes(include=np.number).columns
         for feature in cols_num:
@@ -417,11 +417,11 @@ class Outliers:
                 )
         return df
 
-    def _compute_bounds(self, df, feature):
+    def _compute_bounds(self, df: pd.DataFrame, feature):
         # function that computes the lower and upper bounds for finding outliers in the data
         featureSorted = sorted(df[feature])
 
-        q1, q3 = np.percentile(featureSorted, [25, 75])
+        q1, q3 = np.percentile(featureSorted, [5, 95])
         iqr = q3 - q1
 
         lb = q1 - (self.outlier_param * iqr)
@@ -432,7 +432,7 @@ class Outliers:
 
 class Adjust:
 
-    def convert_datetime(self, df):
+    def convert_datetime(self, df: pd.DataFrame):
         # function for extracting of datetime values in the data
         if self.extract_datetime:
             logger.info(
@@ -514,7 +514,7 @@ class Adjust:
             logger.info("Skipped datetime feature conversion")
         return df
 
-    def round_values(self, df, input_data):
+    def round_values(self, df: pd.DataFrame, input_data):
         # function that checks datatypes of features and converts them if necessary
         if (
             self.duplicates
@@ -579,7 +579,7 @@ class Adjust:
 
 class EncodeCateg:
 
-    def handle(self, df):
+    def handle(self, df: pd.DataFrame):
 
         if self.encode_categ:
             # if not isinstance(self.encode_categ, list):
@@ -673,7 +673,7 @@ class EncodeCateg:
             logger.info("Skipped encoding of categorical features")
         return df
 
-    def _to_onehot(self, df, feature, limit=10):
+    def _to_onehot(self, df: pd.DataFrame, feature, limit=10):
         # function that encodes categorical features to OneHot encodings
         one_hot = pd.get_dummies(df[feature], prefix=feature)
         if one_hot.shape[1] > limit:
@@ -687,7 +687,7 @@ class EncodeCateg:
         # df.drop(feature, inplace=True, axis=1)
         return df
 
-    def _to_label(self, df, feature):
+    def _to_label(self, df: pd.DataFrame, feature):
         # function that encodes categorical features to label encodings
         le = preprocessing.LabelEncoder()
 
@@ -708,7 +708,7 @@ class EncodeCateg:
 
 class Duplicates:
 
-    def handle(self, df):
+    def handle(self, df: pd.DataFrame):
         if self.duplicates:
             logger.info(
                 'Started handling of duplicates... Method: "{}"',

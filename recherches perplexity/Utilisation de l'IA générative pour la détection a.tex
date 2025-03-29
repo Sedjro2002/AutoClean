@@ -1,0 +1,67 @@
+\section{Utilisation de l'IA générative pour la détection automatique des colonnes sensibles et l'analyse de code}
+
+Dans le cadre de ce projet, nous avons exploité les capacités de l'IA générative pour automatiser deux tâches cruciales : la détection des colonnes sensibles dans un jeu de données et l'analyse du code de prétraitement pour identifier d'éventuels biais. Cette approche s'inscrit dans une démarche d'éthique et de transparence, visant à améliorer la qualité et la fiabilité des données utilisées dans les processus d'apprentissage automatique \cite{ref5}.
+
+\subsection{Détection automatique des colonnes sensibles}
+
+Pour la détection des colonnes sensibles, nous avons implémenté un agent intelligent basé sur le modèle OpenAI, en utilisant le package Pydantic pour la validation et la sérialisation des données \cite{ref1}. L'agent est conçu pour évaluer chaque feature du dataset selon plusieurs critères de sensibilité :
+
+\begin{itemize}
+    \item Type et contenu des données
+    \item Contexte au sein du jeu de données
+    \item Potentiel de révélation d'informations personnelles ou confidentielles
+    \item Risque de discrimination ou de biais
+\end{itemize}
+
+L'agent attribue un score de sensibilité sur une échelle de 0 à 10, où 0-2 représente des informations non sensibles et publiques, tandis que 9-10 indique des données hautement sensibles présentant un risque élevé \cite{ref2}. Cette approche permet une évaluation nuancée et contextuelle de la sensibilité des données.
+
+\begin{lstlisting}[language=Python,caption=Modèle Feature pour la détection de sensibilité]
+class Feature(BaseModel):
+    is_sensitive: bool = Field(..., description="Whether the feature is sensitive")
+    sensibility_level: Annotated[
+        int, Field(ge=0, le=10, description="The sensibility level of the feature")
+    ]
+    justification: str | None = Field(None, description="Justification if the feature is sensitive")
+    recommendation: str | None = Field(None, description="Recommendation for handling the risk if the feature is sensitive")
+\end{lstlisting}
+
+L'utilisation de Pydantic pour définir le modèle \texttt{Feature} assure une structure cohérente et validée pour les résultats de l'analyse, facilitant ainsi leur interprétation et leur intégration dans le processus de prétraitement des données \cite{ref3}.
+
+\subsection{Analyse du code de prétraitement}
+
+Pour l'analyse du code de prétraitement, nous avons développé un analyseur de code basé sur l'IA, capable de détecter les biais potentiels et les problèmes éthiques dans les pipelines de traitement de données. Cette approche s'inspire des travaux récents sur l'utilisation de l'IA pour l'analyse statique de code \cite{ref4}.
+
+L'analyseur utilise un modèle de langage avancé, configuré avec un prompt système spécialisé :
+
+\begin{lstlisting}[language=Python,caption=Prompt système pour l'analyse éthique du code]
+self.system_prompt = """You are an expert AI ethics advisor specializing in analyzing Python code for potential ethical biases. Your task is to:
+
+1. Identify code sections that could introduce ethical biases in data processing or model training
+2. Focus on:
+   - Data filtering or selection that might exclude certain groups
+   - Feature engineering that could amplify biases
+   - Preprocessing steps that might disproportionately affect certain demographics
+   - Direct or indirect use of sensitive attributes
+   - Sampling methods that might not preserve demographic distributions
+3. Provide specific line numbers and explanations for problematic code
+4. Rate the overall sensitivity level from 0-10
+5. Offer concrete recommendations for addressing the issues
+6. Assess the severity of each finding (low, medium, high, critical)
+
+Be thorough but avoid false positives. Focus on real ethical concerns rather than general code quality issues."""
+\end{lstlisting}
+
+Ce prompt guide l'IA pour effectuer une analyse approfondie du code, en se concentrant sur les aspects éthiques et les biais potentiels. L'analyseur produit des résultats structurés, incluant l'identification des sections problématiques, une explication détaillée des problèmes détectés, et des recommandations pour les résoudre \cite{ref5}.
+
+\begin{lstlisting}[language=Python,caption=Modèle pour les résultats de l'analyse de biais]
+class CodeBiasAnalysisResult(BaseModel):
+    is_problematic: bool = Field(..., description="Whether the code contains potential ethical issues")
+    sensitivity_level: int = Field(..., ge=0, le=10, description="The sensitivity level of the potential biases (0-10)")
+    problematic_sections: List[CodeSection] = Field(..., description="List of problematic code sections with metadata")
+    recommendations: List[str] = Field(..., description="List of recommendations for addressing the potential biases")
+    severity: AnalysisSeverity = Field(..., description="Overall severity of the identified issues")
+\end{lstlisting}
+
+Cette approche permet une évaluation systématique et reproductible du code de prétraitement, contribuant ainsi à l'objectif global de transparence et d'éthique dans le traitement des données \cite{ref6}.
+
+L'utilisation combinée de ces deux techniques - la détection des colonnes sensibles et l'analyse du code - offre une approche holistique pour identifier et atténuer les risques éthiques dans le processus de prétraitement des données. Cette méthodologie s'aligne sur les principes émergents de l'IA responsable et de l'éthique des données, contribuant à renforcer la confiance dans les systèmes d'apprentissage automatique \cite{ref5}.

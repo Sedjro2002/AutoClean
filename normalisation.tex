@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\title{Normalisation dans le prétraitement des données}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+La normalisation est une étape cruciale du prétraitement des données visant à \textbf{uniformiser l'échelle des caractéristiques} pour éviter les biais algorithmiques. Elle permet aux modèles d'apprentissage automatique de traiter équitablement toutes les variables, indépendamment de leurs unités de mesure initiales.
+
+\paragraph*{Fondements mathématiques}
+Soit un ensemble de données 
+\[
+X = \{x_1, x_2, ..., x_n\}
+\]
+où chaque 
+\[
+x_i
+\]
+représente une observation avec 
+\[
+m
+\]
+caractéristiques. La normalisation transforme ces données selon :
+
+\[
+X' = \frac{X - \text{centrage}}{\text{échelle}}
+\]
+
+Trois stratégies principales existent dans \texttt{sklearn.preprocessing} :
+
+\paragraph*{StandardScaler : Standardisation Z-Score}
+
+\textbf{Algorithme}: \\
+Centre les données sur la moyenne ($\mu=0$) et les scale selon l'écart-type ($\sigma=1$).
+
+\textbf{Implémentation}: \\
+\begin{lstlisting}[language=Python]
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler(
+    with_mean=True,  # Activation du centrage
+    with_std=True    # Activation du scaling
+)
+X_normalized = scaler.fit_transform(X)
+\end{lstlisting}
+
+\textbf{Mécanisme interne}: \\
+\begin{itemize}
+    \item Calcule $\mu$ et $\sigma$ pour chaque colonne
+    \item Applique la transformation :
+    \[
+    x' = \frac{x - \mu}{\sigma}
+    \]
+    \item Stocke $\mu$ et $\sigma$ dans \texttt{scaler.mean\_} et \texttt{scaler.scale\_}
+\end{itemize}
+
+\textbf{Cas d'usage}: \\
+\begin{itemize}
+    \item Données approximativement gaussiennes
+    \item Comparaison de variables hétérogènes
+    \item Prérequis pour PCA/SVM/Régression Logistique
+\end{itemize}
+
+\paragraph*{MinMaxScaler : Normalisation par plage}
+
+\textbf{Algorithme}: \\
+Projection linéaire des données dans l'intervalle[^1].
+
+\textbf{Implémentation}: \\
+\begin{lstlisting}[language=Python]
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler(
+    feature_range=(0, 1),  # Plage cible
+    clip=False             # Désactive le clipping des outliers
+)
+X_normalized = scaler.fit_transform(X)
+\end{lstlisting}
+
+\textbf{Mécanisme interne}: \\
+\begin{itemize}
+    \item Détermine $\text{min}(x)$ et $\text{max}(x)$ par colonne
+    \item Applique :
+    \[
+    x' = \frac{x - \text{min}(x)}{\text{max}(x) - \text{min}(x)}
+    \]
+    \item Stocke les paramètres dans \texttt{scaler.data\_min\_} et \texttt{scaler.data\_max\_}
+\end{itemize}
+
+\textbf{Cas d'usage}: \\
+\begin{itemize}
+    \item Réseaux de neurones (entrées bornées)
+    \item Données non-gaussiennes
+    \item Visualisation de données hétérogènes
+\end{itemize}
+
+\paragraph*{RobustScaler : Standardisation robuste}
+
+\textbf{Algorithme}: \\
+Utilise des statistiques robustes aux outliers (médiane et IQR).
+
+\textbf{Implémentation}: \\
+\begin{lstlisting}[language=Python]
+from sklearn.preprocessing import RobustScaler
+
+scaler = RobustScaler(
+    with_centering=True,   # Centrage sur la médiane
+    with_scaling=True,     # Scaling par IQR
+    quantile_range=(25.0, 75.0)  # Définition des quantiles
+)
+X_normalized = scaler.fit_transform(X)
+\end{lstlisting}
+
+\textbf{Mécanisme interne}: \\
+\begin{itemize}
+    \item Calcule médiane $Q_{50}$ et écart interquartile $IQR = Q_{75} - Q_{25}$
+    \item Transforme :
+    \[
+    x' = \frac{x - Q_{50}}{IQR}
+    \]
+    \item Stocke $Q_{50}$ dans \texttt{scaler.center\_} et $IQR$ dans \texttt{scaler.scale\_}
+\end{itemize}
+
+\textbf{Cas d'usage}: \\
+\begin{itemize}
+    \item Données avec outliers extrêmes
+    \item Distributions asymétriques
+    \item Données de mesures physiques bruitées
+\end{itemize}
+
+\end{document}

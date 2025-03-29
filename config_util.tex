@@ -1,0 +1,173 @@
+
+% \section{Architecture Globale}
+% \begin{figure}[h]
+% \centering
+% \begin{minted}{text}
+% graph TD
+%     A[Fichier de Configuration] --> B[Processus Principal]
+%     C[Jeu de Données] --> B
+%     B --> D[Analyse Éthique]
+%     B --> E[Prétraitement]
+%     B --> F[Audit]
+%     D --> G[Rapport d'Équité]
+%     E --> H[Données Nettoyées]
+%     F --> I[Journal d'Audit]
+% \end{minted}
+% \caption{Architecture globale de FairAutoCleaner}
+% \end{figure}
+
+\paragraph*{Configuration de l'Outils}
+
+\subsubsection{Structure du Fichier de Configuration}
+Le fichier JSON de configuration se structure en trois parties principales :
+
+\subsubsection{Métadonnées du Dataset}
+\begin{minted}{json}
+"dataset": {
+    "title": "Jeu de données bancaires",
+    "description": "Données clients pour prédiction d'attrition",
+    "target": "churn",
+    "sensitive_features": ["genre", "age"]
+}
+\end{minted}
+
+\subsubsection{Paramètres de Prétraitement}
+\begin{minted}{json}
+"preprocessing": {
+    "normalization": {
+        "enabled": true,
+        "method": "standard",
+        "exclude_features": ["id_client"]
+    },
+    "dim_reduction": {
+        "enabled": true,
+        "method": "pca",
+        "target_explained_variance": 0.95
+    }
+}
+\end{minted}
+
+\subsubsection{Analyse de Code}
+Cette section optionnelle permet d'analyser les scripts de prétraitement pour détecter d'éventuels biais algorithmiques. Elle offre :
+\begin{itemize}
+    \item La possibilité de spécifier les répertoires à analyser
+    \item Le choix entre analyse syntaxique ou IA
+    \item Un niveau de sensibilité configurable (1-10)
+    \item Une traçabilité complète des analyses effectuées
+    \item Des recommandations concrètes pour corriger les biais détectés
+    \item La génération automatique de rapports détaillés
+\end{itemize}
+
+\begin{minted}{json}
+"code_analysis": {
+    "paths": ["scripts/preprocessing"],
+    "type": "ai",
+    "sensitivity_level": 7,
+    "report_level": "detailed",
+    "exclude_patterns": ["test_*.py"],
+    "max_file_size": 1048576
+}
+\end{minted}
+
+\subsubsection{Validation de la Configuration}
+La classe \texttt{Config} assure la validation des paramètres :
+\begin{minted}{python}
+@dataclass
+class Config:
+    dataset_config: Dict[str, Any]
+    output_dir: Path
+    sample_size: int = 1000
+    profile_threshold: int = 10000
+\end{minted}
+
+\paragraph*{Processus d'Utilisation}
+
+\subsubsection{Workflow Principal}
+\begin{figure}[h]
+\centering
+\begin{minted}{text}
+sequenceDiagram
+    participant U as Utilisateur
+    participant C as CLI
+    participant P as Processus Principal
+    participant A as Audit
+    participant D as Données
+    
+    U->>C: Exécute la commande
+    C->>P: Charge la configuration
+    P->>D: Charge les données
+    P->>P: Analyse éthique
+    P->>P: Prétraitement
+    P->>A: Enregistre les étapes
+    P->>C: Retourne les résultats
+    C->>U: Affiche le statut
+\end{minted}
+\caption{Workflow principal de FairAutoCleaner}
+\end{figure}
+
+Le workflow principal de FairAutoCleaner suit une séquence d'interactions bien définie entre l'utilisateur et les différents composants du système. L'utilisateur initie le processus via l'interface en ligne de commande (CLI) qui orchestre l'exécution des différentes étapes. Le processus principal charge d'abord la configuration et les données, puis effectue l'analyse éthique et le prétraitement tout en enregistrant chaque étape dans le système d'audit. Enfin, les résultats sont retournés à l'utilisateur via l'interface CLI.
+
+\begin{enumerate}
+    \item Initialisation de l'audit
+    \item Chargement des données
+    \item Analyse éthique automatique
+    \item Prétraitement des données
+    \item Génération des rapports
+\end{enumerate}
+
+\subsubsection{Interface en Ligne de Commande}
+\begin{minted}{bash}
+
+python -m FairAutoCleaner \
+    --config configuration.json \
+    --dataset donnees.csv \
+    --output resultats/
+
+
+\end{minted}
+
+\subsubsection{API Python}
+\begin{minted}{python}
+
+from FairAutoCleaner import process_dataset
+resultats = process_dataset(
+    config_path="config.json",
+    dataset_path="data.csv", 
+    output_path="output/"
+)
+
+\end{minted}
+
+\paragraph*{Résultats et Rapports}
+
+\subsubsection{Structure des Sorties}
+\begin{minted}{text}
+
+
+resultats/
+├── cleaned_data.csv
+├── audit_trail.json
+├── fairness_report.md
+├── logs/
+│   └── processing.log
+└── profiles/
+    ├── initial_profile.html
+    └── final_profile.html
+
+    
+\end{minted}
+
+\subsubsection{Journal d'Audit}
+Le fichier JSON d'audit contient :
+\begin{itemize}
+    \item Timestamps des opérations
+    \item Paramètres utilisés
+    \item Métriques de performance
+    \item Avertissements et erreurs
+    \item Détails des transformations
+\end{itemize}
+
+\paragraph*{Conclusion}
+FairAutoCleaner offre une solution complète pour le prétraitement éthique des données, combinant automatisation technique et vigilance éthique. Sa configuration modulaire et ses rapports détaillés en font un outil essentiel pour les projets de science des données responsables.
+
+\end{document}

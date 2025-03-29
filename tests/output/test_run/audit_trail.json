@@ -1,5 +1,5 @@
 {
-    "start_time": "2025-02-19T17:05:24.056276",
+    "start_time": "2025-03-29T12:55:43.653300",
     "end_time": null,
     "total_duration_seconds": null,
     "input_file": null,
@@ -13,16 +13,16 @@
                 "method": "auto"
             },
             "metrics": {
-                "start_time": "2025-02-19T17:05:24.083035",
-                "end_time": "2025-02-19T17:05:24.157273",
-                "duration_seconds": 0.074238,
+                "start_time": "2025-03-29T12:55:43.674030",
+                "end_time": "2025-03-29T12:55:44.044726",
+                "duration_seconds": 0.370696,
                 "input_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "output_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "changes_made": {},
                 "success": true,
@@ -34,116 +34,410 @@
             "operation_name": "missing_value_handling",
             "description": "Handle missing values in the dataset",
             "parameters": {
-                "numerical_method": "auto",
-                "categorical_method": "auto"
+                "numerical_method": "knn",
+                "categorical_method": "knn"
             },
             "metrics": {
-                "start_time": "2025-02-19T17:05:24.157273",
-                "end_time": "2025-02-19T17:05:24.210776",
-                "duration_seconds": 0.053503,
+                "start_time": "2025-03-29T12:55:44.045738",
+                "end_time": "2025-03-29T12:55:48.444620",
+                "duration_seconds": 4.398882,
                 "input_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "output_shape": [
-                    10000,
-                    12
-                ],
-                "changes_made": {},
-                "success": true,
-                "error": null
-            },
-            "warnings": []
-        },
-        {
-            "operation_name": "outlier_handling",
-            "description": "Handle outliers in numerical features",
-            "parameters": {
-                "method": "winz",
-                "outlier_param": 1.5
-            },
-            "metrics": {
-                "start_time": "2025-02-19T17:05:24.210776",
-                "end_time": "2025-02-19T17:05:26.745554",
-                "duration_seconds": 2.534778,
-                "input_shape": [
-                    10000,
-                    12
-                ],
-                "output_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "changes_made": {
                     "dtype_changes": {
-                        "credit_score": {
-                            "before": "int64",
+                        "MYMTN_RECHARGE_AMOUNT ": {
+                            "before": "float64",
                             "after": "Int64"
                         },
-                        "age": {
-                            "before": "int64",
+                        "CRBT_SUBSCRIPTION ": {
+                            "before": "float64",
                             "after": "Int64"
                         },
-                        "churn": {
-                            "before": "int64",
+                        "DATA_RGS90 ": {
+                            "before": "float64",
                             "after": "Int64"
                         },
-                        "products_number": {
-                            "before": "int64",
+                        "DOB ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "PAYING_CRBT_SUBSCRIBER ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "OTHER_RMS_REVENUE ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "GAMING_SUBSCRIPTION ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "PAYING_GAMING_SUBSCRIBER ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "VIDEO_SUBSCRIPTION ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "MUSIC_SUBSCRIPTION ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "MOMO_RECHARGE_AMOUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "DATA_RGS60 ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "UNKNOWN_TOTAL_BILLED_AMOUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "PAYING_VAS_EXCL_CRBT_SUBSCRIBER ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "PAYING_DIGITAL_SUBSCRIBER ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "TOTAL_RECHARGE ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "DIGITAL_SUBSCRIPTION ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "PAYING_OTHER_RMS_SUBSCRIBER ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "BILLED_AIRTIME_COUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "PAYING_MUSIC_SUBSCRIBER ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "UNKNOWN_TOTAL_BILLED_COUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "PAYING_E_VERTICAL_SUBSCRIBER ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "OTHER_RMS_SUBSCRIPTION ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "MUSIC_REVENUE ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "VAS_EXCL_CRBT_SUBSCRIPTION ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "TOTAL_BILLED_COUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "USSD_RECHARGE_AMOUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "DATA_RGS30 ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "PAYING_VIDEO_SUBSCRIBER ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "E_VERTICAL_SUBSCRIPTION ": {
+                            "before": "float64",
                             "after": "Int64"
                         }
                     },
+                    "missing_values": {
+                        "before": 3758,
+                        "after": 0,
+                        "difference": 3758
+                    },
                     "statistics_changes": {
-                        "credit_score": {
-                            "mean_change": 0.0324999999999136,
-                            "std_change": -0.09459638046455154,
-                            "min_change": 33.0,
+                        "DOB ": {
+                            "mean_change": -0.0030927807092666626,
+                            "std_change": -2415.02891105655,
+                            "min_change": 0.0,
                             "max_change": 0.0
                         },
-                        "age": {
-                            "mean_change": -0.2609999999999957,
-                            "std_change": -0.7411022300551995,
+                        "DATA_RGS30 ": {
+                            "mean_change": 0.061267605633802846,
+                            "std_change": -0.052242944613882236,
                             "min_change": 0.0,
-                            "max_change": -30.0
+                            "max_change": 0.0
                         },
-                        "products_number": {
-                            "mean_change": -0.006000000000000005,
-                            "std_change": -0.020721363263916825,
+                        "DATA_RGS60 ": {
+                            "mean_change": 0.061267605633802846,
+                            "std_change": -0.052242944613882236,
                             "min_change": 0.0,
-                            "max_change": -1.0
+                            "max_change": 0.0
                         },
-                        "churn": {
-                            "mean_change": -0.2037,
-                            "std_change": -0.4027685839948609,
+                        "DATA_RGS90 ": {
+                            "mean_change": 0.061267605633802846,
+                            "std_change": -0.052242944613882236,
                             "min_change": 0.0,
-                            "max_change": -1.0
+                            "max_change": 0.0
+                        },
+                        "MOMO_RECHARGE_AMOUNT ": {
+                            "mean_change": -0.4500000000000002,
+                            "std_change": -2.1280403796178584,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "MYMTN_RECHARGE_AMOUNT ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "USSD_RECHARGE_AMOUNT ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "TOTAL_RECHARGE ": {
+                            "mean_change": 0.0,
+                            "std_change": -1.8333017242342038,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "PAYING_MUSIC_SUBSCRIBER ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "MUSIC_SUBSCRIPTION ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "MUSIC_REVENUE ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "PAYING_VIDEO_SUBSCRIBER ": {
+                            "mean_change": -0.2657142857142857,
+                            "std_change": -0.34724474233797686,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "VIDEO_SUBSCRIPTION ": {
+                            "mean_change": -0.2657142857142857,
+                            "std_change": -0.34724474233797686,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "VIDEO_REVENUE ": {
+                            "mean_change": 2.7755575615628914e-17,
+                            "std_change": -0.23052098171449564,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "PAYING_GAMING_SUBSCRIBER ": {
+                            "mean_change": -0.2657142857142857,
+                            "std_change": -0.34724474233797686,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "GAMING_SUBSCRIPTION ": {
+                            "mean_change": -0.2657142857142857,
+                            "std_change": -0.34724474233797686,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "GAMING_REVENUE ": {
+                            "mean_change": 1.3877787807814457e-17,
+                            "std_change": -0.09394227803857214,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "PAYING_OTHER_RMS_SUBSCRIBER ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "OTHER_RMS_SUBSCRIPTION ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "OTHER_RMS_REVENUE ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "PAYING_CRBT_SUBSCRIBER ": {
+                            "mean_change": -0.13285714285714284,
+                            "std_change": -0.2779644730092273,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "CRBT_SUBSCRIPTION ": {
+                            "mean_change": -0.13285714285714284,
+                            "std_change": -0.2779644730092273,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "CRBT_REVENUE ": {
+                            "mean_change": 1.3877787807814457e-17,
+                            "std_change": -0.15624068654803452,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "PAYING_VAS_EXCL_CRBT_SUBSCRIBER ": {
+                            "mean_change": 0.2657142857142857,
+                            "std_change": -0.34724474233797686,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "VAS_EXCL_CRBT_SUBSCRIPTION ": {
+                            "mean_change": 0.2657142857142857,
+                            "std_change": -0.34724474233797686,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "VAS_EXCL_CRBT_REVENUE ": {
+                            "mean_change": 5.551115123125783e-17,
+                            "std_change": -0.1111719908741079,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "PAYING_E_VERTICAL_SUBSCRIBER ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "E_VERTICAL_SUBSCRIPTION ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "E_VERTICAL_REVENUE ": {
+                            "mean_change": 1.1102230246251565e-16,
+                            "std_change": -0.2365294286255082,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "PAYING_DIGITAL_SUBSCRIBER ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "DIGITAL_SUBSCRIPTION ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "DIGITAL_REVENUE ": {
+                            "mean_change": 1.1102230246251565e-16,
+                            "std_change": -0.2365294286255082,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "BILLED_AIRTIME_AMOUNT ": {
+                            "mean_change": -2.220446049250313e-16,
+                            "std_change": -0.3305312743924001,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "BILLED_AIRTIME_COUNT ": {
+                            "mean_change": 0.2657142857142858,
+                            "std_change": -0.829141218339535,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "TOTAL_BILLABLE_AMOUNT ": {
+                            "mean_change": -2.220446049250313e-16,
+                            "std_change": -0.3305312743924001,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "UNKNOWN_TOTAL_BILLED_COUNT ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "UNKNOWN_TOTAL_BILLED_AMOUNT ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "TOTAL_BILLED_AMOUNT ": {
+                            "mean_change": -2.220446049250313e-16,
+                            "std_change": -0.3305312743924001,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "TOTAL_BILLED_COUNT ": {
+                            "mean_change": 0.2657142857142858,
+                            "std_change": -0.829141218339535,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "GROSS_REVENUE ": {
+                            "mean_change": -2.220446049250313e-16,
+                            "std_change": -0.2589355851095967,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "REV_SHARE_DUE_THIRD_PARTY ": {
+                            "mean_change": 4.163336342344337e-17,
+                            "std_change": -0.06881929699089524,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "NET_REVENUE ": {
+                            "mean_change": 1.1102230246251565e-16,
+                            "std_change": -0.2365294286255082,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "ACCOUNTING_REVENUE": {
+                            "mean_change": 1.1102230246251565e-16,
+                            "std_change": -0.2365294286255082,
+                            "min_change": 0.0,
+                            "max_change": 0.0
                         }
                     }
                 },
-                "success": true,
-                "error": null
-            },
-            "warnings": []
-        },
-        {
-            "operation_name": "datetime_conversion",
-            "description": "Convert and extract datetime features",
-            "parameters": {
-                "granularity": "s"
-            },
-            "metrics": {
-                "start_time": "2025-02-19T17:05:26.745554",
-                "end_time": "2025-02-19T17:05:26.796772",
-                "duration_seconds": 0.051218,
-                "input_shape": [
-                    10000,
-                    12
-                ],
-                "output_shape": [
-                    10000,
-                    12
-                ],
-                "changes_made": {},
                 "success": true,
                 "error": null
             },
@@ -158,24 +452,152 @@
                 ]
             },
             "metrics": {
-                "start_time": "2025-02-19T17:05:26.796772",
-                "end_time": "2025-02-19T17:05:26.842229",
-                "duration_seconds": 0.045457,
+                "start_time": "2025-03-29T12:55:48.444620",
+                "end_time": "2025-03-29T12:55:48.988562",
+                "duration_seconds": 0.543942,
                 "input_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "output_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "changes_made": {
                     "dtype_changes": {
-                        "gender": {
+                        "BILLED_CARD_AMOUNT ": {
                             "before": "object",
                             "after": "int64"
                         },
-                        "country": {
+                        "BILLED_OTHERS_COUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "MOD_DATA_SUBSCRIPTION_AMOUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "BILLED_MOMO_AMOUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "hashed_msisdn ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "SUBSCRIPTION_WEB ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "DEVICE_OS ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "TOTAL_FAILED_COUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "SUBSCRIPTION_AYOBA ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "FAILED_OTHERS_COUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "VAT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "EXTRABYTE_REVENUE ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "MOD_RECHARGE_AMOUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "USIM ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "EXTRATIME_REVENUE ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "GENDER ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "FAILED_CARD_COUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "SUBSCRIBER_TYPE ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "DEVICE_TECH ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "SUBSCRIPTION_SMS ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "FAILED_AIRTIME_COUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "FAILED_MOMO_COUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "OTHER_DIGITAL_TAXES ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "VALUE_BAND ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "DEVICE_BRAND ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "DEVICE_MODEL ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "LOCATION ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "SUBSCRIPTION_OTHERS ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "SUBSCRIPTION_USSD ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "DEEMED_COST ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "BILLED_CARD_COUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "DEVICE_TYPE ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "BILLED_OTHERS_AMOUNT ": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "BILLED_MOMO_COUNT ": {
                             "before": "object",
                             "after": "int64"
                         }
@@ -191,83 +613,354 @@
             "description": "Round numerical values to appropriate precision",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-02-19T17:05:26.842229",
-                "end_time": "2025-02-19T17:05:26.939703",
-                "duration_seconds": 0.097474,
+                "start_time": "2025-03-29T12:55:48.989554",
+                "end_time": "2025-03-29T12:55:49.569615",
+                "duration_seconds": 0.580061,
                 "input_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "output_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "changes_made": {
                     "dtype_changes": {
-                        "credit_card": {
+                        "BILLED_CARD_AMOUNT ": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "active_member": {
+                        "PAYING_OTHER_RMS_SUBSCRIBER_RETURNEE ": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "gender": {
+                        "BILLED_OTHERS_COUNT ": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "country": {
+                        "PAYING_E_VERTICAL_SUBSCRIBER_CHURN ": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "customer_id": {
+                        "PAYING_DIGITAL_SUBSCRIBER_CHURN ": {
                             "before": "int64",
                             "after": "Int64"
                         },
-                        "tenure": {
+                        "MYMTN_DOLA ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "MOD_DATA_SUBSCRIPTION_AMOUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_VIDEO_SUBSCRIBER_RETURNEE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "BILLED_MOMO_AMOUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_GAMING_SUBSCRIBER_RETURNEE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_DIGITAL_SUBSCRIBER_RETURNEE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "USSD_DATA_SUSBCRIPTION_AMOUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "hashed_msisdn ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "SUBSCRIPTION_WEB ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "DEVICE_OS ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "TOTAL_FAILED_COUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_CRBT_SUBSCRIBER_CHURN ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "SUBSCRIPTION_AYOBA ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "FAILED_OTHERS_COUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_MUSIC_SUBSCRIBER_RETURNEE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "MYMTN_DAU_30 ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "TOTAL_DATA_SESSION_DURATION ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "VAT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "EXTRABYTE_REVENUE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "MOD_RECHARGE_AMOUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "USIM ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "EXTRATIME_REVENUE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "GENDER ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "MOMO_RGS30 ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "FAILED_CARD_COUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "SUBSCRIBER_TYPE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "NETWORK_AGE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "ACTIVATION_DATE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "DEVICE_TECH ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_OTHER_RMS_SUBSCRIBER_CHURN ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "SUBSCRIPTION_SMS ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "FAILED_AIRTIME_COUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_GAMING_SUBSCRIBER_CHURN ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "FAILED_MOMO_COUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "OTHER_DIGITAL_TAXES ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "DOLA ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "RETURNEE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "ACTIVE_BUNDLE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "VALUE_BAND ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "DIGITAL_CALL_CENTRE_TICKETS ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "DEVICE_BRAND ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "MOMO_DATA_SUBSCRIPTION_AMOUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "DEVICE_MODEL ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "AYOBA_M1 ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "GC ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "MYMTN_DATA_SUBSCRIPTION_AMOUNT ": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "LOCATION ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "SUBSCRIPTION_OTHERS ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "DATE_KEY ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "SUBSCRIPTION_USSD ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "DEEMED_COST ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_VAS_EXCL_CRBT_SUBSCRIBER_CHURN ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "BILLED_CARD_COUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "DEVICE_TYPE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "ADS30 ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "BILLED_OTHERS_AMOUNT ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_E_VERTICAL_SUBSCRIBER_RETURNEE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_VIDEO_SUBSCRIBER_CHURN ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_CRBT_SUBSCRIBER_RETURNEE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_MUSIC_SUBSCRIBER_CHURN ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "PAYING_VAS_EXCL_CRBT_SUBSCRIBER_RETURNEE ": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "BILLED_MOMO_COUNT ": {
                             "before": "int64",
                             "after": "Int64"
                         }
-                    }
-                },
-                "success": true,
-                "error": null
-            },
-            "warnings": []
-        },
-        {
-            "operation_name": "Fairness Analysis gender",
-            "description": "Analyze and mitigate bias for feature gender",
-            "parameters": {},
-            "metrics": {
-                "start_time": "2025-02-19T17:05:27.110816",
-                "end_time": "2025-02-19T17:05:27.158382",
-                "duration_seconds": 0.047566,
-                "input_shape": [
-                    10000,
-                    12
-                ],
-                "output_shape": [
-                    10000,
-                    12
-                ],
-                "changes_made": {
-                    "results": {
-                        "original": {
-                            "disparate_impact": NaN,
-                            "statistical_parity_difference": 0.0,
-                            "group_metrics": {
-                                "group_0_positive_rate": 0.0,
-                                "group_1_positive_rate": 0.0
-                            }
+                    },
+                    "statistics_changes": {
+                        "VIDEO_REVENUE ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
                         },
-                        "mitigated": {
-                            "disparate_impact": NaN,
-                            "statistical_parity_difference": 0.0,
-                            "group_metrics": {
-                                "group_0_positive_rate": 0.0,
-                                "group_1_positive_rate": 0.0
-                            }
+                        "GAMING_REVENUE ": {
+                            "mean_change": 1.3877787807814457e-17,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "CRBT_REVENUE ": {
+                            "mean_change": 1.3877787807814457e-17,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "VAS_EXCL_CRBT_REVENUE ": {
+                            "mean_change": -2.7755575615628914e-17,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "E_VERTICAL_REVENUE ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "DIGITAL_REVENUE ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "BILLED_AIRTIME_AMOUNT ": {
+                            "mean_change": 0.003985714285714259,
+                            "std_change": 5.5943073914294095e-06,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "TOTAL_BILLABLE_AMOUNT ": {
+                            "mean_change": 0.003985714285714259,
+                            "std_change": 5.5943073914294095e-06,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "TOTAL_BILLED_AMOUNT ": {
+                            "mean_change": 0.003985714285714259,
+                            "std_change": 5.5943073914294095e-06,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "NET_REVENUE ": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "ACCOUNTING_REVENUE": {
+                            "mean_change": 0.0,
+                            "std_change": 0.0,
+                            "min_change": 0.0,
+                            "max_change": 0.0
                         }
                     }
                 },
@@ -281,38 +974,214 @@
             "description": "Analyze and mitigate bias for each sensitive feature",
             "parameters": {},
             "metrics": {
-                "start_time": "2025-02-19T17:05:27.110816",
-                "end_time": "2025-02-19T17:05:27.158382",
-                "duration_seconds": 0.047566,
+                "start_time": "2025-03-29T12:55:49.602869",
+                "end_time": "2025-03-29T12:55:49.604901",
+                "duration_seconds": 0.002032,
                 "input_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "output_shape": [
-                    10000,
-                    12
+                    100,
+                    113
                 ],
                 "changes_made": {
-                    "results": {
-                        "gender": {
-                            "original": {
-                                "disparate_impact": NaN,
-                                "statistical_parity_difference": 0.0,
-                                "group_metrics": {
-                                    "group_0_positive_rate": 0.0,
-                                    "group_1_positive_rate": 0.0
-                                }
-                            },
-                            "mitigated": {
-                                "disparate_impact": NaN,
-                                "statistical_parity_difference": 0.0,
-                                "group_metrics": {
-                                    "group_0_positive_rate": 0.0,
-                                    "group_1_positive_rate": 0.0
-                                }
-                            }
-                        }
-                    }
+                    "results": {}
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "dimensionality_reduction",
+            "description": "Reduce data dimensionality",
+            "parameters": {
+                "enabled": true,
+                "method": "pca",
+                "n_components": null,
+                "target_explained_variance": 0.95
+            },
+            "metrics": {
+                "start_time": "2025-03-29T12:55:49.604901",
+                "end_time": "2025-03-29T12:55:49.649664",
+                "duration_seconds": 0.044763,
+                "input_shape": [
+                    100,
+                    113
+                ],
+                "output_shape": [
+                    100,
+                    23
+                ],
+                "changes_made": {
+                    "added_columns": [
+                        "component_11",
+                        "component_21",
+                        "component_14",
+                        "component_17",
+                        "component_2",
+                        "component_19",
+                        "component_3",
+                        "component_5",
+                        "component_20",
+                        "component_4",
+                        "component_6",
+                        "component_12",
+                        "component_9",
+                        "component_23",
+                        "component_7",
+                        "component_8",
+                        "component_13",
+                        "component_15",
+                        "component_1",
+                        "component_10",
+                        "component_18",
+                        "component_16",
+                        "component_22"
+                    ],
+                    "removed_columns": [
+                        "BILLED_CARD_AMOUNT ",
+                        "PAYING_OTHER_RMS_SUBSCRIBER_CHURN ",
+                        "SUBSCRIPTION_SMS ",
+                        "FAILED_AIRTIME_COUNT ",
+                        "PAYING_OTHER_RMS_SUBSCRIBER_RETURNEE ",
+                        "TOTAL_RECHARGE ",
+                        "DIGITAL_SUBSCRIPTION ",
+                        "PAYING_GAMING_SUBSCRIBER_CHURN ",
+                        "FAILED_MOMO_COUNT ",
+                        "BILLED_OTHERS_COUNT ",
+                        "PAYING_E_VERTICAL_SUBSCRIBER_CHURN ",
+                        "OTHER_DIGITAL_TAXES ",
+                        "NET_REVENUE ",
+                        "PAYING_OTHER_RMS_SUBSCRIBER ",
+                        "REV_SHARE_DUE_THIRD_PARTY ",
+                        "BILLED_AIRTIME_COUNT ",
+                        "PAYING_DIGITAL_SUBSCRIBER_CHURN ",
+                        "MYMTN_DOLA ",
+                        "DOLA ",
+                        "RETURNEE ",
+                        "MYMTN_RECHARGE_AMOUNT ",
+                        "MOD_DATA_SUBSCRIPTION_AMOUNT ",
+                        "ACTIVE_BUNDLE ",
+                        "VALUE_BAND ",
+                        "PAYING_VIDEO_SUBSCRIBER_RETURNEE ",
+                        "BILLED_MOMO_AMOUNT ",
+                        "DIGITAL_CALL_CENTRE_TICKETS ",
+                        "PAYING_GAMING_SUBSCRIBER_RETURNEE ",
+                        "DEVICE_BRAND ",
+                        "MOMO_DATA_SUBSCRIPTION_AMOUNT ",
+                        "CRBT_SUBSCRIPTION ",
+                        "DEVICE_MODEL ",
+                        "PAYING_MUSIC_SUBSCRIBER ",
+                        "AYOBA_M1 ",
+                        "BILLED_AIRTIME_AMOUNT ",
+                        "PAYING_DIGITAL_SUBSCRIBER_RETURNEE ",
+                        "ACCOUNTING_REVENUE",
+                        "GC ",
+                        "USSD_DATA_SUSBCRIPTION_AMOUNT ",
+                        "UNKNOWN_TOTAL_BILLED_COUNT ",
+                        "hashed_msisdn ",
+                        "SUBSCRIPTION_WEB ",
+                        "DATA_RGS90 ",
+                        "DEVICE_OS ",
+                        "TOTAL_FAILED_COUNT ",
+                        "MYMTN_DATA_SUBSCRIPTION_AMOUNT ",
+                        "PAYING_CRBT_SUBSCRIBER_CHURN ",
+                        "TOTAL_BILLABLE_AMOUNT ",
+                        "PAYING_VAS_EXCL_CRBT_SUBSCRIBER_RETURNEE ",
+                        "TOTAL_VOICE_REVENUE ",
+                        "DOB ",
+                        "PAYING_E_VERTICAL_SUBSCRIBER ",
+                        "SUBSCRIPTION_AYOBA ",
+                        "OTHER_RMS_SUBSCRIPTION ",
+                        "LOCATION ",
+                        "MUSIC_REVENUE ",
+                        "SUBSCRIPTION_OTHERS ",
+                        "VAS_EXCL_CRBT_REVENUE ",
+                        "DATE_KEY ",
+                        "FAILED_OTHERS_COUNT ",
+                        "VAS_EXCL_CRBT_SUBSCRIPTION ",
+                        "TOTAL_DATA_SUBSCRIPTION_AMOUNT ",
+                        "VIDEO_REVENUE ",
+                        "TOTAL_BILLED_COUNT ",
+                        "PAYING_CRBT_SUBSCRIBER ",
+                        "PAYING_MUSIC_SUBSCRIBER_RETURNEE ",
+                        "MYMTN_DAU_30 ",
+                        "TOTAL_DATA_SESSION_DURATION ",
+                        "DIGITAL_REVENUE ",
+                        "SUBSCRIPTION_USSD ",
+                        "DEEMED_COST ",
+                        "E_VERTICAL_REVENUE ",
+                        "USSD_RECHARGE_AMOUNT ",
+                        "VAT ",
+                        "PAYING_VAS_EXCL_CRBT_SUBSCRIBER_CHURN ",
+                        "BILLED_CARD_COUNT ",
+                        "DEVICE_TYPE ",
+                        "OTHER_RMS_REVENUE ",
+                        "GAMING_SUBSCRIPTION ",
+                        "EXTRABYTE_REVENUE ",
+                        "MOD_RECHARGE_AMOUNT ",
+                        "PAYING_GAMING_SUBSCRIBER ",
+                        "ADS30 ",
+                        "VIDEO_SUBSCRIPTION ",
+                        "GROSS_REVENUE ",
+                        "TOTAL_DATA_USAGE_MB ",
+                        "MUSIC_SUBSCRIPTION ",
+                        "DATA_RGS30 ",
+                        "BILLED_OTHERS_AMOUNT ",
+                        "USIM ",
+                        "PAYING_E_VERTICAL_SUBSCRIBER_RETURNEE ",
+                        "MOMO_RECHARGE_AMOUNT ",
+                        "EXTRATIME_REVENUE ",
+                        "TOTAL_BILLED_AMOUNT ",
+                        "GENDER ",
+                        "CRBT_REVENUE ",
+                        "PAYING_VIDEO_SUBSCRIBER ",
+                        "E_VERTICAL_SUBSCRIPTION ",
+                        "PAYING_VIDEO_SUBSCRIBER_CHURN ",
+                        "PAYING_CRBT_SUBSCRIBER_RETURNEE ",
+                        "DATA_RGS60 ",
+                        "MOMO_RGS30 ",
+                        "UNKNOWN_TOTAL_BILLED_AMOUNT ",
+                        "FAILED_CARD_COUNT ",
+                        "GAMING_REVENUE ",
+                        "PAYING_MUSIC_SUBSCRIBER_CHURN ",
+                        "SUBSCRIBER_TYPE ",
+                        "NETWORK_AGE ",
+                        "PAYING_VAS_EXCL_CRBT_SUBSCRIBER ",
+                        "ACTIVATION_DATE ",
+                        "DEVICE_TECH ",
+                        "BILLED_MOMO_COUNT ",
+                        "PAYING_DIGITAL_SUBSCRIBER "
+                    ],
+                    "explained_variance_ratio": [
+                        0.22409708453387606,
+                        0.11708424777451895,
+                        0.07579751103143172,
+                        0.06911430864277963,
+                        0.06303421673983226,
+                        0.05389324235755006,
+                        0.04532799107676201,
+                        0.03597977004119756,
+                        0.03110047024291025,
+                        0.029853599652312678,
+                        0.02492827130884424,
+                        0.023053372570586497,
+                        0.02239326215389446,
+                        0.020303454587282395,
+                        0.018386302175979516,
+                        0.0168234497838917,
+                        0.016331427084515605,
+                        0.014983268193363129,
+                        0.012911128549971732,
+                        0.01195757208676844,
+                        0.011395311502241266,
+                        0.009694848891772872,
+                        0.00839552334834015
+                    ],
+                    "n_components": 23,
+                    "total_variance_explained": 0.9568396343306234
                 },
                 "success": true,
                 "error": null

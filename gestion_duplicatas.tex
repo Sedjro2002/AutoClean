@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\title{Gestion des Duplicatas dans le Prétraitement des Données}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+La gestion des duplicatas est une étape cruciale dans le prétraitement des données. Les données dupliquées peuvent fausser les analyses et les résultats, il est donc essentiel de les identifier et de les traiter correctement.
+
+\section{Identification des Duplicatas}
+Les duplicatas peuvent être identifiés en comparant les enregistrements selon plusieurs critères :
+\begin{itemize}
+    \item Comparaison exacte de toutes les colonnes
+    \item Comparaison sur un sous-ensemble de colonnes clés
+    \item Utilisation de fonctions de similarité pour détecter des enregistrements quasi-identiques
+\end{itemize}
+
+\section{Traitement des Duplicatas}
+Plusieurs approches peuvent être utilisées pour traiter les duplicatas :
+\begin{itemize}
+    \item Suppression des enregistrements dupliqués
+    \item Fusion des enregistrements dupliqués
+    \item Marquage des duplicatas pour analyse ultérieure
+\end{itemize}
+
+\section{Implémentation avec Pandas}
+Pandas propose plusieurs méthodes pour gérer les duplicatas \cite{pandas_duplicates,pandas_drop_duplicates} :
+\begin{itemize}
+    \item \texttt{duplicated()} : Identifie les lignes dupliquées
+    \item \texttt{drop\_duplicates()} : Supprime les duplicatas
+    \item \texttt{groupby()} : Permet de regrouper et fusionner les duplicatas
+\end{itemize}
+
+\section{Considérations Techniques}
+\begin{itemize}
+    \item Définir des règles claires pour identifier les duplicatas
+    \item Documenter les décisions de traitement des duplicatas
+    \item Vérifier l'impact des traitements sur les analyses
+\end{itemize}
+
+\section{Conclusion}
+La gestion des duplicatas est une étape essentielle du prétraitement des données. Une approche méthodique et documentée permet de garantir la qualité des données tout en préservant leur intégrité.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

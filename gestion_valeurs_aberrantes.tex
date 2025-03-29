@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\title{Gestion des Valeurs Aberrantes par la Méthode de Winsorization}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+La winsorization est une technique statistique robuste utilisée pour atténuer l'impact des valeurs aberrantes (\textbf{outliers}) tout en conservant l'intégrité structurelle des données. Contrairement à la suppression pure des outliers, cette méthode remplace les valeurs extrêmes par des valeurs situées à des percentiles prédéfinis, préservant ainsi la taille de l'échantillon et réduisant les distorsions induites par les anomalies.
+
+\paragraph*{Algorithme Technique de la Winsorization}
+La méthode suit une séquence d'étapes précises pour traiter les données :
+
+\paragraph*{Définition des Bornes}
+\begin{itemize}
+    \item Sélectionner un seuil de winsorization, généralement exprimé en pourcentage (p. ex., 5\% pour chaque extrémité)
+    \item Calculer les \textbf{percentiles} correspondants :
+    \begin{itemize}
+        \item \textbf{Percentile inférieur} (p. ex., 5\textsuperscript{e} percentile : $P_{\text{inf}}$)
+        \item \textbf{Percentile supérieur} (p. ex., 95\textsuperscript{e} percentile : $P_{\text{sup}}$) \cite{investopedia, amplitude}
+    \end{itemize}
+\end{itemize}
+
+\paragraph*{Remplacement des Valeurs Extrêmes}
+\begin{itemize}
+    \item Identifier toutes les valeurs $< P_{\text{inf}}$ et les remplacer par $P_{\text{inf}}$
+    \item Identifier toutes les valeurs $> P_{\text{sup}}$ et les remplacer par $P_{\text{sup}}$
+    \item Formellement, pour une observation $x_i$, la valeur winsorisée $x_i'$ devient :
+    
+    \[
+    x_i' = 
+    \begin{cases} 
+    P_{\text{inf}} & \text{si } x_i < P_{\text{inf}}, \\
+    P_{\text{sup}} & \text{si } x_i > P_{\text{sup}}, \\
+    x_i & \text{sinon}.
+    \end{cases}
+    \]
+    
+    Cette approche préserve la distribution globale tout en limitant l'influence des extrêmes \cite{datacamp, wikipedia}
+\end{itemize}
+
+\paragraph*{Recalcul des Statistiques}
+Les statistiques descriptives (moyenne, écart-type) et les modèles ultérieurs sont calculés sur les données winsorisées, offrant une robustesse accrue \cite{dasca, magnimind}
+
+\paragraph*{Aspects Techniques et Paramètres}
+\textbf{Choix des Percentiles}: 
+La sélection des bornes dépend du contexte et du degré de conservatisme souhaité. Par exemple, une winsorization à 5\% symétrique (des deux côtés) est courante, mais une approche asymétrique peut être adoptée si les outliers sont concentrés dans une seule queue \cite{amplitude, datacamp}
+
+\textbf{Gestion des Données Multivariées}: 
+Dans les jeux de données multivariés, la winsorization peut être appliquée variable par variable pour éviter les interactions complexes entre dimensions \cite{amplitude, datacamp}
+
+\textbf{Intégration dans les Pipelines de Prétraitement}: 
+La méthode s'intègre facilement dans des workflows automatisés via des bibliothèques comme SciPy (\texttt{winsorize()}) ou des implémentations personnalisées en Python, garantissant une reproductibilité et une scalabilité optimales \cite{datacamp, wikipedia}
+
+\paragraph*{Conclusion}
+La winsorization est un compromis méthodologique entre la suppression totale des outliers et l'acceptation de leur influence disruptive. Son implémentation technique repose sur une définition rigoureuse des percentiles et une application systématique du remplacement des valeurs extrêmes. Dans un contexte éthique, elle exige une documentation transparente et une réflexion critique sur les implications des choix de paramétrage, en particulier dans les systèmes de prétraitement automatisé où l'auditabilité est primordiale \cite{investopedia, dasca, wikipedia}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

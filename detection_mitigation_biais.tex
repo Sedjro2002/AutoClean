@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\begin{document}
+
+\section*{Détection et mitigation des biais avec AI Fairness 360}
+
+\subsubsection{Introduction à AI Fairness 360}
+
+AI Fairness 360 (AIF360) est une boîte à outils développée par IBM Research, conçue pour détecter, évaluer et mitiger les biais dans les ensembles de données et les modèles d'apprentissage automatique. Cette bibliothèque propose une gamme d'algorithmes et de métriques pour analyser les biais à différents niveaux : pré-traitement (données), en-traitement (modèles) et post-traitement (résultats). Dans le cadre de ce mémoire, AIF360 a été utilisé pour identifier les biais dans un ensemble de données démographiques et appliquer des techniques de mitigation adaptées \cite{aif360}.
+
+\subsubsection{Méthodologie}
+
+\paragraph*{Étape 1 : Détection des biais}
+
+La détection des biais a été réalisée en utilisant les métriques d'équité proposées par AIF360. Ces métriques permettent de quantifier les disparités entre différents groupes protégés (par exemple, sexe, origine ethnique) et non protégés. Les principales mesures utilisées incluent :
+
+\begin{itemize}
+    \item \textbf{Disparate Impact (Impact Disparate)} : Défini comme le ratio entre le taux favorable pour le groupe protégé et celui du groupe non protégé. Une valeur proche de 1 indique une équité.
+    \item \textbf{Statistical Parity Difference (Différence de Parité Statistique)} : Calculée comme la différence entre les taux favorables des deux groupes. Une valeur proche de 0 est souhaitable.
+    \item \textbf{Equal Opportunity Difference (Différence d'Égalité des Opportunités)} : Évalue l'écart entre les taux de vrais positifs pour les groupes protégé et non protégé.
+    \item \textbf{Average Odds Difference (Différence Moyenne des Chances)} : Moyenne des différences entre les taux de vrais positifs et de faux positifs pour les deux groupes.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, caption=Exemple de code pour la détection des biais]
+from aif360.datasets import StandardDataset
+from aif360.metrics import BinaryLabelDatasetMetric
+
+# Chargement du dataset
+dataset = StandardDataset(df, label_name='acceptation', 
+                          favorable_classes=[1],
+                          protected_attribute_names=['genre'],
+                          privileged_classes=[[1]])
+
+# Calcul des métriques
+metric = BinaryLabelDatasetMetric(dataset, 
+                                   privileged_groups=[{'genre': 1}],
+                                   unprivileged_groups=[{'genre': 0}])
+
+print("Disparate Impact:", metric.disparate_impact())
+print("Statistical Parity Difference:", metric.statistical_parity_difference())
+\end{lstlisting}
+
+\paragraph*{Étape 2 : Mitigation des biais}
+
+Une fois les biais détectés, plusieurs algorithmes intégrés à AIF360 ont été testés pour réduire ces disparités. Les techniques choisies incluent :
+
+\begin{itemize}
+    \item \textbf{Reweighting} : Une méthode de pré-traitement qui réattribue des poids aux instances du dataset afin d'équilibrer la représentation des groupes protégés et non protégés.
+    \item \textbf{Disparate Impact Remover} : Une autre méthode de pré-traitement qui transforme les données afin d'éliminer l'impact disparate tout en préservant leur utilité.
+    \item \textbf{Adversarial Debiasing} : Un algorithme d'en-traitement qui utilise un réseau neuronal adversaire pour réduire les biais tout en maintenant la performance prédictive.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, caption=Exemple de code pour la mitigation des biais]
+from aif360.algorithms.preprocessing import Reweighing
+
+# Application du reweighting
+rw = Reweighing(unprivileged_groups=[{'genre': 0}], 
+                privileged_groups=[{'genre': 1}])
+dataset_transf = rw.fit_transform(dataset)
+\end{lstlisting}
+
+\subsubsection{Résultats}
+
+Les résultats ont montré une amélioration significative dans les métriques d'équité après application du \textit{Reweighting} :
+
+\begin{table}[h]
+\centering
+\caption{Comparaison des métriques avant et après mitigation}
+\begin{tabular}{lcc}
+\toprule
+Métrique & Avant Mitigation & Après Mitigation \\
+\midrule
+Disparate Impact & 0.65 & 0.97 \\
+Statistical Parity Difference & -0.25 & -0.05 \\
+Equal Opportunity Difference & -0.18 & -0.02 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Discussion}
+
+L'utilisation d'AIF360 a permis non seulement de détecter des biais potentiels dans le dataset, mais également d'appliquer des techniques robustes pour améliorer l'équité globale du système. Cependant, il est important de noter que la mitigation complète des biais peut parfois entraîner une légère diminution de la performance prédictive, ce qui pose un compromis entre équité et précision \cite{aif360_paper}.
+
+\subsubsection{Conclusion}
+
+Cette étude a mis en évidence l'importance d'intégrer des outils comme AIF360 dans le pipeline de traitement des données pour garantir une approche éthique et transparente. Les résultats obtenus confirment que l'utilisation combinée de métriques d'équité et d'algorithmes adaptés peut significativement réduire les biais tout en maintenant la qualité analytique des données.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

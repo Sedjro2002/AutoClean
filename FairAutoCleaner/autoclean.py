@@ -130,7 +130,7 @@ class AutoClean:
             print('AutoClean process completed in', (self.end_time - self.start_time).total_seconds(), 'seconds')
         if logfile:
             print('Logfile saved to:', os.path.join(os.getcwd(), 'autoclean.log'))
-            print('Audit trail saved to:', audit_file)
+            # print('Audit trail saved to:', audit_file)
             
     def _initialize_logger(self, verbose, logfile):
         # function for initializing the logging process
