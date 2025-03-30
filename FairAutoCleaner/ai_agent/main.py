@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Annotated
 
-from httpx import AsyncClient
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -37,10 +36,6 @@ system_prompt_path = Path(__file__).parent / "system_prompt.txt"
 # logfire.configure(send_to_logfire='if-token-present')
 
 
-@dataclass
-class Deps:
-    client: AsyncClient
-    brave_api_key: str | None
 
 
 class Feature(BaseModel):

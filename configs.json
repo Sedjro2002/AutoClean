@@ -3,8 +3,8 @@
 		"title": "german_credit_data",
 		"description": "german_credit_data",
 		"columns": [],
-		"target": "Sex",
-		"sensitive_features": ["Sex"]
+		"target": "ForeignWorker",
+		"sensitive_features": []
 	},
 	"preprocessing": {
 		"dim_reduction": {
@@ -23,16 +23,12 @@
 		"missing_num": "knn",
 		"missing_categ": "knn",
 		"outliers": "delete",
-		"encode_categ": ["auto"],
+		"encode_categ": ["label"],
 		"extract_datetime": "auto",
 		"outlier_param": 1.5,
 		"logfile": true,
 		"verbose": false,
 		"output_folder": "C:/Users/habib/Documents/AutoClean/output/test_run"
 	},
-	"code_analysis_paths": [
-		"C:/Users/habib/Documents/AutoClean/preprocessing"
-	],
-	"code_analysis_type": "ai",
 	"columns": {}
 }

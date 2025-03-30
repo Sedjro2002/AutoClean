@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import csv
 from loguru import logger
+from datetime import datetime
 import ydata_profiling
 from .config import Config
 from .dim_reduction import DimensionalityReducer
@@ -55,7 +56,7 @@ class DataProcessor:
         # Generate initial profile
         profile = self.generate_profile(df, "before_preprocessing")
         metadata['initial_profile'] = profile
-        
+        start_time = datetime.now()
         # Apply dimensionality reduction if enabled
         if self.dim_reducer is not None:
             self.audit_logger.start_operation(
@@ -113,7 +114,7 @@ class DataProcessor:
                     "n_components": self.dim_reducer.n_components,
                     "target_explained_variance": self.dim_reducer.target_explained_variance
                 },
-                start_time=self.audit_logger.start_time,
+                start_time=start_time,
                 input_df=df_before,
                 output_df=df,
                 changes_made=metadata
@@ -124,6 +125,7 @@ class DataProcessor:
     def generate_profile(self, df: pd.DataFrame, output_prefix: str) -> Any:
         """Generate data profile reports."""
         try:
+            start_time = datetime.now()
             # Sample data if it exceeds threshold
             self.audit_logger.start_operation(
                 name="Data Profiling",
@@ -142,12 +144,12 @@ class DataProcessor:
             
             profile = ydata_profiling.ProfileReport(
                 profile_df, 
-                title="Data Profile",
-                explorative=True
+                title=output_prefix,
+                infer_dtypes=False
             )
             
             # Save reports
-            profile.to_file(self.config.output_dir / f"{output_prefix}_profile.html")
+            # profile.to_file(self.config.output_dir / f"{output_prefix}_profile.html")
             profile.to_file(self.config.output_dir / f"{output_prefix}_profile.json")
             
             self.audit_logger.complete_operation(
@@ -158,7 +160,7 @@ class DataProcessor:
                     "sample_size": self.config.sample_size,
                     "output_prefix": output_prefix
                 },
-                start_time=self.audit_logger.start_time,
+                start_time=start_time,
                 input_df=df,
                 output_df=profile_df,
                 changes_made={}

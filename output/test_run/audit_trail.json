@@ -1,0 +1,1293 @@
+{
+    "start_time": "2025-03-30T18:33:07.118371",
+    "end_time": null,
+    "total_duration_seconds": null,
+    "input_file": null,
+    "configuration": {},
+    "final_metrics": {},
+    "operations": [
+        {
+            "operation_name": "duplicate_handling",
+            "description": "Remove duplicate rows from the dataset",
+            "parameters": {
+                "method": "auto"
+            },
+            "metrics": {
+                "start_time": "2025-03-30T18:33:07.144320",
+                "end_time": "2025-03-30T18:33:07.256545",
+                "duration_seconds": 0.112225,
+                "input_shape": [
+                    5021,
+                    21
+                ],
+                "output_shape": [
+                    4982,
+                    21
+                ],
+                "changes_made": {
+                    "row_count": {
+                        "before": 5021,
+                        "after": 4982,
+                        "difference": 39
+                    },
+                    "statistics_changes": {
+                        "LoanDuration": {
+                            "mean_change": 0.06587886876723559,
+                            "std_change": -0.022664884115652484,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "LoanAmount": {
+                            "mean_change": 12.031429177702194,
+                            "std_change": -1.8382033916482214,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "InstallmentPercent": {
+                            "mean_change": 0.009478776053462035,
+                            "std_change": -0.004372296080526361,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "CurrentResidenceDuration": {
+                            "mean_change": 0.004880425536712085,
+                            "std_change": -0.0005158525007218362,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "Age": {
+                            "mean_change": 0.07125064692162653,
+                            "std_change": -0.022639186876647344,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "ExistingCreditsCount": {
+                            "mean_change": 0.0020378081267826698,
+                            "std_change": 0.00025709026358711196,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "Dependents": {
+                            "mean_change": 0.0004864754702269547,
+                            "std_change": 0.0004395055706211126,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "missing_value_handling",
+            "description": "Handle missing values in the dataset",
+            "parameters": {
+                "numerical_method": "knn",
+                "categorical_method": "knn"
+            },
+            "metrics": {
+                "start_time": "2025-03-30T18:33:07.257849",
+                "end_time": "2025-03-30T18:33:07.399111",
+                "duration_seconds": 0.141262,
+                "input_shape": [
+                    4982,
+                    21
+                ],
+                "output_shape": [
+                    4982,
+                    21
+                ],
+                "changes_made": {
+                    "missing_values": {
+                        "before": 6,
+                        "after": 0,
+                        "difference": 6
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "outlier_handling",
+            "description": "Handle outliers in numerical features",
+            "parameters": {
+                "method": "delete",
+                "outlier_param": 1.5
+            },
+            "metrics": {
+                "start_time": "2025-03-30T18:33:07.399111",
+                "end_time": "2025-03-30T18:33:07.508507",
+                "duration_seconds": 0.109396,
+                "input_shape": [
+                    4982,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "row_count": {
+                        "before": 4982,
+                        "after": 4981,
+                        "difference": 1
+                    },
+                    "statistics_changes": {
+                        "LoanDuration": {
+                            "mean_change": -0.003923742014112719,
+                            "std_change": -0.002327610240177691,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "LoanAmount": {
+                            "mean_change": -0.7460719662858537,
+                            "std_change": -0.3085606747977181,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "InstallmentPercent": {
+                            "mean_change": -0.0006043841749190371,
+                            "std_change": -0.0006980443670374648,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "CurrentResidenceDuration": {
+                            "mean_change": -0.000429814749278723,
+                            "std_change": -0.00030121613055689167,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "Age": {
+                            "mean_change": -0.007630279687461439,
+                            "std_change": -0.012601673909699684,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        },
+                        "ExistingCreditsCount": {
+                            "mean_change": -0.0005084354670590319,
+                            "std_change": -0.001082687642968705,
+                            "min_change": 0.0,
+                            "max_change": -1.0
+                        },
+                        "Dependents": {
+                            "mean_change": -0.0001675979319566423,
+                            "std_change": -0.00015117831969185813,
+                            "min_change": 0.0,
+                            "max_change": 0.0
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "field_assignments",
+            "description": "Assign field types",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:33:07.508507",
+                "end_time": "2025-03-30T18:33:08.326743",
+                "duration_seconds": 0.818236,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "dtype_changes": {
+                        "Telephone": {
+                            "before": "object",
+                            "after": "bool"
+                        },
+                        "Age": {
+                            "before": "int64",
+                            "after": "float64"
+                        },
+                        "ForeignWorker": {
+                            "before": "object",
+                            "after": "bool"
+                        },
+                        "Risk": {
+                            "before": "object",
+                            "after": "bool"
+                        },
+                        "Sex": {
+                            "before": "object",
+                            "after": "bool"
+                        },
+                        "ExistingCreditsCount": {
+                            "before": "int64",
+                            "after": "float64"
+                        },
+                        "InstallmentPercent": {
+                            "before": "int64",
+                            "after": "float64"
+                        },
+                        "LoanAmount": {
+                            "before": "int64",
+                            "after": "float64"
+                        },
+                        "Dependents": {
+                            "before": "int64",
+                            "after": "bool"
+                        },
+                        "CurrentResidenceDuration": {
+                            "before": "int64",
+                            "after": "float64"
+                        },
+                        "LoanDuration": {
+                            "before": "int64",
+                            "after": "float64"
+                        }
+                    },
+                    "statistics_changes": {
+                        "Dependents": {
+                            "mean_change": null,
+                            "std_change": null,
+                            "min_change": null,
+                            "max_change": null
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "datetime_conversion",
+            "description": "Convert and extract datetime features",
+            "parameters": {
+                "granularity": "auto"
+            },
+            "metrics": {
+                "start_time": "2025-03-30T18:33:08.326743",
+                "end_time": "2025-03-30T18:33:08.462933",
+                "duration_seconds": 0.13619,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {},
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "categorical_encoding",
+            "description": "Encode categorical features",
+            "parameters": {
+                "method": [
+                    "label"
+                ]
+            },
+            "metrics": {
+                "start_time": "2025-03-30T18:33:08.466776",
+                "end_time": "2025-03-30T18:33:08.606971",
+                "duration_seconds": 0.140195,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "dtype_changes": {
+                        "ExistingSavings": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "InstallmentPlans": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "CreditHistory": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "CheckingStatus": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "Housing": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "OthersOnLoan": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "LoanPurpose": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "Job": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "OwnsProperty": {
+                            "before": "object",
+                            "after": "int64"
+                        },
+                        "EmploymentDuration": {
+                            "before": "object",
+                            "after": "int64"
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "value_rounding",
+            "description": "Round numerical values to appropriate precision",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:33:08.606971",
+                "end_time": "2025-03-30T18:33:08.891695",
+                "duration_seconds": 0.284724,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "dtype_changes": {
+                        "ExistingSavings": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "Age": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "InstallmentPlans": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "CreditHistory": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "CheckingStatus": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "Housing": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "ExistingCreditsCount": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "InstallmentPercent": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "LoanAmount": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "CurrentResidenceDuration": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "OthersOnLoan": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "LoanPurpose": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "Job": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "LoanDuration": {
+                            "before": "float64",
+                            "after": "Int64"
+                        },
+                        "OwnsProperty": {
+                            "before": "int64",
+                            "after": "Int64"
+                        },
+                        "EmploymentDuration": {
+                            "before": "int64",
+                            "after": "Int64"
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "normalization",
+            "description": "Normalize numerical features",
+            "parameters": {
+                "enabled": true,
+                "method": "standard",
+                "exclude_features": []
+            },
+            "metrics": {
+                "start_time": "2025-03-30T18:33:08.914967",
+                "end_time": "2025-03-30T18:33:09.144564",
+                "duration_seconds": 0.229597,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "dtype_changes": {
+                        "ExistingSavings": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "Telephone": {
+                            "before": "bool",
+                            "after": "float64"
+                        },
+                        "Age": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "InstallmentPlans": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "ForeignWorker": {
+                            "before": "bool",
+                            "after": "float64"
+                        },
+                        "Risk": {
+                            "before": "bool",
+                            "after": "float64"
+                        },
+                        "Sex": {
+                            "before": "bool",
+                            "after": "float64"
+                        },
+                        "CreditHistory": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "CheckingStatus": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "Housing": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "ExistingCreditsCount": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "InstallmentPercent": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "LoanAmount": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "Dependents": {
+                            "before": "bool",
+                            "after": "float64"
+                        },
+                        "CurrentResidenceDuration": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "OthersOnLoan": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "LoanPurpose": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "Job": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "LoanDuration": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "OwnsProperty": {
+                            "before": "Int64",
+                            "after": "float64"
+                        },
+                        "EmploymentDuration": {
+                            "before": "Int64",
+                            "after": "float64"
+                        }
+                    },
+                    "statistics_changes": {
+                        "CheckingStatus": {
+                            "mean_change": -1.815097370006023,
+                            "std_change": -0.21416427405350635,
+                            "min_change": -1.4949620486141706,
+                            "max_change": -2.0240829542173615
+                        },
+                        "LoanDuration": {
+                            "mean_change": -21.451917285685607,
+                            "std_change": -10.131403921877899,
+                            "min_change": -5.5679524437090695,
+                            "max_change": -60.177304236837955
+                        },
+                        "CreditHistory": {
+                            "mean_change": -2.263601686408352,
+                            "std_change": -0.5416147976600532,
+                            "min_change": -1.4683833646599422,
+                            "max_change": -2.873609958231145
+                        },
+                        "LoanPurpose": {
+                            "mean_change": -4.2381047982332865,
+                            "std_change": -1.7845249093292406,
+                            "min_change": -1.522118713936125,
+                            "max_change": -7.930610748935727
+                        },
+                        "LoanAmount": {
+                            "mean_change": -3491.0694639630597,
+                            "std_change": -2483.8140258836547,
+                            "min_change": -251.30448182096504,
+                            "max_change": -11672.705688289363
+                        },
+                        "ExistingSavings": {
+                            "mean_change": -1.8478217225456735,
+                            "std_change": -0.33137286916844744,
+                            "min_change": -1.3879416771332203,
+                            "max_change": -2.383449067919587
+                        },
+                        "EmploymentDuration": {
+                            "mean_change": -1.4220036137321823,
+                            "std_change": -0.23809271012743505,
+                            "min_change": -1.1485658984242266,
+                            "max_change": -1.9177276998919255
+                        },
+                        "InstallmentPercent": {
+                            "mean_change": -2.9889580405541056,
+                            "std_change": -0.12200253919270532,
+                            "min_change": -2.7727052142203723,
+                            "max_change": -3.316338669337121
+                        },
+                        "OthersOnLoan": {
+                            "mean_change": -1.6902228468179081,
+                            "std_change": 0.2917149008298796,
+                            "min_change": -2.3862607994682996,
+                            "max_change": -1.5626558482504354
+                        },
+                        "CurrentResidenceDuration": {
+                            "mean_change": -2.8586629190925517,
+                            "std_change": -0.11393012141214132,
+                            "min_change": -2.6685804315673014,
+                            "max_change": -3.1799224440771696
+                        },
+                        "OwnsProperty": {
+                            "mean_change": -1.3095763902830757,
+                            "std_change": -0.05696924453613894,
+                            "min_change": -1.238998658489591,
+                            "max_change": -1.4006793339748038
+                        },
+                        "Age": {
+                            "mean_change": -35.98594659706886,
+                            "std_change": -9.606208026528607,
+                            "min_change": -20.601655472397773,
+                            "max_change": -70.41554173546427
+                        },
+                        "InstallmentPlans": {
+                            "mean_change": -1.1092150170648467,
+                            "std_change": 0.466756954634992,
+                            "min_change": -2.079947537043767,
+                            "max_change": -0.32964213178946755
+                        },
+                        "Housing": {
+                            "mean_change": -1.0620357357960248,
+                            "std_change": 0.4042932666394847,
+                            "min_change": -1.7826949480570526,
+                            "max_change": -0.4255669570278733
+                        },
+                        "ExistingCreditsCount": {
+                            "mean_change": -1.4669745031118249,
+                            "std_change": 0.4354422553714613,
+                            "min_change": -1.827086960545917,
+                            "max_change": -0.2847652490418646
+                        },
+                        "Job": {
+                            "mean_change": -1.1977514555310178,
+                            "std_change": 0.17161471936417605,
+                            "min_change": -1.4458568670850964,
+                            "max_change": -0.8244289145452712
+                        }
+                    },
+                    "feature_stats": {
+                        "mean": {
+                            "CheckingStatus": 1.815097370006023,
+                            "LoanDuration": 21.451917285685607,
+                            "CreditHistory": 2.263601686408352,
+                            "LoanPurpose": 4.2381047982332865,
+                            "LoanAmount": 3491.0694639630597,
+                            "ExistingSavings": 1.8478217225456735,
+                            "EmploymentDuration": 1.4220036137321823,
+                            "InstallmentPercent": 2.9889580405541056,
+                            "Sex": 0.37984340493876734,
+                            "OthersOnLoan": 1.6902228468179081,
+                            "CurrentResidenceDuration": 2.8586629190925517,
+                            "OwnsProperty": 1.3095763902830757,
+                            "Age": 35.98594659706886,
+                            "InstallmentPlans": 1.1092150170648465,
+                            "Housing": 1.0620357357960248,
+                            "ExistingCreditsCount": 1.4669745031118249,
+                            "Job": 1.1977514555310178,
+                            "Dependents": 0.8349728970086328,
+                            "Telephone": 0.5868299538245332,
+                            "ForeignWorker": 0.9753061634209998,
+                            "Risk": 0.6649267215418591
+                        },
+                        "std": {
+                            "CheckingStatus": 1.2141427748541294,
+                            "LoanDuration": 11.130386865817327,
+                            "CreditHistory": 1.5415604268525416,
+                            "LoanPurpose": 2.7843457671404312,
+                            "LoanAmount": 2484.564684516176,
+                            "ExistingSavings": 1.3313396038098164,
+                            "EmploymentDuration": 1.2380688088363918,
+                            "InstallmentPercent": 1.1219902917862405,
+                            "Sex": 0.4853477028515649,
+                            "OthersOnLoan": 0.7083143834045798,
+                            "CurrentResidenceDuration": 1.113918684367349,
+                            "OwnsProperty": 1.0569635255937428,
+                            "Age": 10.6052436930396,
+                            "InstallmentPlans": 0.5332899014565414,
+                            "Housing": 0.5957473189417688,
+                            "ExistingCreditsCount": 0.5646014571473831,
+                            "Job": 0.8284025084348295,
+                            "Dependents": 0.3712050084113143,
+                            "Telephone": 0.4924028423139223,
+                            "ForeignWorker": 0.15519037023607435,
+                            "Risk": 0.4720160765497867
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Sensitive Feature Detection",
+            "description": "Use AI to detect potentially sensitive features",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:33:09.369283",
+                "end_time": "2025-03-30T18:36:01.321323",
+                "duration_seconds": 171.95204,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "sensitive_features": [
+                        "CreditHistory",
+                        "ExistingSavings",
+                        "Sex",
+                        "Age",
+                        "Telephone"
+                    ],
+                    "results": [
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The feature 'CheckingStatus' appears to contain numerical values without direct identifiers or sensitive context. It is likely a derived or aggregated metric related to credit status, which is not inherently sensitive.",
+                            "recommendation": null,
+                            "column": "CheckingStatus"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The feature 'LoanDuration' appears to represent numerical values related to loan durations, which are not inherently sensitive or personally identifiable. There is no direct or indirect link to personal or confidential information.",
+                            "recommendation": null,
+                            "column": "LoanDuration"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 6,
+                            "justification": "The 'CreditHistory' feature, while not directly revealing personal identifiers, can indirectly indicate financial behavior or creditworthiness, which is sensitive financial data. This could lead to potential bias or discrimination in credit-related decisions.",
+                            "recommendation": "Anonymize or aggregate the data to reduce granularity. Ensure compliance with financial data protection regulations (e.g., GDPR, FCRA) and use fairness-aware algorithms to mitigate bias in downstream applications.",
+                            "column": "CreditHistory"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The feature 'LoanPurpose' appears to contain numerical values without direct identifiers or sensitive context. It is likely a transformed or encoded representation of loan purposes, which does not inherently reveal personal or confidential information.",
+                            "recommendation": null,
+                            "column": "LoanPurpose"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The 'LoanAmount' feature contains numerical values representing loan amounts, which are not directly linked to personal identifiers or sensitive attributes. However, in certain contexts, large or small loan amounts could indirectly hint at financial status, but the risk is low.",
+                            "recommendation": "No specific handling is required unless the dataset is combined with other features that could lead to re-identification or bias. Ensure anonymization if used in conjunction with other sensitive data.",
+                            "column": "LoanAmount"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 5,
+                            "justification": "The 'ExistingSavings' feature contains financial data, which is potentially sensitive as it could reveal personal financial status. While the data is anonymized (no direct identifiers), it could still be used to infer financial behavior or status, posing a moderate risk.",
+                            "recommendation": "Anonymize or aggregate the data further to reduce re-identification risk. Ensure compliance with financial data protection regulations (e.g., GDPR, CCPA) if applicable. Limit access to authorized personnel only.",
+                            "column": "ExistingSavings"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The feature 'EmploymentDuration' contains numerical values representing employment duration, which is not directly identifiable or linked to personal or sensitive information. It does not reveal protected characteristics, health, financial, or location data.",
+                            "recommendation": null,
+                            "column": "EmploymentDuration"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The feature 'InstallmentPercent' contains numerical values representing financial installment percentages, which are not directly linked to personal identifiers or protected characteristics. The data does not reveal sensitive information about individuals.",
+                            "recommendation": null,
+                            "column": "InstallmentPercent"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 7,
+                            "justification": "The feature 'Sex' represents gender, which is a protected characteristic under many legal frameworks. It can lead to discrimination or bias in credit-related decisions, especially in the context of the dataset (german_credit_data). The numerical encoding (e.g., 1.2777573509004465, -0.7826212068318695) may obscure direct interpretation but still carries sensitive information.",
+                            "recommendation": "1. Avoid using this feature in model training if not necessary. 2. If required, ensure fairness-aware algorithms are applied to mitigate bias. 3. Document the potential impact of this feature on model outcomes for transparency.",
+                            "column": "Sex"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The feature 'OthersOnLoan' consists of numerical values that appear to represent loan-related metrics. There is no indication of personal identifiers, protected characteristics, or other sensitive information. The context suggests it is part of a credit risk dataset, and the values do not reveal any confidential or discriminatory details.",
+                            "recommendation": "No special handling is required for this feature as it poses minimal risk. However, ensure that the dataset as a whole is reviewed for other potentially sensitive features.",
+                            "column": "OthersOnLoan"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The feature 'CurrentResidenceDuration' appears to represent numerical values, likely indicating the duration of residence. It does not directly or indirectly reveal personal identifiers, protected characteristics, or other sensitive information. The context of the dataset (german_credit_data) suggests it is used for credit risk analysis, and this feature alone does not pose a significant risk of bias or discrimination.",
+                            "recommendation": null,
+                            "column": "CurrentResidenceDuration"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The 'OwnsProperty' feature appears to represent numerical values, likely indicating ownership status or a derived metric. It does not directly or indirectly reveal personal or confidential information, nor does it relate to protected characteristics or other sensitive categories.",
+                            "recommendation": null,
+                            "column": "OwnsProperty"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 4,
+                            "justification": "Age is a protected characteristic under many anti-discrimination laws (e.g., GDPR, ADEA). While the provided data appears to be normalized or transformed, it could still be used to infer age-related biases in credit decisions.",
+                            "recommendation": "Avoid using age directly in decision-making models. If necessary, anonymize or aggregate age data to reduce re-identification risk and ensure compliance with anti-discrimination laws.",
+                            "column": "Age"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The 'InstallmentPlans' feature contains numerical values representing financial installment plans. While financial data can be sensitive, these values appear to be anonymized or standardized (e.g., z-scores or similar transformations), and there is no direct link to personal identifiers or confidential information.",
+                            "recommendation": "No specific handling is required unless the data is combined with other features that could lead to re-identification. Ensure the data remains anonymized and avoid linking it to identifiable information.",
+                            "column": "InstallmentPlans"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The 'Housing' feature contains numerical values that do not directly or indirectly reveal personal, confidential, or sensitive information. It lacks identifiers or protected characteristics, and its context within the dataset does not suggest any bias or discrimination risk.",
+                            "recommendation": null,
+                            "column": "Housing"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The feature 'ExistingCreditsCount' represents numerical values related to credit counts, which do not directly or indirectly reveal personal or confidential information. It is unlikely to contribute to discrimination or bias in downstream applications.",
+                            "recommendation": null,
+                            "column": "ExistingCreditsCount"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The 'Job' feature appears to contain numerical values that do not directly correspond to personal identifiers, protected characteristics, or other sensitive categories. Given the context of the dataset (german_credit_data), it is likely a derived or encoded feature related to employment status or job type, which is generally non-sensitive.",
+                            "recommendation": "No specific handling is required unless further analysis reveals that the numerical values can be reverse-engineered to reveal sensitive information.",
+                            "column": "Job"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The 'Dependents' feature represents numerical values that do not directly reveal personal or confidential information. It is unlikely to be used for re-identification or to introduce bias.",
+                            "recommendation": null,
+                            "column": "Dependents"
+                        },
+                        {
+                            "is_sensitive": true,
+                            "sensibility_level": 8,
+                            "justification": "The 'Telephone' feature, despite being represented numerically, could indirectly map to personal phone numbers or identifiers, posing a re-identification risk. In the context of credit data, such identifiers can link sensitive financial behavior to individuals.",
+                            "recommendation": "Anonymize or remove this feature to prevent re-identification. If retention is necessary, ensure it is encrypted or hashed, and access is strictly controlled.",
+                            "column": "Telephone"
+                        },
+                        {
+                            "is_sensitive": false,
+                            "sensibility_level": 2,
+                            "justification": "The 'Risk' feature appears to be a numerical representation of risk scores, likely derived from financial or credit data. While it could indirectly relate to financial risk, it does not directly reveal personal identifiers, protected characteristics, or other sensitive information. The values are abstract and not tied to specific individuals.",
+                            "recommendation": "No specific handling is required unless the risk scores can be reverse-engineered to reveal sensitive attributes. In such cases, consider aggregating or anonymizing the data further.",
+                            "column": "Risk"
+                        }
+                    ]
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis CreditHistory",
+            "description": "Analyze and mitigate bias for feature CreditHistory",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:36:01.326935",
+                "end_time": "2025-03-30T18:36:01.339640",
+                "duration_seconds": 0.012705,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis ExistingSavings",
+            "description": "Analyze and mitigate bias for feature ExistingSavings",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:36:01.339640",
+                "end_time": "2025-03-30T18:36:01.351071",
+                "duration_seconds": 0.011431,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis Sex",
+            "description": "Analyze and mitigate bias for feature Sex",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:36:01.351071",
+                "end_time": "2025-03-30T18:36:01.366934",
+                "duration_seconds": 0.015863,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis Age",
+            "description": "Analyze and mitigate bias for feature Age",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:36:01.366934",
+                "end_time": "2025-03-30T18:36:01.380161",
+                "duration_seconds": 0.013227,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis Telephone",
+            "description": "Analyze and mitigate bias for feature Telephone",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:36:01.380161",
+                "end_time": "2025-03-30T18:36:01.392809",
+                "duration_seconds": 0.012648,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "results": {
+                        "original": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        },
+                        "mitigated": {
+                            "disparate_impact": NaN,
+                            "statistical_parity_difference": 0.0,
+                            "group_metrics": {
+                                "group_0_positive_rate": 0.0,
+                                "group_1_positive_rate": 0.0
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "Fairness Analysis",
+            "description": "Analyze and mitigate bias for each sensitive feature",
+            "parameters": {},
+            "metrics": {
+                "start_time": "2025-03-30T18:36:01.326935",
+                "end_time": "2025-03-30T18:36:01.392809",
+                "duration_seconds": 0.065874,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    21
+                ],
+                "changes_made": {
+                    "results": {
+                        "CreditHistory": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        },
+                        "ExistingSavings": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        },
+                        "Sex": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        },
+                        "Age": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        },
+                        "Telephone": {
+                            "original": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            },
+                            "mitigated": {
+                                "disparate_impact": NaN,
+                                "statistical_parity_difference": 0.0,
+                                "group_metrics": {
+                                    "group_0_positive_rate": 0.0,
+                                    "group_1_positive_rate": 0.0
+                                }
+                            }
+                        }
+                    }
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        },
+        {
+            "operation_name": "dimensionality_reduction",
+            "description": "Reduce data dimensionality",
+            "parameters": {
+                "enabled": true,
+                "method": "pca",
+                "n_components": null,
+                "target_explained_variance": 0.95
+            },
+            "metrics": {
+                "start_time": "2025-03-30T18:36:01.394813",
+                "end_time": "2025-03-30T18:36:01.413507",
+                "duration_seconds": 0.018694,
+                "input_shape": [
+                    4981,
+                    21
+                ],
+                "output_shape": [
+                    4981,
+                    18
+                ],
+                "changes_made": {
+                    "added_columns": [
+                        "component_7",
+                        "component_9",
+                        "component_10",
+                        "component_6",
+                        "component_15",
+                        "component_3",
+                        "component_13",
+                        "component_2",
+                        "component_4",
+                        "component_5",
+                        "component_16",
+                        "component_12",
+                        "component_18",
+                        "component_1",
+                        "component_8",
+                        "component_11",
+                        "component_14",
+                        "component_17"
+                    ],
+                    "removed_columns": [
+                        "ExistingSavings",
+                        "Telephone",
+                        "Age",
+                        "InstallmentPlans",
+                        "ForeignWorker",
+                        "Risk",
+                        "Sex",
+                        "CreditHistory",
+                        "CheckingStatus",
+                        "Housing",
+                        "ExistingCreditsCount",
+                        "InstallmentPercent",
+                        "LoanAmount",
+                        "Dependents",
+                        "CurrentResidenceDuration",
+                        "OthersOnLoan",
+                        "LoanPurpose",
+                        "Job",
+                        "LoanDuration",
+                        "OwnsProperty",
+                        "EmploymentDuration"
+                    ],
+                    "explained_variance_ratio": [
+                        0.297266444210552,
+                        0.06291740545664798,
+                        0.05418355267844598,
+                        0.048941012604277224,
+                        0.04868745897249908,
+                        0.04697487139291733,
+                        0.04563535810783587,
+                        0.04469220081111227,
+                        0.04235915111981569,
+                        0.03910363555853766,
+                        0.03679103469153724,
+                        0.03408748945933974,
+                        0.030802085243984895,
+                        0.0305368114459371,
+                        0.02840503112216329,
+                        0.0248805983581969,
+                        0.02146075458144305,
+                        0.019030834613292132
+                    ],
+                    "n_components": 18,
+                    "total_variance_explained": 0.9567557304285355
+                },
+                "success": true,
+                "error": null
+            },
+            "warnings": []
+        }
+    ]
+}

@@ -57,8 +57,6 @@ def autoclean(input_dataframe, drop_nans=False, copy=False, encoder=None,
             input_dataframe[column].fillna(input_dataframe[column].median(), inplace=True)
         except TypeError:
             most_frequent = input_dataframe[column].mode()
-            # If the mode can't be computed, use the nearest valid value
-            # See https://github.com/rhiever/datacleaner/issues/8
             if len(most_frequent) > 0:
                 input_dataframe[column].fillna(input_dataframe[column].mode()[0], inplace=True)
             else:

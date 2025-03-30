@@ -3,7 +3,7 @@
 from typing import List, Dict, Any, Optional, Union, AsyncIterator
 from pathlib import Path
 from pydantic import BaseModel, Field, ValidationError
-from pydantic_ai import Agent, ModelRetry, RunContext
+from pydantic_ai import Agent, RunContext
 from pydantic_ai.models.openai import OpenAIModel
 from openai import AsyncOpenAI, APIError
 from loguru import logger
@@ -101,7 +101,7 @@ class AICodeAnalyzer:
 
 Be thorough but avoid false positives. Focus on real ethical concerns rather than general code quality issues."""
 
-    async def analyze_file(self, file_path: str) -> Union[CodeBiasAnalysisResult, str]:
+    def analyze_file(self, file_path: str) -> Union[CodeBiasAnalysisResult, str]:
         """Analyze a Python file for potential ethical biases using AI.
         
         Args:
@@ -135,7 +135,7 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
             def prompt(ctx: RunContext[Dependency]) -> str:
                 return self.system_prompt + f"""\n{ctx.deps.context['file_type']} file: {ctx.deps.file_path} \n contents: {ctx.deps.code}"""
 
-            result = await agent.run(
+            result = agent.run_sync(
                 "Analyze the Python code for ethical biases",
                 deps=deps,
             )
@@ -150,7 +150,7 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
             logger.error(f"Unexpected error analyzing file {file_path}: {str(e)}")
             return f"Unexpected error analyzing file {file_path}: {str(e)}"
 
-    async def analyze_path(self, path: str) -> List[Dict[str, Any]]:
+    def analyze_path(self, path: str) -> List[Dict[str, Any]]:
         """Analyze all Python files in the given path for potential biases.
         
         Args:
@@ -162,8 +162,8 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
         path_obj = Path(path)
         results = []
 
-        async def analyze_single_file(file_path: str):
-            result = await self.analyze_file(file_path)
+        def analyze_single_file(file_path: str):
+            result = self.analyze_file(file_path)
             return {
                 "file": file_path,
                 # "analysis": result.model_dump() if isinstance(result, BaseModel) else result
@@ -171,10 +171,10 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
             }
 
         if path_obj.is_file() and path_obj.suffix == '.py':
-            results.append(await analyze_single_file(str(path_obj)))
+            results.append(analyze_single_file(str(path_obj)))
         elif path_obj.is_dir():
             for py_file in path_obj.rglob('*.py'):
-                results.append(await analyze_single_file(str(py_file)))
+                results.append(analyze_single_file(str(py_file)))
 
         return results
 
@@ -191,7 +191,7 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
         results = []
 
         async def analyze_single_file(file_path: str):
-            result = await self.analyze_file(file_path)
+            result = self.analyze_file(file_path)
             return {
                 "file": file_path,
                 "analysis": result.model_dump() if isinstance(result, BaseModel) else result

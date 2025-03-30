@@ -47,13 +47,44 @@ Create a JSON configuration file to specify your data cleaning parameters. Examp
 
 ```json
 {
-    "dataset_config": {
-        "dataset": {
-            "sensitive_features": ["gender", "race"],
-            "target": "outcome"
-        }
-    }
+	"dataset": {
+		"title": "german_credit_data",
+		"description": "german_credit_data",
+		"columns": [],
+		"target": "Sex",
+		"sensitive_features": ["Sex"]
+	},
+	"preprocessing": {
+		"dim_reduction": {
+			"enabled": true,
+			"method": "pca",
+			"n_components": null,
+			"target_explained_variance": 0.95
+		},
+		"normalization": {
+			"enabled": true,
+			"method": "standard",
+			"exclude_features": []
+		},
+		"mode": "auto",
+		"duplicates": false,
+		"missing_num": false,
+		"missing_categ": false,
+		"outliers": false,
+		"encode_categ": [],
+		"extract_datetime": false,
+		"outlier_param": 1.5,
+		"logfile": true,
+		"verbose": false,
+		"output_folder": "C:/Users/Documents/output/test_run"
+    },
+	"code_analysis_paths": [
+		"C:/Users/Documents/preprocessing_code"
+	],
+	"code_analysis_type": "ai",
+	"columns": {}
 }
+
 ```
 
 ## Environment variables
@@ -75,10 +106,11 @@ For detailed documentation and examples, visit our [documentation](link-to-docum
 - Categorical encoding
 - Feature scaling
 - Outlier detection and handling
+- Normalization and standardization
 
 ### Fairness Analysis
-- Bias detection in data processing
 - Sensitive feature identification
+- Bias detection in data
 - AI-powered code analysis for potential biases
 - Detailed audit trails
 

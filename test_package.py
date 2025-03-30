@@ -10,7 +10,7 @@ def test_data():
     test_dir = Path(__file__).parent
     return {
         "config_path": test_dir / "configs.json",
-        "dataset_path": test_dir / "datasets/german_credit_data.csv",
+        "dataset_path": test_dir / "datasets/head_output_pandas.csv",
         "output_path": test_dir / "output/test_run"
     }
 
@@ -51,8 +51,7 @@ def mock_analyze_code_biases(self):
 #             output_path=str(test_data["output_path"])
 #         )
 
-# @patch('FairAutoCleaner.fairness_analyzer.FairnessAnalyzer.analyze_code_biases', mock_analyze_code_biases)
-
+@patch('FairAutoCleaner.fairness_analyzer.FairnessAnalyzer.analyze_code_biases', mock_analyze_code_biases)
 def test_output_files_created(test_data):
     """Verify that output files are created correctly"""
     # Clean up previous test output

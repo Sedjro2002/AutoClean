@@ -45,10 +45,14 @@ def process_dataset(
 
         # Initialize data processor
         processor = DataProcessor(config, audit_logger=audit_logger)
+        
 
         # Load and process data
         df = processor.load_csv(dataset_path)
 
+        # Generate initial profile
+        # profile = processor.generate_profile(df, "before_preprocessing")
+        
         # Run AutoClean
         cleaned_data = AutoClean(
             df, audit_logger=audit_logger, output_folder=output_path, config=config.__dict__
@@ -57,6 +61,9 @@ def process_dataset(
         # Save cleaned dataset
         cleaned_data_path = output_path / "cleaned_data.csv"
         cleaned_data.to_csv(cleaned_data_path, index=False)
+        
+        # Generate profile after preprocessing
+        # profile_after = processor.generate_profile(cleaned_data, "after_preprocessing")
 
         # Run fairness analysis
         sensitive_features = config.dataset_config.get("dataset", {}).get(
@@ -71,25 +78,28 @@ def process_dataset(
         )
         results, mitigated_data = analyser.analyze_and_mitigate()
         
+        
         # Save the mitigated dataset
         if mitigated_data is not None:
             mitigated_data_path = output_path / "mitigated_data.csv"
-            # mitigated_data.to_csv(mitigated_data_path, index=False)
+            # mitigated_data.convert_to_dataframe().to_csv(mitigated_data_path, index=False)
 
+        # Generate profile after fairness analysis
+        # profile_after = processor.generate_profile(mitigated_data, "after_fairness_analysis")
 
         # Dimensionality reduction
-        if config.dataset_config.get('dataset', {}).get('preprocessing', {}).get('dim_reduction', {}).get('enabled', False)==True:
+        if config.dataset_config.get('preprocessing', {}).get('dim_reduction', {}).get('enabled', False)==True:
             start_time = audit_logger.start_operation(
                 "dimensionality_reduction",
                 "Reduce data dimensionality",
-                config.dataset_config['dataset']['preprocessing']['dim_reduction'],
+                config.dataset_config['preprocessing']['dim_reduction'],
                 cleaned_data
             )
             df_before = cleaned_data.copy()
             reducer = DimensionalityReducer(
-                method=config.dataset_config['dataset']['preprocessing']['dim_reduction'].get('method', 'pca'),
-                n_components=config.dataset_config['dataset']['preprocessing']['dim_reduction'].get('n_components'),
-                target_explained_variance=config.dataset_config['dataset']['preprocessing']['dim_reduction'].get('target_explained_variance', 0.95)
+                method=config.dataset_config['preprocessing']['dim_reduction'].get('method', 'pca'),
+                n_components=config.dataset_config['preprocessing']['dim_reduction'].get('n_components'),
+                target_explained_variance=config.dataset_config['preprocessing']['dim_reduction'].get('target_explained_variance', 0.95)
             )
             reduced_data, reduction_metadata = reducer.fit_transform(cleaned_data)
             reduced_cols = [f'component_{i+1}' for i in range(reduced_data.shape[1])]
@@ -100,7 +110,7 @@ def process_dataset(
             audit_logger.complete_operation(
                 "dimensionality_reduction",
                 "Reduce data dimensionality",
-                config.dataset_config['dataset']['preprocessing']['dim_reduction'],
+                config.dataset_config['preprocessing']['dim_reduction'],
                 start_time,
                 df_before,
                 cleaned_data,
@@ -108,6 +118,10 @@ def process_dataset(
             )
             dim_red_data_path = output_path / "dim_red_data.csv"
             cleaned_data.to_csv(dim_red_data_path, index=False)
+            
+            # Generate profile after dimensionality reduction
+            # profile_after = processor.generate_profile(cleaned_data, "after_dim_reduction")
+            
 
 
 

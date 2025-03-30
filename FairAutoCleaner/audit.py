@@ -221,12 +221,21 @@ class AuditLogger:
                 after_stats = after_df[col].describe()
                 after_stats = after_stats.astype("float64")
                 if not before_stats.equals(after_stats):
-                    stats_changes[col] = {
-                        "mean_change": float(after_stats['mean'] - before_stats['mean']),
-                        "std_change": float(after_stats['std'] - before_stats['std']),
-                        "min_change": float(after_stats['min'] - before_stats['min']),
-                        "max_change": float(after_stats['max'] - before_stats['max'])
-                    }
+                    try:
+                        stats_changes[col] = {
+                            "mean_change": float(after_stats['mean'] - before_stats['mean']),
+                            "std_change": float(after_stats['std'] - before_stats['std']),
+                            "min_change": float(after_stats['min'] - before_stats['min']),
+                            "max_change": float(after_stats['max'] - before_stats['max'])
+                        }
+                    except Exception as e:
+                        logger.warning(f"Error calculating statistics changes for column {col}: {str(e)}")
+                        stats_changes[col] = {
+                            "mean_change": None,
+                            "std_change": None,
+                            "min_change": None,
+                            "max_change": None
+                        }
         if stats_changes:
             changes["statistics_changes"] = stats_changes
             

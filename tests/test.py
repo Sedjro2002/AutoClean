@@ -42,7 +42,7 @@ def main():
         df = processor.load_csv("./datasets/Student_performance_10k.csv")
         
         # Generate profiles
-        # profile = processor.generate_profile(df, "before_preprocessing")
+        profile = processor.generate_profile(df, "before_preprocessing")
         
         # Run AutoClean
         cleaned_data = AutoClean(df, audit_logger=audit_logger).output

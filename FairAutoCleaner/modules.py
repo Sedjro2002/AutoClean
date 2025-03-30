@@ -10,7 +10,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, OrdinalEncoder
 from loguru import logger
 import warnings
 
@@ -146,11 +146,11 @@ class MissingValues:
                                     counter,
                                     feature,
                                 )
-                        except:
+                        except Exception as e:
                             logger.warning(
                                 '{} imputation failed for feature "{}"',
                                 str(self.missing_num).upper(),
-                                feature,
+                                feature, e
                             )
         else:
             # categorical features
@@ -195,11 +195,11 @@ class MissingValues:
                                     counter,
                                     feature,
                                 )
-                        except:
+                        except Exception as e:
                             logger.warning(
                                 '{} imputation failed for feature "{}"',
                                 str(self.missing_categ).upper(),
-                                feature,
+                                feature, e
                             )
         return df
 
@@ -252,8 +252,8 @@ class MissingValues:
                         len(pred),
                         feature,
                     )
-            except:
-                logger.warning('LINREG imputation failed for feature "{}"', feature)
+            except Exception as e:
+                logger.warning('LINREG imputation failed for feature "{}"', feature, e)
         for feature in df.columns:
             try:
                 # map categorical feature values back to original
@@ -309,8 +309,8 @@ class MissingValues:
                             len(pred),
                             feature,
                         )
-                except:
-                    logger.warning('LOGREG imputation failed for feature "{}"', feature)
+                except Exception as e:
+                    logger.warning('LOGREG imputation failed for feature "{}"', feature, e)
         for feature in df.columns:
             try:
                 # map categorical feature values back to original
@@ -449,11 +449,11 @@ class Adjust:
                             df[feature], errors='raise'
                         )
                     except Exception as e:
-                        logger.error(
-                            'Error converting feature "{}" to datetime: {}',
-                            feature,
-                            str(e),
-                        )
+                        # logger.error(
+                        #     'Error converting feature "{}" to datetime: {}',
+                        #     feature,
+                        #     str(e),
+                        # )
                         raise
                     df["Day"] = pd.to_datetime(df[feature]).dt.day
 
@@ -500,11 +500,12 @@ class Adjust:
                             df.drop("Year", inplace=True, axis=1)
                     except:
                         pass
-                except:
+                except Exception as e:
                     # feature cannot be converted to datetime
-                    logger.warning(
-                        'Conversion to DATETIME failed for "{}"', feature
-                    )
+                    # logger.warning(
+                    #     'Conversion to DATETIME failed for "{}"', feature, e
+                    # )
+                    continue
             end = timer()
             logger.info(
                 "Completed conversion of DATETIME features in {} seconds",
@@ -538,9 +539,9 @@ class Adjust:
                         logger.debug(
                             'Conversion to type INT succeeded for feature "{}"', feature
                         )
-                    except:
+                    except Exception as e:
                         logger.warning(
-                            'Conversion to type INT failed for feature "{}"', feature
+                            'Conversion to type INT failed for feature "{}"', feature, e
                         )
                 else:
                     try:
@@ -562,9 +563,9 @@ class Adjust:
                             'Conversion to type FLOAT succeeded for feature "{}"',
                             feature,
                         )
-                    except:
+                    except Exception as e:
                         logger.warning(
-                            'Conversion to type FLOAT failed for feature "{}"', feature
+                            'Conversion to type FLOAT failed for feature "{}"', feature, e
                         )
             end = timer()
             logger.info(
@@ -582,93 +583,57 @@ class EncodeCateg:
     def handle(self, df: pd.DataFrame):
 
         if self.encode_categ:
-            # if not isinstance(self.encode_categ, list):
-            #     self.encode_categ = ["auto"]
-
-            # cols_categ = (
-            #     set(df.columns)
-            #     ^ set(df.select_dtypes(include=np.number).columns)
-            #     ^ set(df.select_dtypes(include=np.datetime64).columns)
-            # )
-
-            # if len(self.encode_categ) == 1:
-            #     target_cols = cols_categ
-            # else:
-            #     target_cols = self.encode_categ[1]
-            # logger.info(
-            #     'Started encoding categorical features... Method: "{}"',
-            #     str(self.encode_categ[0]).upper(),
-            # )
-            # start = timer()
-            # for feature in target_cols:
-            #     if feature in cols_categ:
-
-            #         feature = feature
-            #     else:
-
-            #         feature = df.columns[feature]
-            #     try:
-
-            #         pd.to_datetime(df[feature])
-            #         logger.debug('Skipped encoding for DATETIME feature "{}"', feature)
-            #     except:
-            #         try:
-            #             if self.encode_categ[0] == "auto":
-
-            #                 if df[feature].nunique() <= 10:
-            #                     df = EncodeCateg._to_onehot(self, df, feature)
-            #                     logger.debug(
-            #                         'Encoding to ONEHOT succeeded for feature "{}"',
-            #                         feature,
-            #                     )
-
-            #                 elif df[feature].nunique() <= 20:
-            #                     df = EncodeCateg._to_label(self, df, feature)
-            #                     logger.debug(
-            #                         'Encoding to LABEL succeeded for feature "{}"',
-            #                         feature,
-            #                     )
-
-            #                 else:
-            #                     logger.debug(
-            #                         'Encoding skipped for feature "{}"', feature
-            #                     )
-
-            #             elif self.encode_categ[0] == "onehot":
-            #                 df = EncodeCateg._to_onehot(df, feature)
-            #                 logger.debug(
-            #                     'Encoding to {} succeeded for feature "{}"',
-            #                     str(self.encode_categ[0]).upper(),
-            #                     feature,
-            #                 )
-            #             elif self.encode_categ[0] == "label":
-            #                 df = EncodeCateg._to_label(df, feature)
-            #                 logger.debug(
-            #                     'Encoding to {} succeeded for feature "{}"',
-            #                     str(self.encode_categ[0]).upper(),
-            #                     feature,
-            #                 )
-            #         except:
-            #             logger.warning(
-            #                 'Encoding to {} failed for feature "{}"',
-            #                 str(self.encode_categ[0]).upper(),
-            #                 feature,
-            #             )
-
-            # end = timer()
-            # logger.info(
-            #     "Completed encoding of categorical features in {} seconds",
-            #     round(end - start, 6),
-            # )
             
             for column in df.columns.values:
-                if str(df[column].values.dtype) == 'object':
+                if str(df[column].values.dtype) == 'object' and column != self.config.get('dataset_config', {}).get('dataset', {}).get('target') and column not in self.config.get('dataset_config', {}).get('dataset', {}).get('sensitive_features', []):
                     # if encoder is not None:
                     #     column_encoder = encoder(**encoder_kwargs).fit(df[column].values)
                     # else:
-                    column_encoder = LabelEncoder().fit(df[column].values)
+                    try:
+                        pd.to_datetime(df[column])
+                        logger.debug('Skipped encoding for DATETIME feature "{}"', column)
+                        continue
+                    except:
+                        try:
+                            if self.encode_categ[0] == "auto" or self.encode_categ == "auto":
+                                x = df[column].dropna().unique()
+                                if len(x) < 5:
+                                    column_encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+                                    encoded_array = column_encoder.fit_transform(df[[column]])
+                                    encoded_df = pd.DataFrame(encoded_array, columns=column_encoder.get_feature_names_out([column]))
+                                    encoded_df.index = df.index
+                                    df = df.drop(columns=[column])
+                                    df = pd.concat([df, encoded_df], axis=1)
+                                    logger.debug('Encoding to ONEHOT succeeded for feature "{}" | {} unique values', column, len(x))
+                                else:
+                                    column_encoder = LabelEncoder().fit(df[column].values)
+                                    df[column] = column_encoder.transform(df[column].values)
+                                    logger.debug('Encoding to LABEL succeeded for feature "{}" | {} unique values', column, len(x))
+                                # else:
+                                #     logger.debug('Encoding skipped for feature "{}"', column)
+                                # column_encoder = LabelEncoder().fit(df[column].values)
+                                # df[column] = column_encoder.transform(df[column].values)
+                                # logger.debug('Encoding to LABEL succeeded for feature "{}"', column)
+                            elif self.encode_categ[0] == "onehot" or self.encode_categ == "onehot":
+                                column_encoder = OneHotEncoder(handle_unknown='ignore').fit(df[column].values.reshape(-1, 1))
+                                df[column] = column_encoder.transform(df[column].values.reshape(-1, 1)).toarray().ravel()
+                                logger.debug('Encoding to {} succeeded for feature "{}"', str(self.encode_categ[0]).upper(), column)
+                            elif self.encode_categ[0] == "label" or self.encode_categ == "label":
+                                column_encoder = LabelEncoder().fit(df[column].values)
+                                df[column] = column_encoder.transform(df[column].values)
+                                logger.debug('Encoding to {} succeeded for feature "{}"', str(self.encode_categ[0]).upper(), column)
+                            else:
+                                logger.debug('Encoding skipped for feature "{}"', column)
+                        except Exception as e:
+                            logger.warning('Encoding to {} failed for feature "{}": {}', str(self.encode_categ[0]).upper(), column, e)
+                    # try:
+                    #     column_encoder = LabelEncoder().fit(df[column].values)
 
-                    df[column] = column_encoder.transform(df[column].values)
+                    #     df[column] = column_encoder.transform(df[column].values)
+                        
+                    #     logger.debug("Encoding to {} succeeded for feature {}", str(self.encode_categ[0]).upper(), column)
+                    # except:
+                    #     logger.warning("Encoding to {} failed for feature {}", str(self.encode_categ[0]).upper(), column)
         else:
             logger.info("Skipped encoding of categorical features")
         return df
@@ -724,15 +689,15 @@ class Duplicates:
                 if count != 0:
                     logger.debug("Deletion of {} duplicate(s) succeeded", count)
                 else:
-                    logger.debug("{} missing values found", count)
+                    logger.debug("{} duplicate(s) found", count)
                 end = timer()
                 logger.info(
                     "Completed handling of duplicates in {} seconds",
                     round(end - start, 6),
                 )
 
-            except:
-                logger.warning("Handling of duplicates failed")
+            except Exception as e:
+                logger.warning("Handling of duplicates failed", e)
         else:
             logger.info("Skipped handling of duplicates")
         return df
@@ -799,25 +764,27 @@ class FieldAssignment:
 
         for column_name in cols_categ:
             boolean_columns = []
-            if df[column_name].dtype == "object":
-                unique_counts = df[column_name].dropna().unique()
-                if len(unique_counts) == 2 or unique_counts.max() >= boolean_threshold:
-                    logger.debug(
-                        'Since the percentage of unique values for feature "{}" is higher than the limit of {}%, the conversion to boolean will be attempted.',
-                        column_name,
-                        boolean_threshold,
-                    )
-                    df[column_name] = df[column_name].apply(
-                        lambda x: x == unique_counts[0]
-                    )
-                else:
-                    logger.debug(
-                        'Since the percentage of unique values for feature "{}" is lower than the limit of {}%, the conversion to boolean will be skipped.',
-                        column_name,
-                        boolean_threshold,
-                    )
+            # if df[column_name].dtype == "object":
+            unique_counts = df[column_name].dropna().unique()
+            x=len(unique_counts) / len(df[column_name])
+            # if len(unique_counts) == 2 or len(unique_counts) / len(df[column_name]) >= boolean_threshold:
+            if len(unique_counts) == 2:
+                logger.debug(
+                    'Since the percentage of unique values for feature "{}" is higher than the limit of {}%, the conversion to boolean will be attempted.',
+                    column_name,
+                    boolean_threshold,
+                )
+                df[column_name] = df[column_name].apply(
+                    lambda x: x == unique_counts[0]
+                )
             else:
-                continue
+                logger.debug(
+                    'Since the percentage of unique values for feature "{}" is lower than the limit of {}%, the conversion to boolean will be skipped.',
+                    column_name,
+                    boolean_threshold,
+                )
+            # else:
+            #     continue
         return df
 
         # for column in cols_categ:
@@ -828,7 +795,7 @@ class FieldAssignment:
         # return df
 
     def _transform_cols_to_numeric(
-        self, df: pd.DataFrame, cols_categ, limit_percentage=80
+        self, df: pd.DataFrame, cols_categ, limit_percentage=90
     ):
         logger.info("Converting string fields to numeric if possible...")
         # function for converting string fields to numeric if possible
