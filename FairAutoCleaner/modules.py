@@ -585,7 +585,7 @@ class EncodeCateg:
         if self.encode_categ:
             
             for column in df.columns.values:
-                if str(df[column].values.dtype) == 'object' and column != self.config.get('dataset_config', {}).get('dataset', {}).get('target') and column not in self.config.get('dataset_config', {}).get('dataset', {}).get('sensitive_features', []):
+                if str(df[column].values.dtype) == 'object' and column != self.config.get('dataset_config', {}).get('dataset', {}).get('target'):
                     # if encoder is not None:
                     #     column_encoder = encoder(**encoder_kwargs).fit(df[column].values)
                     # else:
