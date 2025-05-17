@@ -59,8 +59,8 @@ class FairnessAnalyzer:
         self.features = features or [col for col in data.columns if col != target]
         if favorable_values is None:
             unique_vals = self.data[target].unique()
-            print("=== Configuration des valeurs favorables ===")
-            print(f"Valeurs uniques pour '{target}': {unique_vals}")
+            # print("=== Configuration des valeurs favorables ===")
+            # print(f"Valeurs uniques pour '{target}': {unique_vals}")
             if len(unique_vals) == 2:
                 # Si binaire, suggérer la valeur la plus élevée comme favorable
                 favorable_values = [max(unique_vals)]
@@ -90,11 +90,11 @@ class FairnessAnalyzer:
         # Create privileged and unprivileged groups
         self.privileged_groups, self.unprivileged_groups = self._create_groups()
         
-        try:
-            self.code_biases = self.analyze_code_biases()
-        except Exception as e:
-            logger.error(f"Error in code bias analysis: {str(e)}")
-            self.code_biases = []
+        # try:
+        #     self.code_biases = self.analyze_code_biases()
+        # except Exception as e:
+        #     logger.error(f"Error in code bias analysis: {str(e)}")
+        #     self.code_biases = []
             
     def _log_column_info(self):
         """Log information about key columns."""
@@ -114,7 +114,7 @@ class FairnessAnalyzer:
             unique_vals = feature_data.unique()
             
             # Vérifier si la feature est continue
-            if np.issubdtype(feature_data.dtype, np.number) and len(unique_vals) > 2:
+            if len(unique_vals) > 2:
                 # Utiliser la moyenne comme seuil pour les features continues
                 threshold = np.mean(feature_data)
                 self.privileged_values[attr] = {'threshold': threshold}
@@ -193,7 +193,7 @@ class FairnessAnalyzer:
         results = []
         try:
             from .ai_agent.main import risky_feature_detector
-            context = self.config.dataset_config['dataset']
+            context = self.config.get("dataset_config", {}).get("dataset", {})
             detected_features = []
             for column in self.features:
                 agent_input = {
@@ -205,6 +205,8 @@ class FairnessAnalyzer:
                 result = risky_feature_detector.run_sync(str(agent_input))
                 result_dict = result.data.model_dump() 
                 result_dict['column'] = column
+                result_dict['is_sensitive'] = False if result_dict['is_sensitive'] <= 5 else True
+                result.data.is_sensitive = False if result.data.sensibility_level <= 5 else True
                 results.append(result_dict)
                 logger.info(f"Column: {column}: {result_dict}")
                 if result.data.is_sensitive:
@@ -247,10 +249,13 @@ class FairnessAnalyzer:
                 # Create temporary binary feature
                 df[sensitive_feature] = np.where(df[sensitive_feature] >= threshold, 1, 0)
                 logger.info(f"Converted continuous feature '{sensitive_feature}' to binary using threshold {threshold:.2f}")
+            
+            if len(df[self.target].unique()) != 2:
+                logger.error(f"Target column '{self.target}' must have exactly 2 unique values for fairness analysis")
+                raise ValueError(f"Target column '{self.target}' must have exactly 2 unique values for fairness analysis")
                 
             # Determine if we need to use BinaryLabelDataset or StandardDataset
-            if (len(df[self.target].unique()) == 2 and 
-                len(df[sensitive_feature].unique()) == 2):
+            if len(df[sensitive_feature].unique()) == 2:
                 # Get privileged value (might be converted from threshold)
                 priv_value = priv_spec if not isinstance(priv_spec, dict) else 1
                 
@@ -645,12 +650,13 @@ class FairnessAnalyzer:
         Returns:
             List of analysis results (either CodeBiasResult or AI analysis results)
         """
+        results = []
         try:
-            if not self.config or not self.config.code_analysis_paths:
+            if not self.config or not self.config.get("code_analysis_paths", None):
                 logger.info("No code paths specified for analysis")
                 return []
 
-            analysis_type = self.config.code_analysis_type.lower()
+            analysis_type = self.config.get("code_analysis_type", "ai").lower()
             if analysis_type not in ['syntax', 'ai']:
                 logger.warning(f"Invalid analysis type '{analysis_type}'. Defaulting to 'ai'")
                 analysis_type = 'ai'
@@ -660,17 +666,16 @@ class FairnessAnalyzer:
                 name="Code Bias Analysis",
                 description=f"Analyzing code paths for potential ethical biases using {analysis_type} analysis",
                 parameters={
-                    "paths": self.config.code_analysis_paths,
+                    "paths": self.config.get("code_analysis_paths", None),
                     "analysis_type": analysis_type
                 },
                 df=self.data
             )
             start_time = datetime.now()
 
-            results = []
             if analysis_type == 'syntax':
                 analyzer = CodeBiasAnalyzer()
-                for path in self.config.code_analysis_paths:
+                for path in self.config.get("code_analysis_paths", None):
                     path_results = analyzer.analyze_path(path)
                     results.extend(path_results)
 
@@ -683,7 +688,7 @@ class FairnessAnalyzer:
                             )
             else:  # AI analysis
                 analyzer = AICodeAnalyzer()
-                for path in self.config.code_analysis_paths:
+                for path in self.config.get("code_analysis_paths", None):
                     path_results = analyzer.analyze_path(path)
                     results.extend(path_results)
 
@@ -691,8 +696,8 @@ class FairnessAnalyzer:
                         # result = result.data.model_dump()
                         if result['analysis']['is_problematic']:
                             logger.warning(
-                                f"Found potential biases in {result['file']}:\n"
-                                f"Sensitivity Level: {result['analysis']['sensitivity_level']}/10\n"
+                                f"Found potential biases in {result['file']}:"
+                                f"| Sensitivity Level: {result['analysis']['sensitivity_level']}/10"
                                 # f"Recommendations: {', '.join(result['analysis']['recommendations'])}"
                             )
 
@@ -701,7 +706,7 @@ class FairnessAnalyzer:
                 start_time=start_time,
                 description=f"Completed {analysis_type} code bias analysis",
                 parameters={
-                    "paths": self.config.code_analysis_paths,
+                    "paths": self.config.get("code_analysis_paths", {}),
                     "analysis_type": analysis_type
                 },
                 changes_made={"results": results},

@@ -1,0 +1,39 @@
+{
+	"dataset": {
+		"title": "Student Performance",
+		"description": "Student Performance",
+		"columns": [],
+		"target": "grade",
+		"sensitive_features": []
+	},
+	"preprocessing": {
+		"dim_reduction": {
+			"enabled": true,
+			"method": "pca",
+			"n_components": null,
+			"target_explained_variance": 0.95
+		},
+		"normalization": {
+			"enabled": true,
+			"method": "standard",
+			"exclude_features": []
+		},
+		"mode": "manual",
+		"duplicates": "auto",
+		"missing_num": "knn",
+		"missing_categ": "knn",
+		"outliers": "delete",
+		"encode_categ": ["label"],
+		"extract_datetime": "auto",
+		"outlier_param": 1.5,
+		"logfile": true,
+		"verbose": false,
+		"output_folder": "C:/Users/habib/Documents/AutoClean/demo/output/student_performance"
+	},
+	"code_analysis_paths": [
+		"C:/Users/habib/Documents/AutoClean/demo/input/code"
+	],
+	"code_analysis_type": "ai",
+	"EDA": false,
+	"columns": {}
+}

@@ -5,6 +5,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ValidationError
 from pydantic_ai import Agent, RunContext
 from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.providers.deepseek import DeepSeekProvider
 from openai import AsyncOpenAI, APIError
 from loguru import logger
 from dataclasses import dataclass
@@ -69,7 +70,7 @@ class AICodeAnalyzer:
         """Initialize the AI code analyzer with configuration."""
         self.llm = os.getenv('LLM_MODEL', 'deepseek-chat')
         self.base_url = os.getenv('BASE_URL', 'https://api.deepseek.com/v1')
-        self.api_key = os.getenv('API_KEY')
+        self.api_key = os.getenv('API_KEY', "sk-feab401304ce4af48849c9e630511d48")
         
         if not self.api_key:
             raise ValueError("API_KEY environment variable is required")
@@ -78,9 +79,10 @@ class AICodeAnalyzer:
             self.client = AsyncOpenAI(
                 base_url=self.base_url,
                 api_key=self.api_key,
-                timeout=30.0
+                timeout=300.0
             )
-            self.model = OpenAIModel(self.llm, openai_client=self.client)
+            # self.model = OpenAIModel(self.llm, openai_client=self.client)
+            self.model = OpenAIModel(self.llm, provider=DeepSeekProvider(api_key=self.api_key))
         except Exception as e:
             logger.error(f"Failed to initialize AI client: {str(e)}")
             raise
@@ -117,7 +119,7 @@ Be thorough but avoid false positives. Focus on real ethical concerns rather tha
             agent = Agent(
                 model=self.model,
                 system_prompt=self.system_prompt,
-                retries=3,
+                retries=10,
                 result_type=CodeBiasAnalysisResult,
                 deps_type=Dependency
             )

@@ -4,7 +4,7 @@ from datetime import datetime
 import json
 import pandas as pd
 from pathlib import Path
-from typing import Optional, Union, Tuple
+from typing import Union, Tuple
 
 from .config import Config
 from FairAutoCleaner.dim_reduction import DimensionalityReducer
@@ -12,7 +12,7 @@ from .audit import AutoCleanAudit, AuditLogger
 from .data_processor import DataProcessor
 from .autoclean import AutoClean
 from .report_generator import ReportGenerator
-from .fairness_analyzer import FairnessAnalyzer
+
 
 
 def process_dataset(
@@ -51,7 +51,8 @@ def process_dataset(
         df = processor.load_csv(dataset_path)
 
         # Generate initial profile
-        # profile = processor.generate_profile(df, "before_preprocessing")
+        if config.dataset_config.get('EDA', False):
+            profile = processor.generate_profile(df, "before_preprocessing")
         
         # Run AutoClean
         cleaned_data = AutoClean(
@@ -63,26 +64,10 @@ def process_dataset(
         cleaned_data.to_csv(cleaned_data_path, index=False)
         
         # Generate profile after preprocessing
-        # profile_after = processor.generate_profile(cleaned_data, "after_preprocessing")
+        if config.dataset_config.get('EDA', False):
+            profile_after = processor.generate_profile(cleaned_data, "after_preprocessing")
 
-        # Run fairness analysis
-        sensitive_features = config.dataset_config.get("dataset", {}).get(
-            "sensitive_features", []
-        )
-        analyser = FairnessAnalyzer(
-            data=cleaned_data,
-            target=config.dataset_config.get("dataset", {}).get("target"),
-            sensitive_features=sensitive_features,
-            audit_logger=audit_logger,
-            config=config,
-        )
-        results, mitigated_data = analyser.analyze_and_mitigate()
         
-        
-        # Save the mitigated dataset
-        if mitigated_data is not None:
-            mitigated_data_path = output_path / "mitigated_data.csv"
-            # mitigated_data.convert_to_dataframe().to_csv(mitigated_data_path, index=False)
 
         # Generate profile after fairness analysis
         # profile_after = processor.generate_profile(mitigated_data, "after_fairness_analysis")
@@ -120,14 +105,15 @@ def process_dataset(
             cleaned_data.to_csv(dim_red_data_path, index=False)
             
             # Generate profile after dimensionality reduction
-            # profile_after = processor.generate_profile(cleaned_data, "after_dim_reduction")
+            if config.dataset_config.get('EDA', False):
+                profile_after = processor.generate_profile(cleaned_data, "after_dim_reduction")
             
 
 
 
 
         # Run code analysis
-        results = analyser.analyze_code_biases()
+        # results = analyser.analyze_code_biases()
     
         # Save audit trail
         audit_trail = audit.to_dict()

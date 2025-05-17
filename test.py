@@ -9,7 +9,7 @@ def test_data():
     test_dir = Path(__file__).parent
     return {
         "config_path": test_dir / "configs.json",
-        "dataset_path": test_dir / "datasets/adult.csv",
+        "dataset_path": test_dir / "datasets/german_credit_data.csv",
         "output_path": test_dir / "output/test_run"
     }
 

@@ -1,10 +1,10 @@
 {
 	"dataset": {
-		"title": "adult",
-		"description": "An individual’s annual income results from various factors. Intuitively, it is influenced by the individual’s education level, age, gender, occupation, and etc.This is a widely cited KNN dataset. I encountered it during my course, and I wish to share it here because it is a good starter example for data pre-processing and machine learning practices. ",
+		"title": "german_credit_data",
+		"description": "german_credit_data",
 		"columns": [],
-		"target": "income",
-		"sensitive_features": ["gender"]
+		"target": "Risk",
+		"sensitive_features": ["Sex"]
 	},
 	"preprocessing": {
 		"dim_reduction": {
@@ -30,5 +30,9 @@
 		"verbose": false,
 		"output_folder": "C:/Users/habib/Documents/AutoClean/output/test_run"
 	},
+	"code_analysis_paths": [
+		"C:/Users/habib/Documents/AutoClean/preprocessing"
+	],
+	"code_analysis_type": "ai",
 	"columns": {}
 }

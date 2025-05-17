@@ -10,6 +10,7 @@ from loguru import logger
 import ydata_profiling
 from FairAutoCleaner.normalizer import DataNormalizer
 from FairAutoCleaner.modules import *
+from .fairness_analyzer import FairnessAnalyzer
 import json
 
 
@@ -385,6 +386,27 @@ class AutoClean:
         )
         
         df.to_csv(self.output_folder + "/before_normalization.csv", index=False)
+        
+        # Run fairness analysis
+        sensitive_features = self.config.get("dataset_config", {}).get("dataset", {}).get(
+            "sensitive_features", []
+        )
+        analyser = FairnessAnalyzer(
+            data=df,
+            target=self.config.get("dataset_config", {}).get("dataset", {}).get("target"),
+            sensitive_features=sensitive_features,
+            audit_logger=self.audit_logger,
+            config=self.config,
+        )
+        results, mitigated_data = analyser.analyze_and_mitigate()
+        
+        code_biaises = analyser.analyze_code_biases()
+        
+        
+        # Save the mitigated dataset
+        if mitigated_data is not None:
+            mitigated_data_path = self.output_folder + "/mitigated_data.csv"
+            # mitigated_data.convert_to_dataframe().to_csv(mitigated_data_path, index=False)
 
         # Normalization
         if (

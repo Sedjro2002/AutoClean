@@ -149,8 +149,8 @@ class DataProcessor:
             )
             
             # Save reports
-            # profile.to_file(self.config.output_dir / f"{output_prefix}_profile.html")
-            profile.to_file(self.config.output_dir / f"{output_prefix}_profile.json")
+            profile.to_file(self.config.output_dir / f"{output_prefix}_profile.html")
+            # profile.to_file(self.config.output_dir / f"{output_prefix}_profile.json")
             
             self.audit_logger.complete_operation(
                 name="Data Profiling",
